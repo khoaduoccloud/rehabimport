@@ -129,7 +129,7 @@
 
     <script>
         document.getElementById('deviceForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+          
 
             const data = {
                 deviceID: document.getElementById('deviceID').value,
@@ -145,7 +145,7 @@
                 user: document.getElementById('user').value
             };
 
-            fetch('https://script.google.com/macros/s/AKfycbynE3kjXWFdahrcyNTSwfwN7_3-0k-01c2ru2K4gNDbevHShE2PbS9nM4Ux7EoiGjnh/exec', {  // Thay WEB_APP_URL bằng URL của Google Apps Script
+            fetch('https://script.google.com/macros/s/AKfycbxqpGS6fkRztIzdUc65ZbFdsYbB95b1WrLw2aWpb_rp9pYubon85tAUWlO-exmwfMe8/exec', {  // Thay WEB_APP_URL bằng URL của Google Apps Script
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
