@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nhập Thông Tin Thiết Bị</title>
+	<link rel="icon" type="image/png" href="images/favicon.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -69,63 +70,52 @@
 <body>
     <h1>Form Nhập Thông Tin Thiết Bị</h1>
     <form id="deviceForm">
-        <div class="form-group">
-            <label for="deviceID">MÃ THIẾT BỊ:</label>
-            <input type="text" id="deviceID" name="deviceID">
-        </div>
-
-        <div class="form-group">
-            <label for="deviceName">TÊN THIẾT BỊ:</label>
-            <input type="text" id="deviceName" name="deviceName">
-        </div>
-
-        <div class="form-group">
-            <label for="deviceType">LOẠI THIẾT BỊ:</label>
-            <input type="text" id="deviceType" name="deviceType">
-        </div>
-
-        <div class="form-group">
-            <label for="modelSerial">MODEL/SERIAL:</label>
-            <input type="text" id="modelSerial" name="modelSerial">
-        </div>
-
-        <div class="form-group">
-            <label for="originalPrice">NGUYÊN GIÁ:</label>
-            <input type="number" id="originalPrice" name="originalPrice">
-        </div>
-
-        <div class="form-group">
-            <label for="manufactureYear">NĂM SẢN XUẤT:</label>
-            <input type="number" id="manufactureYear" name="manufactureYear">
-        </div>
-
-        <div class="form-group">
-            <label for="usageYear">NĂM SỬ DỤNG:</label>
-	<input type="number" id="usageYear" name="usageYear">
-        </div>
-
-        <div class="form-group">
-            <label for="manufacturer">HÃNG SẢN XUẤT:</label>
-            <input type="text" id="manufacturer" name="manufacturer">
-        </div>
-
-        <div class="form-group">
-            <label for="country">NƯỚC SẢN XUẤT:</label>
-            <input type="text" id="country" name="country">
-        </div>
-
-        <div class="form-group">
-            <label for="department">KHOA PHÒNG SỬ DỤNG:</label>
-            <input type="text" id="department" name="department">
-        </div>
-
-        <div class="form-group">
-            <label for="user">NGƯỜI SỬ DỤNG:</label>
-            <input type="text" id="user" name="user">
-        </div>
-
-        <input type="submit" value="Lưu dữ liệu">
-    </form>
+    <div class="form-group">
+      <label for="deviceID">MÃ THIẾT BỊ:</label>
+      <input type="text" id="deviceID" name="deviceID" placeholder="Ví dụ: PHCNNL.01">
+    </div>
+    <div class="form-group">
+      <label for="deviceName">TÊN THIẾT BỊ:</label>
+      <input type="text" id="deviceName" name="deviceName" placeholder="Ví dụ: Máy điện xung 2 kênh">
+    </div>
+    <div class="form-group">
+      <label for="deviceType">LOẠI THIẾT BỊ:</label>
+      <input type="text" id="deviceType" name="deviceType" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="modelSerial">MODEL/SERIAL:</label>
+      <input type="text" id="modelSerial" name="modelSerial" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="originalPrice">NGUYÊN GIÁ:</label>
+      <input type="number" id="originalPrice" name="originalPrice" placeholder="Ví dụ: 1500000">
+    </div>
+    <div class="form-group">
+      <label for="manufactureYear">NĂM SẢN XUẤT:</label>
+      <input type="number" id="manufactureYear" name="manufactureYear" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="usageYear">NĂM SỬ DỤNG:</label>
+      <input type="number" id="usageYear" name="usageYear" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="manufacturer">HÃNG SẢN XUẤT:</label>
+      <input type="text" id="manufacturer" name="manufacturer" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="country">NƯỚC SẢN XUẤT:</label>
+      <input type="text" id="country" name="country" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="department">KHOA PHÒNG SỬ DỤNG:</label>
+      <input type="text" id="department" name="department" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="user">NGƯỜI SỬ DỤNG:</label>
+      <input type="text" id="user" name="user" placeholder="Ví dụ: ...">
+    </div>
+    <input type="submit" value="Lưu dữ liệu">
+  </form>
 
    <script>
 document.getElementById("deviceForm").addEventListener("submit", function(e) {
