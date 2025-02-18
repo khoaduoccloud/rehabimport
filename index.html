@@ -128,7 +128,7 @@
     </form>
 
    <script>
-document.getElementById("submit").addEventListener("click", function(e) {
+document.getElementById("deviceForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
   // Lấy dữ liệu từ form
@@ -160,6 +160,7 @@ document.getElementById("submit").addEventListener("click", function(e) {
   .then(result => {
     alert('Dữ liệu đã được lưu thành công vào Google Trang tính!');
     console.log(result);
+	document.getElementById("deviceForm").reset(); // Xóa dữ liệu sau khi gửi thành công
   })
   .catch(error => {
     console.error('Error:', error);
