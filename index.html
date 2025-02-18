@@ -154,7 +154,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     },
-    body: formData
+    body: new URLSearchParams(data).toString()
   })
   .then(response => response.text())
   .then(result => {
