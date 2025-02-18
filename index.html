@@ -128,39 +128,37 @@
     </form>
 
     <script>
-        document.getElementById('deviceForm').addEventListener('submit', function(e) {
-          
+       document.getElementById('deviceForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Ngăn form tải lại trang
 
-            const data = {
-                deviceID: document.getElementById('deviceID').value,
-                deviceName: document.getElementById('deviceName').value,
-                deviceType: document.getElementById('deviceType').value,
-                modelSerial: document.getElementById('modelSerial').value,
-                originalPrice: document.getElementById('originalPrice').value,
-                manufactureYear: document.getElementById('manufactureYear').value,
-                usageYear: document.getElementById('usageYear').value,
-                manufacturer: document.getElementById('manufacturer').value,
-                country: document.getElementById('country').value,
-                department: document.getElementById('department').value,
-                user: document.getElementById('user').value
-            };
+    const data = {
+        deviceID: document.getElementById('deviceID').value,
+        deviceName: document.getElementById('deviceName').value,
+        deviceType: document.getElementById('deviceType').value,
+        modelSerial: document.getElementById('modelSerial').value,
+        originalPrice: document.getElementById('originalPrice').value,
+        manufactureYear: document.getElementById('manufactureYear').value,
+        usageYear: document.getElementById('usageYear').value,
+        manufacturer: document.getElementById('manufacturer').value,
+        country: document.getElementById('country').value,
+        department: document.getElementById('department').value,
+        user: document.getElementById('user').value
+    };
 
-            fetch('https://script.google.com/macros/s/AKfycbykjRyxbWlaMfOJWGqtlY_5uU1RNdsdXTRQR9jXKKhct-1kpYdbY-LfS4YtESTuTe-w/exec', {  // Thay WEB_APP_URL bằng URL của Google Apps Script
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.text())
-            .then(result => {
-                alert('Dữ liệu đã được lưu thành công');
-                console.log(result);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-        });
+    fetch('https://script.google.com/macros/s/AKfycbzDKY7UFUHXtpdL-6Yob0J0tNe4pJrgO3bzGXLt4ykYqcKednGSNeBGY2Yl0FQTnyEJ/exec', { // Thay bằng URL của Google Apps Script
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(result => {
+        alert('Dữ liệu đã được lưu thành công vào Google Trang tính!');
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
     </script>
 </body>
 </html>
