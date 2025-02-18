@@ -128,11 +128,11 @@
     </form>
 
    <script>
-document.getElementById('deviceForm').addEventListener('submit', function(e) {
+document.getElementById("submit").addEventListener("click", function(e) {
   e.preventDefault();
 
   // Lấy dữ liệu từ form
-  const data = {
+  var data = {
     deviceID: document.getElementById('deviceID').value,
     deviceName: document.getElementById('deviceName').value,
     deviceType: document.getElementById('deviceType').value,
