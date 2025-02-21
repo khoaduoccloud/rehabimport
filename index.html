@@ -135,6 +135,8 @@
       <i class="fa fa-search"></i>
       Tìm kiếm
     </button>
+	  <!-- Container hiển thị kết quả tìm kiếm -->
+<div id="searchResults" style="margin-top:20px;"></div>
     <!-- Nút 2: Xóa dữ liệu -->
     <button id="deleteBtn">
       <i class="fa fa-trash"></i>
@@ -168,7 +170,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   // Chuyển object thành form-encoded string (key=value&key=value...)
   const formData = new URLSearchParams(data).toString();
 
-  fetch('https://script.google.com/macros/s/AKfycbxBG2Co8whDsibTem7YFwstodjLOtwfq08-ai2AdDlvm8WYhkyKQwnmreJgqhzbaO0PHQ/exec', { 
+  fetch('https://script.google.com/macros/s/AKfycbxWGBJQfSBMUzSwVwUptJ_QoLiWzywezaOgPcFtc1DIhyoaabGHiKKyomwT6gX-TcHehg/exec', { 
     method: 'POST',
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -198,6 +200,63 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   // Mở file CV từ GitHub trong tab mới
   window.open('https://khoaduoccloud.github.io/rehabimport/buivanhuuthangCV.pdf', '_blank');
 });
+	   document.getElementById("searchBtn").addEventListener("click", function() {
+  var query = prompt("Nhập từ khóa tìm kiếm:");
+  if (query) {
+    // Gửi GET request với tham số q
+    fetch("https://script.google.com/macros/s/AKfycbxWGBJQfSBMUzSwVwUptJ_QoLiWzywezaOgPcFtc1DIhyoaabGHiKKyomwT6gX-TcHehg/exec" + encodeURIComponent(query))
+      .then(response => response.json())
+      .then(data => {
+        displaySearchResults(data);
+      })
+      .catch(error => {
+        console.error("Lỗi tìm kiếm:", error);
+      });
+  }
+});
+
+function displaySearchResults(data) {
+  var container = document.getElementById("searchResults");
+  container.innerHTML = ""; // Xoá kết quả cũ
+  if (!data.results || data.results.length === 0) {
+    container.innerHTML = "<p>Không tìm thấy kết quả nào.</p>";
+    return;
+  }
+  // Tạo bảng hiển thị kết quả
+  var table = document.createElement("table");
+  table.style.width = "100%";
+  table.style.borderCollapse = "collapse";
+  
+  // Tạo header bảng
+  var thead = document.createElement("thead");
+  var headerRow = document.createElement("tr");
+  data.headers.forEach(function(header) {
+    var th = document.createElement("th");
+    th.textContent = header;
+    th.style.border = "1px solid #ccc";
+    th.style.padding = "8px";
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+  
+  // Tạo body bảng
+  var tbody = document.createElement("tbody");
+  data.results.forEach(function(row) {
+    var tr = document.createElement("tr");
+    row.forEach(function(cell) {
+      var td = document.createElement("td");
+      td.textContent = cell;
+      td.style.border = "1px solid #ccc";
+      td.style.padding = "8px";
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  
+  container.appendChild(table);
+}
 
 </script>
 </body>
