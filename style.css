@@ -1,3 +1,4 @@
+/* HEADER - LOGO + TIÊU ĐỀ */
 .header {
       display: flex;
       align-items: center;
@@ -8,4 +9,28 @@
     .logo {
       width: 50px;
       height: auto;
+    }
+/* CỘT BÊN PHẢI CHỨA 3 NÚT */
+    .right-buttons {
+      position: fixed; /* Cố định ở bên phải màn hình */
+      top: 100px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .right-buttons button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .right-buttons button:hover {
+      background-color: #45a049;
     }
