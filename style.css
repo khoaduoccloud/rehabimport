@@ -34,3 +34,53 @@
     .right-buttons button:hover {
       background-color: #45a049;
     }
+/* Nền mờ che toàn màn hình khi modal bật */
+.modal {
+  display: none; /* Ẩn mặc định */
+  position: fixed;
+  z-index: 999; /* Đảm bảo nổi trên mọi thứ */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Cho phép scroll nếu nội dung dài */
+  background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
+}
+
+/* Khung nội dung của modal */
+.modal-content {
+  background-color: #fff;
+  margin: 5% auto; /* Căn giữa theo chiều ngang */
+  padding: 20px;
+  width: 80%; /* Độ rộng hộp */
+  border-radius: 10px; /* Bo góc */
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+/* Nút đóng (X) */
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #999;
+}
+
+.closeBtn:hover {
+  color: #333;
+}
+
+/* Bảng trong modal có thể tùy chỉnh thêm */
+#modalResults table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#modalResults th, #modalResults td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
