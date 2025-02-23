@@ -94,17 +94,6 @@ body {
   padding: 20px;
   border-radius: 10px;
 }
-.wave-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100px;
-  background: linear-gradient(135deg, #42a5f5, #90caf9);
-  z-index: -1;
-  clip-path: ellipse(70% 60% at 50% 40%);
-  /* Bạn có thể thử clip-path khác hoặc dùng tool online để tạo wave */
-}
 .wave-header h1 {
       position: relative; 
       z-index: 1;         /* Để nó nổi trên wave-bg */
