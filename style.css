@@ -85,7 +85,7 @@
   text-align: left;
 }
 body {
-  background: url('watercolor.png') center/cover no-repeat;
+  background: url('email-pattern.png') center/cover no-repeat;
   background-attachment: fixed; /* parallax effect */
 }
 .form-container {
