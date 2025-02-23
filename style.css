@@ -85,7 +85,7 @@
   text-align: left;
 }
 body {
-  background: url('images/bg.jpg') center/cover no-repeat;
+  background: url('watercolor.png') center/cover no-repeat;
   background-attachment: fixed; /* parallax effect */
 }
 .form-container {
