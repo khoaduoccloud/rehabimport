@@ -79,6 +79,11 @@
       <i class="fa fa-info-circle"></i>
       Thông tin
     </button>
+ 	<!-- Nút 4: Refresh trang -->
+  <button id="refreshBtn">
+    <i class="fa fa-sync"></i>
+    Làm mới
+  </button>
   </div>
 	<div id="searchResults"></div>
 	<!-- Modal ẩn, hiển thị khi tìm kiếm xong -->
@@ -316,6 +321,9 @@ window.addEventListener("click", function(e) {
   if (e.target === modal) {
     modal.style.display = "none";
   }
+});
+document.getElementById("refreshBtn").addEventListener("click", function() {
+  window.location.reload();
 });
 
 </script>
