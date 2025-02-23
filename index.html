@@ -147,6 +147,15 @@
     </button>
   </div>
 	<div id="searchResults"></div>
+	<!-- Modal ẩn, hiển thị khi tìm kiếm xong -->
+<div id="searchModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="closeBtn">&times;</span>
+    <h2>Kết Quả Tìm Kiếm</h2>
+    <div id="modalResults"></div>
+  </div>
+</div>
+
    <script>
 document.getElementById("deviceForm").addEventListener("submit", function(e) {
   e.preventDefault();
@@ -314,6 +323,66 @@ function displaySearchResults(data) {
   
   container.appendChild(table);
 }
+function displaySearchResults(data) {
+  // Tìm phần tử modal
+  const modal = document.getElementById("searchModal");
+  const modalResults = document.getElementById("modalResults");
+
+  // Xoá nội dung cũ
+  modalResults.innerHTML = "";
+
+  // Kiểm tra dữ liệu
+  if (!data || !data.results || data.results.length === 0) {
+    modalResults.innerHTML = "<p>Không tìm thấy kết quả nào.</p>";
+    // Hiện modal để báo không có kết quả
+    modal.style.display = "block";
+    return;
+  }
+
+  // Tạo bảng
+  const table = document.createElement("table");
+  table.style.borderCollapse = "collapse";
+  table.style.width = "100%";
+
+  // Tạo header
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+  data.headers.forEach(h => {
+    const th = document.createElement("th");
+    th.textContent = h;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Tạo body
+  const tbody = document.createElement("tbody");
+  data.results.forEach(row => {
+    const tr = document.createElement("tr");
+    row.forEach(cell => {
+      const td = document.createElement("td");
+      td.textContent = cell;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+
+  // Đưa bảng vào modal
+  modalResults.appendChild(table);
+
+  // Hiện modal
+  modal.style.display = "block";
+}
+document.getElementById("closeModal").addEventListener("click", function() {
+  document.getElementById("searchModal").style.display = "none";
+});
+window.addEventListener("click", function(e) {
+  const modal = document.getElementById("searchModal");
+  if (e.target === modal) {
+    modal.style.display = "none";
+  }
+});
 
 </script>
 </body>
