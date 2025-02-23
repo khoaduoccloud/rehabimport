@@ -17,17 +17,24 @@
       height: auto;
     }
 .footer {
+  position: fixed;       /* Cố định footer */
+  bottom: 2cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
+  left: 0;
+  width: 100%;
   text-align: center;
+  background-color: #fff; /* Nền trắng (hoặc màu khác) để dễ phân biệt */
   padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
   font-size: 0.9rem;
   color: #333;
-  margin-top: 20px;
+  z-index: 999;          /* Để footer nổi trên các phần tử khác */
 }
 
 .footer .highlight {
   color: orange;
   font-weight: bold;
 }
+
 
 /* CỘT BÊN PHẢI CHỨA 3 NÚT */
     .right-buttons {
