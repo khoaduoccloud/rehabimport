@@ -105,6 +105,14 @@ body {
   clip-path: ellipse(70% 60% at 50% 40%);
   /* Bạn có thể thử clip-path khác hoặc dùng tool online để tạo wave */
 }
+.wave-header h1 {
+      position: relative; 
+      z-index: 1;         /* Để nó nổi trên wave-bg */
+      color: #fff;        /* Màu chữ trắng nổi bật */
+      text-align: center;
+      padding-top: 60px;  /* Đẩy xuống một chút, tuỳ chỉnh */
+      font-size: 2rem;
+    }
 /* Form wrapper để tách bạch với wave */
 .form-wrapper {
   position: relative;
