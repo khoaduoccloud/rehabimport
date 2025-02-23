@@ -16,6 +16,19 @@
       width: 50px;
       height: auto;
     }
+.footer {
+  text-align: center;
+  padding: 10px 0;
+  font-size: 0.9rem;
+  color: #333;
+  margin-top: 20px;
+}
+
+.footer .highlight {
+  color: orange;
+  font-weight: bold;
+}
+
 /* CỘT BÊN PHẢI CHỨA 3 NÚT */
     .right-buttons {
       position: fixed; /* Cố định ở bên phải màn hình */
