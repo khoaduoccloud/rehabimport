@@ -10,21 +10,13 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
+	margin-top: 2cm;
       margin-bottom: 20px;
     }
     .logo {
       width: 50px;
       height: auto;
     }
-h1 {
-  position: relative;
-  z-index: 1;
-  color: #fff;
-  text-align: center;
-  /* padding-top: 60px;  // Bỏ hoặc giữ tuỳ bạn */
-  margin-top: 2cm; /* Dịch xuống ~2cm */
-  font-size: 2rem;
-}
 .footer {
   position: fixed;       /* Cố định footer */
   bottom: 0.5cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
