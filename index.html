@@ -169,7 +169,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   // Chuyển object thành form-encoded string (key=value&key=value...)
   const formData = new URLSearchParams(data).toString();
 
-  fetch('https://script.google.com/macros/s/AKfycbxoRuM-Gy2WA7gEnStVSQmta-C2Fjl1atbVT3t6vnt7KCfQhB69yQ0Up6RAEV1qm6k4-w/exec', { 
+  fetch('https://script.google.com/macros/s/AKfycbwVz3RM-tLUyLWEBs8djla8TZS61kaC4yQKQgRg_LCQw6mcYDPlXrD-jy24CeFevs1g/exec', { 
     method: 'POST',
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -192,7 +192,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
-      fetch('YOUR_WEB_APP_GET_URL' + '?' + params)
+      fetch('https://script.google.com/macros/s/AKfycbwVz3RM-tLUyLWEBs8djla8TZS61kaC4yQKQgRg_LCQw6mcYDPlXrD-jy24CeFevs1g/exec' + '?' + params)
         .then(r => r.json())
         .then(json => displaySearchResults(json))
         .catch(err => console.error("Lỗi tìm kiếm:", err));
@@ -202,7 +202,16 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     function getFormData() {
       return {
         deviceID: document.getElementById('deviceID').value,
-        deviceName: document.getElementById('deviceName').value,
+    deviceName: document.getElementById('deviceName').value,
+    deviceType: document.getElementById('deviceType').value,
+    modelSerial: document.getElementById('modelSerial').value,
+    originalPrice: document.getElementById('originalPrice').value,
+    manufactureYear: document.getElementById('manufactureYear').value,
+    usageYear: document.getElementById('usageYear').value,
+    manufacturer: document.getElementById('manufacturer').value,
+    country: document.getElementById('country').value,
+    department: document.getElementById('department').value,
+    user: document.getElementById('user').value
         // ... các trường khác ...
       };
     }
