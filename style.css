@@ -19,7 +19,7 @@
     }
 .footer {
   position: fixed;       /* Cố định footer */
-  bottom: 0.5cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
+  bottom: 0cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
   left: 0;
   width: 100%;
   text-align: center;
