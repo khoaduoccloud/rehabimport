@@ -40,6 +40,14 @@
     .right-buttons button:hover {
       background-color: #45a049;
     }
+.right-buttons button#refreshBtn {
+  background-color: #2196F3; /* Màu xanh dương khác cho nút refresh */
+}
+
+.right-buttons button#refreshBtn:hover {
+  background-color: #1976D2;
+}
+
 /* Nền mờ che toàn màn hình khi modal bật */
 .modal {
   display: none; /* Ẩn mặc định */
