@@ -19,7 +19,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   // Chuyển object thành form-encoded string (key=value&key=value...)
   const formData = new URLSearchParams(data).toString();
 
-  fetch('https://script.google.com/macros/s/AKfycbwVz3RM-tLUyLWEBs8djla8TZS61kaC4yQKQgRg_LCQw6mcYDPlXrD-jy24CeFevs1g/exec', { 
+  fetch('https://script.google.com/macros/s/AKfycbxClnIPJtgAsLxtxwuKJsY1NkbJyxgztMQuYfAohBc3fki88xIPS3mBjeR1BbszEICInA/exec', { 
     method: 'POST',
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -42,7 +42,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
-      fetch('https://script.google.com/macros/s/AKfycbwVz3RM-tLUyLWEBs8djla8TZS61kaC4yQKQgRg_LCQw6mcYDPlXrD-jy24CeFevs1g/exec' + '?' + params)
+      fetch('https://script.google.com/macros/s/AKfycbxClnIPJtgAsLxtxwuKJsY1NkbJyxgztMQuYfAohBc3fki88xIPS3mBjeR1BbszEICInA/exec' + '?' + params)
         .then(r => r.json())
         .then(json => displaySearchResults(json))
         .catch(err => console.error("Lỗi tìm kiếm:", err));
@@ -226,4 +226,33 @@ window.addEventListener("click", function(e) {
 });
 document.getElementById("refreshBtn").addEventListener("click", function() {
   window.location.reload();
+});
+// Xóa dữ liệu
+document.getElementById("deleteBtn").addEventListener("click", function() {
+  var deviceID = document.getElementById('deviceID').value.trim();
+  if (!deviceID) {
+    alert("Vui lòng nhập MÃ THIẾT BỊ của bản ghi cần xóa.");
+    return;
+  }
+  if (confirm("Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: " + deviceID + "?")) {
+    var data = {
+      action: "delete",
+      deviceID: deviceID
+    };
+    fetch('https://script.google.com/macros/s/AKfycbxClnIPJtgAsLxtxwuKJsY1NkbJyxgztMQuYfAohBc3fki88xIPS3mBjeR1BbszEICInA/exec', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: new URLSearchParams(data).toString()
+    })
+    .then(response => response.text())
+    .then(result => {
+      alert(result);
+      // Optionally, refresh the page or clear form
+      document.getElementById("deviceForm").reset();
+    })
+    .catch(error => {
+      console.error("Lỗi xóa dữ liệu:", error);
+      alert("Đã xảy ra lỗi khi xóa dữ liệu.");
+    });
+  }
 });
