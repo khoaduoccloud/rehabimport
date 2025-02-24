@@ -66,14 +66,14 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
       };
     }
 
-    
+    // Hàm hiển thị thông tin
     document.getElementById("infoBtn").addEventListener("click", function() {
   // Mở file CV từ GitHub trong tab mới
   window.open('cv.html', '_blank');
 });
 	   
 
-
+// Hàm hiển thị kết quả tìm kiếm trong modal
 function displaySearchResults(data) {
   // Tìm phần tử modal
   const modal = document.getElementById("searchModal");
