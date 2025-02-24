@@ -19,7 +19,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   // Chuyển object thành form-encoded string (key=value&key=value...)
   const formData = new URLSearchParams(data).toString();
 
-  fetch('https://script.google.com/macros/s/AKfycbxcgi-BeUpMF1UPuAlZeKv6LzaEE1ntudYX6G3EkzXb8dboX5c5OjkJeJ_RFNgieesBtg/exec', { 
+  fetch('https://script.google.com/macros/s/AKfycbyIduz1gYMwrcC7yAdBZdnuc9VDcVt5GwpnTFjBK77gw0aSlE0ZtxRMozM8_knjv1F3qg/exec', { 
     method: 'POST',
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -42,7 +42,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
-      fetch('https://script.google.com/macros/s/AKfycbxcgi-BeUpMF1UPuAlZeKv6LzaEE1ntudYX6G3EkzXb8dboX5c5OjkJeJ_RFNgieesBtg/exec' + '?' + params)
+      fetch('https://script.google.com/macros/s/AKfycbyIduz1gYMwrcC7yAdBZdnuc9VDcVt5GwpnTFjBK77gw0aSlE0ZtxRMozM8_knjv1F3qg/exec' + '?' + params)
         .then(r => r.json())
         .then(json => displaySearchResults(json))
         .catch(err => console.error("Lỗi tìm kiếm:", err));
@@ -66,99 +66,14 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
       };
     }
 
-    // Hàm hiển thị kết quả dưới dạng bảng
-    function displaySearchResults(data) {
-      const container = document.getElementById("searchResults");
-      container.innerHTML = ""; // Xóa kết quả cũ
-
-      if (!data || !data.results || data.results.length === 0) {
-        container.innerHTML = "<p>Không tìm thấy kết quả phù hợp.</p>";
-        return;
-      }
-
-      // Tạo bảng
-      const table = document.createElement("table");
-      table.style.borderCollapse = "collapse";
-      table.style.width = "100%";
-
-      // Tạo header
-      const thead = document.createElement("thead");
-      const headerRow = document.createElement("tr");
-      data.headers.forEach(h => {
-        const th = document.createElement("th");
-        th.textContent = h;
-        th.style.border = "1px solid #ccc";
-        th.style.padding = "8px";
-        headerRow.appendChild(th);
-      });
-      thead.appendChild(headerRow);
-      table.appendChild(thead);
-
-      // Tạo body
-      const tbody = document.createElement("tbody");
-      data.results.forEach(row => {
-        const tr = document.createElement("tr");
-        row.forEach(cell => {
-          const td = document.createElement("td");
-          td.textContent = cell;
-          td.style.border = "1px solid #ccc";
-          td.style.padding = "8px";
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
-      table.appendChild(tbody);
-
-      container.appendChild(table);
-    }
+    
     document.getElementById("infoBtn").addEventListener("click", function() {
   // Mở file CV từ GitHub trong tab mới
   window.open('cv.html', '_blank');
 });
 	   
 
-function displaySearchResults(data) {
-  var container = document.getElementById("searchResults");
-  container.innerHTML = ""; // Xoá kết quả cũ
-  if (!data.results || data.results.length === 0) {
-    container.innerHTML = "<p>Không tìm thấy kết quả nào.</p>";
-    return;
-  }
-  // Tạo bảng hiển thị kết quả
-  var table = document.createElement("table");
-  table.style.width = "100%";
-  table.style.borderCollapse = "collapse";
-  
-  // Tạo header bảng
-  var thead = document.createElement("thead");
-  var headerRow = document.createElement("tr");
-  data.headers.forEach(function(header) {
-    var th = document.createElement("th");
-    th.textContent = header;
-    th.style.border = "1px solid #ccc";
-    th.style.padding = "8px";
-    headerRow.appendChild(th);
-  });
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
-  
-  // Tạo body bảng
-  var tbody = document.createElement("tbody");
-  data.results.forEach(function(row) {
-    var tr = document.createElement("tr");
-    row.forEach(function(cell) {
-      var td = document.createElement("td");
-      td.textContent = cell;
-      td.style.border = "1px solid #ccc";
-      td.style.padding = "8px";
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
-  table.appendChild(tbody);
-  
-  container.appendChild(table);
-}
+
 function displaySearchResults(data) {
   // Tìm phần tử modal
   const modal = document.getElementById("searchModal");
@@ -234,7 +149,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
       action: "delete",
       deviceID: deviceID
     };
-    fetch('https://script.google.com/macros/s/AKfycbxcgi-BeUpMF1UPuAlZeKv6LzaEE1ntudYX6G3EkzXb8dboX5c5OjkJeJ_RFNgieesBtg/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbyIduz1gYMwrcC7yAdBZdnuc9VDcVt5GwpnTFjBK77gw0aSlE0ZtxRMozM8_knjv1F3qg/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams(data).toString()
