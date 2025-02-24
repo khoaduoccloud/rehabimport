@@ -111,11 +111,6 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 
       container.appendChild(table);
     }
-
-    document.getElementById("deleteBtn").addEventListener("click", function() {
-      alert("Chức năng Xóa dữ liệu đang được phát triển...");
-    });
-
     document.getElementById("infoBtn").addEventListener("click", function() {
   // Mở file CV từ GitHub trong tab mới
   window.open('cv.html', '_blank');
