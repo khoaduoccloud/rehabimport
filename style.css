@@ -177,29 +177,37 @@ body {
   margin-bottom: 15px;
 }
 /* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
 .loader {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000; /* đảm bảo nằm trên cùng */
-  
-  --d: 22px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  color: #25b09b;
-  box-shadow: 
-    calc(1 * var(--d))      calc(0 * var(--d))     0 0,
-    calc(0.707 * var(--d))  calc(0.707 * var(--d)) 0 1px,
-    calc(0 * var(--d))      calc(1 * var(--d))     0 2px,
-    calc(-0.707 * var(--d)) calc(0.707 * var(--d)) 0 3px,
-    calc(-1 * var(--d))     calc(0 * var(--d))     0 4px,
-    calc(-0.707 * var(--d)) calc(-0.707 * var(--d)) 0 5px,
-    calc(0 * var(--d))      calc(-1 * var(--d))    0 6px;
-  animation: l27 1s infinite steps(8);
+  width: 120px;
+  height: 22px;
+  border-radius: 40px;
+  color: #514b82;
+  border: 2px solid;
+  position: fixed;             /* Sửa từ relative -> fixed */
+  top: 50%;                   /* Đặt ở giữa theo chiều dọc */
+  left: 50%;                  /* Đặt ở giữa theo chiều ngang */
+  transform: translate(-50%, -50%); /* Căn giữa hoàn toàn */
+  z-index: 1000;              /* Đảm bảo nằm trên cùng */
 }
 
-@keyframes l27 {
-  100% { transform: translate(-50%, -50%) rotate(1turn); }
+.loader::before {
+  content: "";
+  position: absolute;
+  margin: 2px;
+  width: 25%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: inherit;
+  background: currentColor;
+  animation: l3 1s infinite linear;
 }
+
+@keyframes l3 {
+  50% {
+    left: 100%;
+    transform: translateX(calc(-100% - 4px));
+  }
+}
+
