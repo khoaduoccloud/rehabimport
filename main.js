@@ -37,6 +37,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   })
   .then(response => response.text())
   .then(result => {
+	  hideLoader(); // Ẩn loader khi hoàn thành
     alert('Dữ liệu đã được lưu thành công vào Google Trang tính!');
     console.log(result);
 	document.getElementById("deviceForm").reset(); // Xóa dữ liệu sau khi gửi thành công
@@ -47,14 +48,21 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 });
 	   // Xử lý sự kiện cho 3 nút bên phải
     document.getElementById("searchBtn").addEventListener("click", function() {
+	    showLoader(); // Hiển thị loader trước khi gửi request
       const data = getFormData();
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
       fetch('https://script.google.com/macros/s/AKfycbyIduz1gYMwrcC7yAdBZdnuc9VDcVt5GwpnTFjBK77gw0aSlE0ZtxRMozM8_knjv1F3qg/exec' + '?' + params)
         .then(r => r.json())
-        .then(json => displaySearchResults(json))
-        .catch(err => console.error("Lỗi tìm kiếm:", err));
+        .then(json => {
+		hideLoader();
+		displaySearchResults(json);
+	})
+        .catch(err => {
+		hideLoader();
+		console.error("Lỗi tìm kiếm:", err);
+	});
     });
 
     // Hàm lấy dữ liệu form thành object
@@ -80,6 +88,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 	    showLoader(); // Hiển thị loader trước khi gửi request
   // Mở file CV từ GitHub trong tab mới
   window.open('cv.html', '_blank');
+	    hideLoader();
 });
 	   
 
