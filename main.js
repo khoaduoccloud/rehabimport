@@ -1,6 +1,15 @@
+function showLoader() {
+	document.getElementById("loader").style.display = "block";
+}
+function hideLoader() {
+	document.getElementById("loader").style.display = "none";
+}
+
 document.getElementById("deviceForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
+	//Hiển thị loader
+	showLoader();
   // Lấy dữ liệu từ form
   var data = {
     deviceID: document.getElementById('deviceID').value,
@@ -68,6 +77,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 
     // Hàm hiển thị thông tin
     document.getElementById("infoBtn").addEventListener("click", function() {
+	    showLoader(); // Hiển thị loader trước khi gửi request
   // Mở file CV từ GitHub trong tab mới
   window.open('cv.html', '_blank');
 });
