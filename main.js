@@ -54,11 +54,11 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 	    // Kiểm tra trường 'department'
   const deptInput = data.department.trim().toLowerCase();
   // Danh sách các giá trị được phép (ở dạng lowercase)
-  const allowedDepartments = ["phcnnl", "phcn nhi", "nth", "cc"];
+  const allowedDepartments = ["phcnnl", "phcn nhi", "nth", "cc", "yhct", "kd tbyt", "cdha tdcn xn"];
   
   // Nếu người dùng nhập vào trường này (không rỗng) và không nằm trong danh sách cho phép
   if (deptInput && !allowedDepartments.includes(deptInput)) {
-    alert("Không đúng cú pháp cho KHOA PHÒNG SỬ DỤNG. Hãy thử nhập: PHCNNL, PHCN Nhi, NTH, CC.");
+    alert("Không đúng cú pháp cho KHOA PHÒNG SỬ DỤNG. Hãy thử nhập: PHCNNL, PHCN Nhi, NTH, CC, YHCT, KD-TBYT, CĐHA-TDCN-XN.");
     return; // Ngừng xử lý tìm kiếm
   }
       // Tạo query string từ các trường
