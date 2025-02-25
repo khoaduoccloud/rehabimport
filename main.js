@@ -51,6 +51,16 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     document.getElementById("searchBtn").addEventListener("click", function() {
 	    showLoader(); // Hiển thị loader trước khi gửi request
       const data = getFormData();
+	    // Kiểm tra trường 'department'
+  const deptInput = data.department.trim().toLowerCase();
+  // Danh sách các giá trị được phép (ở dạng lowercase)
+  const allowedDepartments = ["phcnnl", "phcn nhi", "nth", "cc"];
+  
+  // Nếu người dùng nhập vào trường này (không rỗng) và không nằm trong danh sách cho phép
+  if (deptInput && !allowedDepartments.includes(deptInput)) {
+    alert("Không đúng cú pháp cho KHOA PHÒNG SỬ DỤNG. Hãy thử nhập: PHCNNL, PHCN Nhi, NTH, CC.");
+    return; // Ngừng xử lý tìm kiếm
+  }
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
