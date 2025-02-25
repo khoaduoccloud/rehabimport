@@ -43,6 +43,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 	document.getElementById("deviceForm").reset(); // Xóa dữ liệu sau khi gửi thành công
   })
   .catch(error => {
+	  hideLoader();
     console.error('Error:', error);
   });
 });
