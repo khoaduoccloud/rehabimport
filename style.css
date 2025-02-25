@@ -194,20 +194,14 @@ body {
   content: "";
   position: absolute;
   margin: 2px;
-  width: 25%;
-  top: 0;
-  bottom: 0;
-  left: 0;
+  inset: 0 100% 0 0;
   border-radius: inherit;
   background: currentColor;
-  animation: l3 1s infinite linear;
+  animation: l6 2s infinite;
 }
 
-@keyframes l3 {
-  50% {
-    left: 100%;
-    transform: translateX(calc(-100% - 4px));
-  }
+@keyframes l6 {
+    100% {inset:0}
 }
 
 
