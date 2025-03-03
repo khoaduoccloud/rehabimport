@@ -142,7 +142,7 @@ function displaySearchResults(data) {
   const tbody = document.createElement("tbody");
   data.results.forEach(row => {
     const tr = document.createElement("tr");
-    row.forEach((cell, index => {
+    row.forEach((cell, index) => {
       const td = document.createElement("td");
       if (index === 11 && cell) { // nếu cột ảnh có giá trị
       const img = document.createElement("img");
