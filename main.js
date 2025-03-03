@@ -22,7 +22,9 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     manufacturer: document.getElementById('manufacturer').value,
     country: document.getElementById('country').value,
     department: document.getElementById('department').value,
-    user: document.getElementById('user').value
+    user: document.getElementById('user').value,
+    source: document.getElementById('source').value,
+    imageURL: document.getElementById('imageURL').value
   };
 
   // Chuyển object thành form-encoded string (key=value&key=value...)
