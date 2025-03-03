@@ -159,7 +159,6 @@ function displaySearchResults(data) {
   });
   tbody.appendChild(tr);
   });
-  table.appendChild(tbody);
 
   // Đưa bảng vào modal
   modalResults.appendChild(table);
