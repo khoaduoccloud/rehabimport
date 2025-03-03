@@ -142,12 +142,22 @@ function displaySearchResults(data) {
   const tbody = document.createElement("tbody");
   data.results.forEach(row => {
     const tr = document.createElement("tr");
-    row.forEach(cell => {
+    row.forEach(cell, index => {
       const td = document.createElement("td");
+      if (index === 11 && cell) { // nếu cột ảnh có giá trị
+      const img = document.createElement("img");
+      img.src = cell;
+      img.style.width = "80px";
+      img.style.height = "auto";
+      td.appendChild(img);
+    } else {
       td.textContent = cell;
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
+    }
+    td.style.border = "1px solid #ccc";
+    td.style.padding = "8px";
+    tr.appendChild(td);
+  });
+  tbody.appendChild(tr);
   });
   table.appendChild(tbody);
 
