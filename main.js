@@ -90,7 +90,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     country: document.getElementById('country').value,
     department: document.getElementById('department').value,
     user: document.getElementById('user').value,
-	source: document.getElementById('source').value
+	source: document.getElementById('source').value,
 	imageURL: document.getElementById('imageURL').value
         // ... các trường khác ...
       };
@@ -142,7 +142,7 @@ function displaySearchResults(data) {
   const tbody = document.createElement("tbody");
   data.results.forEach(row => {
     const tr = document.createElement("tr");
-    row.forEach(cell, index => {
+    row.forEach((cell, index => {
       const td = document.createElement("td");
       if (index === 11 && cell) { // nếu cột ảnh có giá trị
       const img = document.createElement("img");
