@@ -91,6 +91,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     department: document.getElementById('department').value,
     user: document.getElementById('user').value,
 	source: document.getElementById('source').value
+	imageURL: document.getElementById('imageURL').value
         // ... các trường khác ...
       };
     }
