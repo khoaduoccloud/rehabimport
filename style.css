@@ -176,6 +176,23 @@ body {
   flex-direction: column;
   margin-bottom: 15px;
 }
+/* style cho hình ảnh URL */
+.form-group.full-width {
+  grid-column: span 2; /* Chiếm 2 cột trong lưới */
+}
+
+/* Nếu bạn muốn label căn giữa, bạn có thể thêm */
+.form-group.full-width label {
+  text-align: center; /* Căn giữa text của label */
+  margin-bottom: 8px; /* Cho khoảng cách đẹp giữa label và input */
+}
+
+/* Đảm bảo input giãn toàn bộ chiều ngang */
+.form-group.full-width input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 /* HTML: <div class="loader"></div> */
 .loader {
   width: 120px;
