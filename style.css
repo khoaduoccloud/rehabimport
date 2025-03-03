@@ -153,6 +153,7 @@ body {
 
 /* Nếu bạn muốn label căn giữa, bạn có thể thêm */
 .form-group.full-width label {
+	grid-column: span 2;
   text-align: center; /* Căn giữa text của label */
   margin-bottom: 8px; /* Cho khoảng cách đẹp giữa label và input */
 }
