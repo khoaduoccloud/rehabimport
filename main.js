@@ -80,7 +80,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 
     // Hàm lấy dữ liệu form thành object
     function getFormData() {
-      return {
+      const data = {
         deviceID: document.getElementById('deviceID').value,
     deviceName: document.getElementById('deviceName').value,
     deviceType: document.getElementById('deviceType').value,
@@ -96,6 +96,8 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
 	imageURL: document.getElementById('imageURL').value
         // ... các trường khác ...
       };
+	console.log("Form data: ", data);
+	    return data;
     }
 
     // Hàm hiển thị thông tin
