@@ -30,7 +30,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   // Chuyển object thành form-encoded string (key=value&key=value...)
   const formData = new URLSearchParams(data).toString();
 
-  fetch('https://script.google.com/macros/s/AKfycbzecYE5CDcaDVMa_c4XfeS9yVUAmpAbbZNhyng7OjJRh--ZMRf1Zvg7b5waHECH40el/exec', { 
+  fetch('https://script.google.com/macros/s/AKfycbwMFt-Rjf3w_Rxt67CnhXX05pbf2BCHshCYHXhg_pmkuD8YH8bLgTR9Kfn4ov39pf4FZQ/exec', { 
     method: 'POST',
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -66,7 +66,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
-      fetch('https://script.google.com/macros/s/AKfycbzecYE5CDcaDVMa_c4XfeS9yVUAmpAbbZNhyng7OjJRh--ZMRf1Zvg7b5waHECH40el/exec' + '?' + params)
+      fetch('https://script.google.com/macros/s/AKfycbwMFt-Rjf3w_Rxt67CnhXX05pbf2BCHshCYHXhg_pmkuD8YH8bLgTR9Kfn4ov39pf4FZQ/exec' + '?' + params)
         .then(r => r.json())
         .then(json => {
 		hideLoader();
@@ -81,7 +81,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     // Hàm lấy dữ liệu form thành object
     function getFormData() {
       const data = {
-        deviceID: document.getElementById('deviceID').value.trim().toLowerCase(),
+        deviceID: document.getElementById('deviceID').value,
     deviceName: document.getElementById('deviceName').value,
     deviceType: document.getElementById('deviceType').value,
     modelSerial: document.getElementById('modelSerial').value,
@@ -194,7 +194,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
       action: "delete",
       deviceID: deviceID
     };
-    fetch('https://script.google.com/macros/s/AKfycbzecYE5CDcaDVMa_c4XfeS9yVUAmpAbbZNhyng7OjJRh--ZMRf1Zvg7b5waHECH40el/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbwMFt-Rjf3w_Rxt67CnhXX05pbf2BCHshCYHXhg_pmkuD8YH8bLgTR9Kfn4ov39pf4FZQ/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams(data).toString()
