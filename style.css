@@ -221,5 +221,55 @@ body {
 @keyframes l6 {
     100% {inset:0}
 }
+/* Thêm vào cuối file style.css */
+:root {
+  --primary-color: #4CAF50;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #cccccc;
+}
 
+/* Dark mode */
+[data-theme="dark"] {
+  --primary-color: #45a049;
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --border-color: #404040;
+}
+
+/* Thêm nút chuyển đổi Dark mode */
+.theme-switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style cho preview ảnh */
+.image-preview {
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 10px;
+  border: 2px dashed var(--border-color);
+  padding: 5px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+  
+  .right-buttons {
+    position: static;
+    margin: 20px auto;
+    width: 90%;
+  }
+}
 
