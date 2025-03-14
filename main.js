@@ -2,7 +2,7 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxNRjTEVbKXYwZtH9NyaqWNh8I9lJjA_ImdJFSA_YKBMV0yU0nx67smsvkgX846OaDiKg/exec';
 
 // Thêm Dark Mode Toggle
 function addDarkModeToggle() {
@@ -115,7 +115,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     imageURL: document.getElementById('imageURL').value.trim()
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbxNRjTEVbKXYwZtH9NyaqWNh8I9lJjA_ImdJFSA_YKBMV0yU0nx67smsvkgX846OaDiKg/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -154,7 +154,7 @@ document.getElementById("searchBtn").addEventListener("click", function() {
   }
 
   const params = new URLSearchParams(data).toString();
-  fetch(`${'https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec'}?${params}`)
+  fetch(`${'https://script.google.com/macros/s/AKfycbxNRjTEVbKXYwZtH9NyaqWNh8I9lJjA_ImdJFSA_YKBMV0yU0nx67smsvkgX846OaDiKg/exec'}?${params}`)
     .then(response => response.json())
     .then(result => {
       hideLoader();
@@ -318,7 +318,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
     showLoader();
-    fetch('https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbxNRjTEVbKXYwZtH9NyaqWNh8I9lJjA_ImdJFSA_YKBMV0yU0nx67smsvkgX846OaDiKg/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams({
