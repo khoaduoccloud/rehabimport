@@ -221,21 +221,6 @@ body {
 @keyframes l6 {
     100% {inset:0}
 }
-/* Thêm vào cuối file style.css */
-:root {
-  --primary-color: #4CAF50;
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --border-color: #cccccc;
-}
-
-/* Dark mode */
-[data-theme="dark"] {
-  --primary-color: #45a049;
-  --background-color: #1a1a1a;
-  --text-color: #ffffff;
-  --border-color: #404040;
-}
 
 /* Thêm nút chuyển đổi Dark mode */
 .theme-switch {
