@@ -1,41 +1,61 @@
-// Thêm nút chuyển đổi Dark mode vào HTML
-const themeButton = document.createElement('button');
-themeButton.className = 'theme-switch';
-themeButton.innerHTML = '<i class="fas fa-moon"></i> Chế độ tối';
-document.body.appendChild(themeButton);
+// Thêm nút chuyển đổi Dark mode
+function addDarkModeToggle() {
+  const themeButton = document.createElement('button');
+  themeButton.className = 'theme-switch';
+  themeButton.innerHTML = '<i class="fas fa-moon"></i> Chế độ tối';
+  document.body.appendChild(themeButton);
 
-// Xử lý chuyển đổi theme
-themeButton.addEventListener('click', () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-  
-  // Đổi icon
-  themeButton.innerHTML = newTheme === 'dark' 
-    ? '<i class="fas fa-sun"></i> Chế độ sáng'
-    : '<i class="fas fa-moon"></i> Chế độ tối';
-});
-// Thêm preview ảnh
-const imageURLInput = document.getElementById('imageURL');
-const previewContainer = document.createElement('div');
-previewContainer.className = 'image-preview-container';
-imageURLInput.parentNode.appendChild(previewContainer);
-
-imageURLInput.addEventListener('input', function() {
-  const url = this.value;
-  if (url) {
-    const img = document.createElement('img');
-    img.className = 'image-preview';
-    img.src = url;
-    img.onerror = () => {
-      previewContainer.innerHTML = '<p style="color: red;">Không thể tải ảnh. Vui lòng kiểm tra URL.</p>';
-    };
-    previewContainer.innerHTML = '';
-    previewContainer.appendChild(img);
-  } else {
-    previewContainer.innerHTML = '';
+  // Kiểm tra theme đã lưu
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    if (savedTheme === 'dark') {
+      themeButton.innerHTML = '<i class="fas fa-sun"></i> Chế độ sáng';
+    }
   }
+
+  // Xử lý sự kiện click
+  themeButton.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    themeButton.innerHTML = newTheme === 'dark' 
+      ? '<i class="fas fa-sun"></i> Chế độ sáng'
+      : '<i class="fas fa-moon"></i> Chế độ tối';
+  });
+}
+
+// Thêm preview ảnh
+function addImagePreview() {
+  const imageURLInput = document.getElementById('imageURL');
+  const previewContainer = document.createElement('div');
+  previewContainer.className = 'image-preview-container';
+  imageURLInput.parentNode.appendChild(previewContainer);
+
+  imageURLInput.addEventListener('input', function() {
+    const url = this.value.trim();
+    if (url) {
+      const img = document.createElement('img');
+      img.className = 'image-preview';
+      img.src = url;
+      img.onerror = () => {
+        previewContainer.innerHTML = '<p style="color: red;">Không thể tải ảnh. Vui lòng kiểm tra URL.</p>';
+      };
+      previewContainer.innerHTML = '';
+      previewContainer.appendChild(img);
+    } else {
+      previewContainer.innerHTML = '';
+    }
+  });
+}
+
+// Khởi tạo các tính năng khi trang web load xong
+document.addEventListener('DOMContentLoaded', function() {
+  addDarkModeToggle();
+  addImagePreview();
 });
 
 function showLoader() {
