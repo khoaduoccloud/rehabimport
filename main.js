@@ -2,7 +2,7 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyYshVqpWbt5dpZRfWoDOajAc88vKObL4zKZ8Gy0_SQmsBuOGCdx5dxxRb21VLjaEs2/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec';
 
 // Thêm Dark Mode Toggle
 function addDarkModeToggle() {
@@ -54,13 +54,31 @@ function parseCurrency(string) {
 
 // Khởi tạo các event listeners khi trang được tải
 document.addEventListener('DOMContentLoaded', function() {
+  // Thêm event listener cho input mã thiết bị
+  const deviceIDInput = document.getElementById('deviceID');
+  
+  deviceIDInput.addEventListener('input', function(e) {
+    let value = e.target.value.trim().toUpperCase();
+    // Nếu chỉ nhập mã khoa (không có số), gửi request để lấy số tiếp theo
+    if (value && !value.includes('.')) {
+      fetch(`${SCRIPT_URL}?action=getNextID&department=${value}`)
+        .then(response => response.json())
+        .then(result => {
+          if (result.success) {
+            this.value = result.nextID;
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  });
+
   // Thêm Dark Mode Toggle
   addDarkModeToggle();
 });
 
 // Form validation
 function validateForm() {
-  const deviceID = document.getElementById('deviceID').value.trim();
+  const deviceID = document.getElementById('deviceID').value.trim().toUpperCase();
   const deviceName = document.getElementById('deviceName').value.trim();
   const originalPrice = document.getElementById('originalPrice').value.trim();
   const errors = [];
@@ -68,9 +86,10 @@ function validateForm() {
   if (!deviceID) {
     errors.push('Vui lòng nhập Mã thiết bị');
   } else {
-    const deviceIDPattern = /^[A-Za-z]+\.[0-9]+$/;
+    // Kiểm tra định dạng: PHCNNL.01, PHCNNHI.01, YHCT.01, v.v.
+    const deviceIDPattern = /^(PHCNNL|PHCNNHI|YHCT|NTH|CC|XN)\.\d{2}$/;
     if (!deviceIDPattern.test(deviceID)) {
-      errors.push('Mã thiết bị không đúng định dạng (VD: PHCNNL.01)');
+      errors.push('Mã thiết bị không đúng định dạng (VD: PHCNNL.01, PHCNNHI.01, YHCT.01)');
     }
   }
 
@@ -115,7 +134,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     imageURL: document.getElementById('imageURL').value.trim()
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbyYshVqpWbt5dpZRfWoDOajAc88vKObL4zKZ8Gy0_SQmsBuOGCdx5dxxRb21VLjaEs2/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -154,7 +173,7 @@ document.getElementById("searchBtn").addEventListener("click", function() {
   }
 
   const params = new URLSearchParams(data).toString();
-  fetch(`${'https://script.google.com/macros/s/AKfycbyYshVqpWbt5dpZRfWoDOajAc88vKObL4zKZ8Gy0_SQmsBuOGCdx5dxxRb21VLjaEs2/exec'}?${params}`)
+  fetch(`${'https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec'}?${params}`)
     .then(response => response.json())
     .then(result => {
       hideLoader();
@@ -318,7 +337,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
     showLoader();
-    fetch('https://script.google.com/macros/s/AKfycbyYshVqpWbt5dpZRfWoDOajAc88vKObL4zKZ8Gy0_SQmsBuOGCdx5dxxRb21VLjaEs2/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams({
