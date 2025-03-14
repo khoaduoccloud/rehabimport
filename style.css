@@ -109,15 +109,53 @@
 }
 
 /* Bảng trong modal có thể tùy chỉnh thêm */
+/* Style cho bảng kết quả tìm kiếm */
 #modalResults table {
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
 }
 
-#modalResults th, #modalResults td {
-  border: 1px solid #ccc;
-  padding: 8px;
+#modalResults th {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px;
   text-align: left;
+  font-weight: bold;
+}
+
+#modalResults td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Style cho ảnh trong kết quả tìm kiếm */
+#modalResults td img {
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+#modalResults td img:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+/* Thêm hover effect cho hàng trong bảng */
+#modalResults tr:hover {
+  background-color: var(--border-color);
+}
+
+/* Style cho modal trong dark mode */
+[data-theme="dark"] #modalResults th {
+  background-color: #2c5530;
+}
+
+[data-theme="dark"] #modalResults tr:hover {
+  background-color: #444444;
 }
 body {
   background: url('email-pattern.png') center/cover no-repeat;
