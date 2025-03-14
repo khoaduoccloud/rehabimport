@@ -2,7 +2,7 @@
 function addDarkModeToggle() {
   const themeButton = document.createElement('button');
   themeButton.className = 'theme-switch';
-  themeButton.innerHTML = '<i class="fas fa-moon"></i> Chế độ tối';
+  themeButton.innerHTML = '<i class="fas fa-moon"></i>';  // Chỉ hiển thị icon mặt trăng
   document.body.appendChild(themeButton);
 
   // Kiểm tra theme đã lưu
@@ -11,7 +11,7 @@ function addDarkModeToggle() {
     document.documentElement.setAttribute('data-theme', savedTheme);
     document.body.setAttribute('data-theme', savedTheme);
     if (savedTheme === 'dark') {
-      themeButton.innerHTML = '<i class="fas fa-sun"></i> Chế độ sáng';
+      themeButton.innerHTML = '<i class="fas fa-sun"></i>';  // Chỉ hiển thị icon mặt trời
     }
   }
 
@@ -25,10 +25,12 @@ function addDarkModeToggle() {
     localStorage.setItem('theme', newTheme);
     
     themeButton.innerHTML = newTheme === 'dark' 
-      ? '<i class="fas fa-sun"></i> Chế độ sáng'
-      : '<i class="fas fa-moon"></i> Chế độ tối';
+      ? '<i class="fas fa-sun"></i>'      // Chỉ hiển thị icon mặt trời
+      : '<i class="fas fa-moon"></i>';    // Chỉ hiển thị icon mặt trăng
   });
 }
+
+  
 
 
 // Khởi tạo các tính năng khi trang web load xong
