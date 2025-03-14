@@ -57,20 +57,21 @@ document.addEventListener('DOMContentLoaded', function() {
   // Thêm event listener cho input nguyên giá
   const originalPriceInput = document.getElementById('originalPrice');
   
-  originalPriceInput.addEventListener('input', function(e) {
-    // Lấy giá trị hiện tại và chỉ giữ lại số
-    let value = e.target.value.replace(/[^\d]/g, '');
-    
-    // Nếu người dùng nhập chữ, hiển thị cảnh báo
-    if (e.target.value !== value && e.target.value !== '') {
+  originalPriceInput.addEventListener('keypress', function(e) {
+    // Chỉ cho phép nhập số
+    if (!/[\d]/.test(e.key)) {
+      e.preventDefault();
       alert('Vui lòng chỉ nhập số vào ô NGUYÊN GIÁ');
     }
+  });
+
+  originalPriceInput.addEventListener('input', function() {
+    // Lấy giá trị hiện tại của input và loại bỏ tất cả ký tự không phải số
+    let value = this.value.replace(/[^\d]/g, '');
     
     // Format số thành tiền tệ nếu có giá trị
     if (value) {
-      e.target.value = formatCurrency(value);
-    } else {
-      e.target.value = '';
+      this.value = formatCurrency(value);
     }
   });
 
