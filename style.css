@@ -354,30 +354,8 @@ body[data-theme="dark"]::before {
 [data-theme="dark"] .footer .highlight {
   color: #ffa500; /* Màu cam cho tên designer */
 }
-/* Style cho container preview ảnh */
-.image-preview-container {
-  margin-top: 10px;
-  text-align: center;
-  min-height: 50px;
-  transition: all 0.3s ease;
-}
 
-/* Style cho ảnh preview */
-.image-preview {
-  max-width: 300px;
-  max-height: 200px;
-  border: 2px dashed var(--border-color);
-  padding: 5px;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
 
-/* Style cho thông báo lỗi */
-.preview-error {
-  color: #ff4444;
-  font-size: 14px;
-  margin-top: 5px;
-}
 
 /* Loading spinner cho preview */
 .preview-loading {
@@ -395,12 +373,4 @@ body[data-theme="dark"]::before {
   100% { transform: rotate(360deg); }
 }
 
-/* Dark mode styles cho preview */
-[data-theme="dark"] .image-preview {
-  border-color: #666;
-  background-color: #333;
-}
 
-[data-theme="dark"] .preview-error {
-  color: #ff6b6b;
-}
