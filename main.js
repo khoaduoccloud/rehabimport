@@ -72,28 +72,10 @@ function validateForm() {
 }
 document.getElementById("deviceForm").addEventListener("submit", function(e) {
   e.preventDefault();
-if (!validateForm()) return;
-	//Hiển thị loader
-	showLoader();
-  // Lấy dữ liệu từ form
-  var data = {
-    deviceID: document.getElementById('deviceID').value,
-    deviceName: document.getElementById('deviceName').value,
-    deviceType: document.getElementById('deviceType').value,
-    modelSerial: document.getElementById('modelSerial').value,
-    originalPrice: document.getElementById('originalPrice').value,
-    manufactureYear: document.getElementById('manufactureYear').value,
-    usageYear: document.getElementById('usageYear').value,
-    manufacturer: document.getElementById('manufacturer').value,
-    country: document.getElementById('country').value,
-    department: document.getElementById('department').value,
-    user: document.getElementById('user').value,
-    source: document.getElementById('source').value,
-    imageURL: document.getElementById('imageURL').value
-  };
-
-  // Chuyển object thành form-encoded string (key=value&key=value...)
-  const formData = new URLSearchParams(data).toString();
+  if (!validateForm()) return;
+  
+  showLoader();
+  const data = getFormData();
 
   fetch('https://script.google.com/macros/s/AKfycbwOpNWLFuyzOqC5SgzBshVvN6wSueJ5puOfbdtIVAGp45vGBaQQJwZH_OYAk9rh_i9bQw/exec', { 
     method: 'POST',
@@ -102,15 +84,18 @@ if (!validateForm()) return;
     },
     body: new URLSearchParams(data).toString()
   })
-  .then(response => response.text())
+  .then(response => response.json())
   .then(result => {
-	  hideLoader(); // Ẩn loader khi hoàn thành
-    alert('Dữ liệu đã được lưu thành công vào Google Trang tính!');
-    console.log(result);
-	document.getElementById("deviceForm").reset(); // Xóa dữ liệu sau khi gửi thành công
+    hideLoader();
+    if (result.error) {
+      throw new Error(result.error);
+    }
+    alert(result.message || 'Dữ liệu đã được lưu thành công!');
+    document.getElementById("deviceForm").reset();
   })
   .catch(error => {
-	  hideLoader();
+    hideLoader();
+    alert('Lỗi: ' + error.message);
     console.error('Error:', error);
   });
 });
