@@ -2,7 +2,7 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSS5LMl5Gmq68wp4Mq36VpZ0fwZBXFXmGhdbeY1V7r17FqQhiDfXw0_scn1zFjyJp3Ew/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec';
 
 // Thêm Dark Mode Toggle
 function addDarkModeToggle() {
@@ -57,45 +57,22 @@ document.addEventListener('DOMContentLoaded', function() {
   // Thêm event listener cho input nguyên giá
   const originalPriceInput = document.getElementById('originalPrice');
   
-  originalPriceInput.addEventListener('keypress', function(e) {
-    // Chỉ cho phép nhập số
-    if (!/[\d]/.test(e.key)) {
-      e.preventDefault();
-      alert('Vui lòng chỉ nhập số vào ô NGUYÊN GIÁ');
-    }
-  });
-
-  originalPriceInput.addEventListener('paste', function(e) {
-    // Ngăn chặn paste nội dung không phải số
-    e.preventDefault();
-    const pastedText = (e.clipboardData || window.clipboardData).getData('text');
-    if (!/^\d+$/.test(pastedText)) {
-      alert('Vui lòng chỉ nhập số vào ô NGUYÊN GIÁ');
-      return;
-    }
-    const numericValue = pastedText.replace(/[^\d]/g, '');
-    this.value = formatCurrency(numericValue);
-  });
-
   originalPriceInput.addEventListener('input', function(e) {
-    // Lấy giá trị hiện tại của input
-    let value = e.target.value;
+    // Lấy giá trị hiện tại và chỉ giữ lại số
+    let value = e.target.value.replace(/[^\d]/g, '');
     
-    // Chỉ giữ lại các số
-    let numericValue = value.replace(/[^\d]/g, '');
+    // Nếu người dùng nhập chữ, hiển thị cảnh báo
+    if (e.target.value !== value && e.target.value !== '') {
+      alert('Vui lòng chỉ nhập số vào ô NGUYÊN GIÁ');
+    }
     
-    // Format số thành tiền tệ
-    if (numericValue) {
-      e.target.value = formatCurrency(numericValue);
+    // Format số thành tiền tệ nếu có giá trị
+    if (value) {
+      e.target.value = formatCurrency(value);
     } else {
       e.target.value = '';
     }
   });
-
-  // Format giá trị ban đầu nếu có
-  if (originalPriceInput.value) {
-    originalPriceInput.value = formatCurrency(parseCurrency(originalPriceInput.value));
-  }
 
   // Thêm Dark Mode Toggle
   addDarkModeToggle();
@@ -158,7 +135,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     imageURL: document.getElementById('imageURL').value.trim()
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbxSS5LMl5Gmq68wp4Mq36VpZ0fwZBXFXmGhdbeY1V7r17FqQhiDfXw0_scn1zFjyJp3Ew/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -197,7 +174,7 @@ document.getElementById("searchBtn").addEventListener("click", function() {
   }
 
   const params = new URLSearchParams(data).toString();
-  fetch(`${'https://script.google.com/macros/s/AKfycbxSS5LMl5Gmq68wp4Mq36VpZ0fwZBXFXmGhdbeY1V7r17FqQhiDfXw0_scn1zFjyJp3Ew/exec'}?${params}`)
+  fetch(`${'https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec'}?${params}`)
     .then(response => response.json())
     .then(result => {
       hideLoader();
@@ -361,7 +338,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
     showLoader();
-    fetch('https://script.google.com/macros/s/AKfycbxSS5LMl5Gmq68wp4Mq36VpZ0fwZBXFXmGhdbeY1V7r17FqQhiDfXw0_scn1zFjyJp3Ew/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbycAGiei_K3Gk65bytIGyeqdyFR2BZY9PDcn76GYk04KsWd9C4QQ5_oHp7k5Pb-1XlZVw/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams({
