@@ -1,131 +1,189 @@
-<!-- File: cv.html -->
+<!-- cv.html -->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <link rel="icon" type="image/png" sizes="512x512" href="man.png">
-  <title>Information</title>
-  <style>
-    /* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Người Phát Triển</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #8e44ad;
+            --bg-color: #f0f2f5;
+            --text-color: #2c3e50;
+        }
 
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f5f5f5; /* Nền xám nhạt */
-  color: #333;
-}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+        }
 
-/* Container tổng */
-.cv-container {
-  max-width: 800px;
-  margin: 50px auto; /* Căn giữa trang, cách trên 50px */
-  background-color: #fff; /* Nền trắng cho CV */
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  overflow: hidden; /* Bo góc không bị tràn */
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap; /* Nếu màn hình nhỏ, avatar xuống dòng */
-}
+        .profile-card {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            animation: slideIn 0.8s ease-out;
+        }
 
-/* Phần ảnh đại diện */
-.avatar-section {
-  flex: 0 0 250px; /* Chiều rộng cố định 250px */
-  background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-.avatar {
-  width: 180px;
-  height: 180px;
-  object-fit: cover; /* Giữ tỉ lệ, cắt ảnh tràn */
-  border-radius: 50%; /* Ảnh hình tròn */
-  margin: 20px;
-}
+        .header {
+            background: linear-gradient(45deg, #8e44ad, #9b59b6);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
 
-/* Phần thông tin */
-.info-section {
-  flex: 1; /* Chiếm phần còn lại */
-  padding: 20px;
-}
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 10px;
+            transition: transform 0.3s ease;
+        }
 
-.info-section h1 {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-}
+        .profile-img:hover {
+            transform: scale(1.1);
+        }
 
-.info-section h2 {
-  font-size: 1.2rem;
-  color: #666;
-  margin-bottom: 20px;
-}
+        .name {
+            font-size: 24px;
+            margin: 10px 0;
+        }
 
-.info-section p {
-  line-height: 1.5;
-  margin-bottom: 15px;
-}
+        .title {
+            font-size: 16px;
+            opacity: 0.9;
+        }
 
-.info-section h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
+        .social-links {
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
 
-.info-section ul {
-  list-style-type: disc;
-  margin-left: 20px;
-  margin-bottom: 15px;
-}
+        .social-links a {
+            color: #8e44ad;
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
 
-.info-section li {
-  margin-bottom: 5px;
-}
+        .social-links a:hover {
+            transform: translateY(-3px);
+        }
 
-.info-section a {
-  color: #007BFF;
-  text-decoration: none;
-}
+        .content {
+            padding: 20px;
+        }
 
-.info-section a:hover {
-  text-decoration: underline;
-}
-    /* v.v... tuỳ ý bạn mở rộng */
-  </style>
+        .info-item {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 0.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .info-item i {
+            width: 30px;
+            color: var(--primary-color);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .skill-tag {
+            background: #f0f2f5;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+            animation: scaleIn 0.5s ease-out forwards;
+            transform: scale(0);
+        }
+
+        @keyframes scaleIn {
+            to {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
-  <!-- Ví dụ bố cục CV A4 Landscape -->
-  <div class="cv-container">
-    <!-- Ảnh đại diện -->
-    <div class="avatar-section">
-      <img src="https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/464295478_8598725006887668_8405537851479556979_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=44BfgWbzHBcQ7kNvgHuxnBS&_nc_oc=AdgjSI523m3mit7rltfG725aTGPZPuiI7MgqNUbrFXXHhMvNCnl_Qt5qvfMrSJry5nMvD7ZBDL7Ry5Y4qsAweMDv&_nc_zt=23&_nc_ht=scontent.fdad1-4.fna&_nc_gid=AdGEkmX3jZ2NMaSSizqirRU&oh=00_AYBIoduh220Jwp640tW0VDZgabRRcoeGGcSbpjKY2ovaKw&oe=67C0FEDB" alt="Avatar của tôi" class="avatar">
+    <div class="profile-card">
+        <div class="header">
+            <img src="your-photo.jpg" alt="Profile Picture" class="profile-img">
+            <h1 class="name">Bùi Văn Hữu Thắng</h1>
+            <p class="title">Web Developer | Medical Equipment Management System</p>
+        </div>
+
+        <div class="social-links">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+
+        <div class="content">
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <span>buivanhuuthang@gmail.com</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <span>+84 797 659 749</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Đà Nẵng, Việt Nam</span>
+            </div>
+
+            <div class="skills">
+                <span class="skill-tag">HTML</span>
+                <span class="skill-tag">CSS</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">Google Apps Script</span>
+                <span class="skill-tag">UI/UX Design</span>
+            </div>
+        </div>
     </div>
 
-    <!-- Thông tin giới thiệu -->
-    <div class="info-section">
-      <h1>Bùi Văn Hữu Thắng</h1>
-      <h2>Dược sĩ Đại học</h2>
-      <p>
-        Xin chào! Tôi là Thắng, hiện đang làm việc tại <strong>Công ty XYZ</strong>. 
-        Tôi có niềm đam mê với lập trình web và mong muốn tạo ra những sản phẩm 
-        giúp ích cho cộng đồng. Sản phẩm này được phát triển và quản lý bởi tôi.
-      </p>
-      <h3>Kỹ năng</h3>
-      <ul>
-        <li>HTML, CSS, JavaScript</li>
-        <li>React, Vue.js (Ví dụ)</li>
-        <li>Thiết kế giao diện người dùng (UI/UX)</li>
-      </ul>
-      <h3>Liên hệ</h3>
-      <p>Email: <a href="mailto:buivanhuuthang@gmail.com">buivanhuuthang@gmail.com</a></p>
-      <p>SĐT: 0797 659 749 (Ví dụ)</p>
-    </div>
-  </div>
+    <script>
+        // Animation delay cho các info-item
+        document.querySelectorAll('.info-item').forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.2}s`;
+        });
 
-  <!-- Bạn có thể thêm nhiều nội dung, chia cột, v.v. -->
+        // Animation delay cho các skill-tag
+        document.querySelectorAll('.skill-tag').forEach((tag, index) => {
+            tag.style.animationDelay = `${0.5 + index * 0.1}s`;
+        });
+    </script>
 </body>
 </html>
