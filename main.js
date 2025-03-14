@@ -30,29 +30,6 @@ function addDarkModeToggle() {
   });
 }
 
-// Thêm preview ảnh
-function addImagePreview() {
-  const imageURLInput = document.getElementById('imageURL');
-  const previewContainer = document.createElement('div');
-  previewContainer.className = 'image-preview-container';
-  imageURLInput.parentNode.appendChild(previewContainer);
-
-  imageURLInput.addEventListener('input', function() {
-    const url = this.value.trim();
-    if (url) {
-      const img = document.createElement('img');
-      img.className = 'image-preview';
-      img.src = url;
-      img.onerror = () => {
-        previewContainer.innerHTML = '<p style="color: red;">Không thể tải ảnh. Vui lòng kiểm tra URL.</p>';
-      };
-      previewContainer.innerHTML = '';
-      previewContainer.appendChild(img);
-    } else {
-      previewContainer.innerHTML = '';
-    }
-  });
-}
 
 // Khởi tạo các tính năng khi trang web load xong
 document.addEventListener('DOMContentLoaded', function() {
