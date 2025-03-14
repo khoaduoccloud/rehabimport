@@ -219,13 +219,14 @@ body {
         }
 
         input[type="text"], input[type="number"], select {
-            padding: 12px;
+            padding: 8px 12px;
             border: 1px solid var(--border-color);
             border-radius: 5px;
             width: 100%;
             font-size: 14px;
-            line-height: 1.2;
-            height: 40px;
+            line-height: 1.5;
+            min-height: 42px;
+            height: auto;
         }
 
         input[type="submit"] {
@@ -418,8 +419,9 @@ body[data-theme="dark"]::before {
 
 /* Điều chỉnh màu cho option trong select dropdown */
 [data-theme="dark"] select option {
-  background-color: #333333;
-  color: #ffffff;
+  padding: 8px;
+  background-color: var(--input-background);
+  color: var(--text-color);
 }
 
 /* Điều chỉnh màu cho footer */
@@ -554,5 +556,25 @@ input[type="submit"]:active {
 
 .theme-switch:hover {
   transform: rotate(180deg);
+}
+
+/* Điều chỉnh style cho option trong select */
+select option {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Đảm bảo select trong dark mode cũng hiển thị đúng */
+[data-theme="dark"] select {
+    background-color: var(--input-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] select option {
+    padding: 8px;
+    background-color: var(--input-background);
+    color: var(--text-color);
 }
 
