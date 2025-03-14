@@ -95,7 +95,7 @@ if (!validateForm()) return;
   // Chuyển object thành form-encoded string (key=value&key=value...)
   const formData = new URLSearchParams(data).toString();
 
-  fetch('https://script.google.com/macros/s/AKfycbzLwPv73CTRv5CvGp4RycQsWnZDLd8x2G7_fOsVZPiFygR8Pm5UTB08TSLtPU75B-8wdQ/exec', { 
+  fetch('https://script.google.com/macros/s/AKfycbwOpNWLFuyzOqC5SgzBshVvN6wSueJ5puOfbdtIVAGp45vGBaQQJwZH_OYAk9rh_i9bQw/exec', { 
     method: 'POST',
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -131,7 +131,7 @@ if (!validateForm()) return;
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
-      fetch('https://script.google.com/macros/s/AKfycbzLwPv73CTRv5CvGp4RycQsWnZDLd8x2G7_fOsVZPiFygR8Pm5UTB08TSLtPU75B-8wdQ/exec' + '?' + params)
+      fetch('https://script.google.com/macros/s/AKfycbwOpNWLFuyzOqC5SgzBshVvN6wSueJ5puOfbdtIVAGp45vGBaQQJwZH_OYAk9rh_i9bQw/exec' + '?' + params)
         .then(r => r.json())
         .then(json => {
 		hideLoader();
@@ -280,7 +280,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
       action: "delete",
       deviceID: deviceID
     };
-    fetch('https://script.google.com/macros/s/AKfycbzLwPv73CTRv5CvGp4RycQsWnZDLd8x2G7_fOsVZPiFygR8Pm5UTB08TSLtPU75B-8wdQ/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbwOpNWLFuyzOqC5SgzBshVvN6wSueJ5puOfbdtIVAGp45vGBaQQJwZH_OYAk9rh_i9bQw/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams(data).toString()
