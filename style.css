@@ -353,3 +353,41 @@ body[data-theme="dark"]::before {
   border-color: var(--border-color);
   color: var(--text-color);
 }
+/* Điều chỉnh màu cho tiêu đề chính và các label trong dark mode */
+[data-theme="dark"] h1,
+[data-theme="dark"] label,
+[data-theme="dark"] .header {
+  color: #ffffff !important; /* Màu trắng cho text */
+}
+
+/* Điều chỉnh màu cho placeholder trong input khi ở dark mode */
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] select {
+  color: #aaaaaa; /* Màu xám nhạt cho placeholder */
+}
+
+/* Điều chỉnh màu chữ trong input khi người dùng nhập liệu */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] select,
+[data-theme="dark"] option {
+  color: #ffffff; /* Màu trắng cho text khi nhập */
+  background-color: #333333; /* Nền tối cho input */
+}
+
+/* Điều chỉnh màu cho option trong select dropdown */
+[data-theme="dark"] select option {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+/* Điều chỉnh màu cho footer */
+[data-theme="dark"] .footer {
+  color: #ffffff;
+  background-color: rgba(45, 45, 45, 0.95);
+}
+
+/* Giữ nguyên màu highlight trong footer */
+[data-theme="dark"] .footer .highlight {
+  color: #ffa500; /* Màu cam cho tên designer */
+}
