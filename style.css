@@ -45,6 +45,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      width: 150px; /* Cố định chiều rộng */
     }
     .right-buttons button {
       display: flex;
@@ -57,6 +58,9 @@
       color: white;
       cursor: pointer;
       font-size: 14px;
+      width: 100%;
+      height: 40px;
+      justify-content: center;
     }
     .right-buttons button:hover {
       background-color: #45a049;
@@ -172,22 +176,22 @@ body {
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            width: 100%;
+            margin: 20px auto 60px;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            animation: fadeInUp 0.8s ease-out;
             backdrop-filter: blur(10px);
             background-color: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-sizing: border-box;
-            width: 100%;
+            position: relative;
         }
 	/* STYLING CHO FORM */
 .form-group {
   display: flex;
   flex-direction: column;
-  
+  gap: 8px;
+  width: 100%;
 }
 /* style cho hình ảnh URL */
 .form-group.full-width {
@@ -209,27 +213,31 @@ body {
         label {
             font-weight: bold;
             text-transform: uppercase; /* In hoa các nhãn */
-            color: #333;
-            margin-bottom: 5px;
+            font-size: 14px;
+            line-height: 1.2;
+            white-space: nowrap;
         }
 
         input[type="text"], input[type="number"], select {
-            padding: 10px;
-            border: 1px solid #ccc;
+            padding: 12px;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             width: 100%;
-            box-sizing: border-box;
+            font-size: 14px;
+            line-height: 1.2;
+            height: 40px;
         }
 
         input[type="submit"] {
             grid-column: span 2;
             padding: 12px;
-            background-color: #4CAF50;
+            background-color: var(--primary-color);
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            height: 45px;
         }
 
         input[type="submit"]:hover {
