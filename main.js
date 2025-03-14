@@ -9,6 +9,7 @@ function addDarkModeToggle() {
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme) {
     document.documentElement.setAttribute('data-theme', savedTheme);
+    document.body.setAttribute('data-theme', savedTheme);
     if (savedTheme === 'dark') {
       themeButton.innerHTML = '<i class="fas fa-sun"></i> Chế độ sáng';
     }
@@ -20,6 +21,7 @@ function addDarkModeToggle() {
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
     document.documentElement.setAttribute('data-theme', newTheme);
+    document.body.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
     
     themeButton.innerHTML = newTheme === 'dark' 
