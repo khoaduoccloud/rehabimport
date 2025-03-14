@@ -250,28 +250,6 @@ body {
   border-radius: 5px;
   cursor: pointer;
 }
-
-/* Style cho preview ảnh */
-.image-preview {
-  max-width: 200px;
-  max-height: 200px;
-  margin-top: 10px;
-  border: 2px dashed var(--border-color);
-  padding: 5px;
-}
-
-/* Responsive design */
-@media (max-width: 768px) {
-  form {
-    grid-template-columns: 1fr;
-  }
-  
-  .right-buttons {
-    position: static;
-    margin: 20px auto;
-    width: 90%;
-  }
-}
 /* Cập nhật biến màu cho theme sáng */
 :root {
   --primary-color: #4CAF50;
@@ -390,4 +368,54 @@ body[data-theme="dark"]::before {
 /* Giữ nguyên màu highlight trong footer */
 [data-theme="dark"] .footer .highlight {
   color: #ffa500; /* Màu cam cho tên designer */
+}
+/* Style cho container preview ảnh */
+.image-preview-container {
+  margin-top: 10px;
+  text-align: center;
+  min-height: 50px;
+  transition: all 0.3s ease;
+}
+
+/* Style cho ảnh preview */
+.image-preview {
+  max-width: 300px;
+  max-height: 200px;
+  border: 2px dashed var(--border-color);
+  padding: 5px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Style cho thông báo lỗi */
+.preview-error {
+  color: #ff4444;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Loading spinner cho preview */
+.preview-loading {
+  width: 30px;
+  height: 30px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 10px auto;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dark mode styles cho preview */
+[data-theme="dark"] .image-preview {
+  border-color: #666;
+  background-color: #333;
+}
+
+[data-theme="dark"] .preview-error {
+  color: #ff6b6b;
 }
