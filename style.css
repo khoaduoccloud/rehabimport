@@ -173,10 +173,15 @@ body {
             gap: 20px;
             max-width: 800px;
             margin: 0 auto;
-            background-color: ;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 0.8s ease-out;
+            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-sizing: border-box;
+            width: 100%;
         }
 	/* STYLING CHO FORM */
 .form-group {
@@ -333,7 +338,11 @@ body[data-theme="dark"]::before {
 /* Cập nhật style cho form trong dark mode */
 [data-theme="dark"] form {
   background-color: var(--form-background);
+  border: 1px solid var(--border-color);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Cập nhật style cho input và select trong dark mode */
