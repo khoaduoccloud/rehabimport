@@ -54,27 +54,6 @@ function parseCurrency(string) {
 
 // Khởi tạo các event listeners khi trang được tải
 document.addEventListener('DOMContentLoaded', function() {
-  // Thêm event listener cho input nguyên giá
-  const originalPriceInput = document.getElementById('originalPrice');
-  
-  originalPriceInput.addEventListener('keypress', function(e) {
-    // Chỉ cho phép nhập số
-    if (!/[\d]/.test(e.key)) {
-      e.preventDefault();
-      alert('Vui lòng chỉ nhập số vào ô NGUYÊN GIÁ');
-    }
-  });
-
-  originalPriceInput.addEventListener('input', function() {
-    // Lấy giá trị hiện tại của input và loại bỏ tất cả ký tự không phải số
-    let value = this.value.replace(/[^\d]/g, '');
-    
-    // Format số thành tiền tệ nếu có giá trị
-    if (value) {
-      this.value = formatCurrency(value);
-    }
-  });
-
   // Thêm Dark Mode Toggle
   addDarkModeToggle();
 });
@@ -101,8 +80,8 @@ function validateForm() {
 
   if (!originalPrice) {
     errors.push('Vui lòng nhập Nguyên giá');
-  } else if (!/^[\d.,\s₫]+$/.test(originalPrice.replace(/[^\d.,\s₫]/g, ''))) {
-    errors.push('Nguyên giá không đúng định dạng. Vui lòng chỉ nhập số.');
+  } else if (!/^\d+$/.test(originalPrice)) {
+    errors.push('Nguyên giá chỉ được phép nhập số.');
   }
 
   if (errors.length > 0) {
