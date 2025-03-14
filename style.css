@@ -263,15 +263,36 @@ body {
 /* Thêm nút chuyển đổi Dark mode */
 .theme-switch {
   position: fixed;
-  top: 20px;
+  bottom: 60px;        /* Đẩy xuống phía trên footer */
   right: 20px;
   z-index: 1000;
-  background: var(--primary-color);
+  width: 40px;         /* Kích thước cố định */
+  height: 40px;
+  border-radius: 50%;  /* Bo tròn thành hình tròn */
   border: none;
+  background-color: #5c6bc0;  /* Màu xanh dương thay vì xanh lá */
   color: white;
-  padding: 10px;
-  border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+}
+
+.theme-switch:hover {
+  transform: scale(1.1);
+  background-color: #3f51b5;
+}
+
+/* Style cho icon */
+.theme-switch i {
+  font-size: 20px;
+}
+
+/* Đảm bảo footer không bị che */
+.footer {
+  margin-bottom: 70px;  /* Tạo khoảng trống cho nút theme */
 }
 /* Cập nhật biến màu cho theme sáng */
 :root {
