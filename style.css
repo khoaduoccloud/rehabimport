@@ -263,7 +263,7 @@ body {
 /* Thêm nút chuyển đổi Dark mode */
 .theme-switch {
   position: fixed;
-  bottom: 80px;        /* Đẩy lên cao hơn, cách footer 80px */
+  bottom: 50px;        /* Đẩy lên cao hơn, cách footer 80px */
   right: 20px;
   z-index: 1000;
   width: 40px;
