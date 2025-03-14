@@ -263,14 +263,14 @@ body {
 /* Thêm nút chuyển đổi Dark mode */
 .theme-switch {
   position: fixed;
-  bottom: 60px;        /* Đẩy xuống phía trên footer */
+  bottom: 100px;        /* Đẩy lên cao hơn, cách footer 100px */
   right: 20px;
   z-index: 1000;
-  width: 40px;         /* Kích thước cố định */
+  width: 40px;
   height: 40px;
-  border-radius: 50%;  /* Bo tròn thành hình tròn */
+  border-radius: 50%;
   border: none;
-  background-color: #5c6bc0;  /* Màu xanh dương thay vì xanh lá */
+  background-color: #5c6bc0;
   color: white;
   cursor: pointer;
   display: flex;
@@ -280,19 +280,21 @@ body {
   transition: all 0.3s ease;
 }
 
-.theme-switch:hover {
-  transform: scale(1.1);
-  background-color: #3f51b5;
-}
-
-/* Style cho icon */
-.theme-switch i {
-  font-size: 20px;
-}
-
-/* Đảm bảo footer không bị che */
+/* Đảm bảo footer luôn hiển thị đúng */
 .footer {
-  margin-bottom: 70px;  /* Tạo khoảng trống cho nút theme */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  background-color: var(--background-color);
+  text-align: center;
+  z-index: 999;
+}
+
+/* Thêm margin-bottom cho form để không bị che bởi footer */
+form {
+  margin-bottom: 60px;  /* Tạo khoảng trống cho footer */
 }
 /* Cập nhật biến màu cho theme sáng */
 :root {
