@@ -272,4 +272,80 @@ body {
     width: 90%;
   }
 }
+/* Thêm biến màu cho theme */
+:root {
+  --primary-color: #4CAF50;
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #cccccc;
+  --form-background: #ffffff;
+}
 
+/* Định nghĩa màu cho Dark mode */
+[data-theme="dark"] {
+  --primary-color: #45a049;
+  --background-color: #1a1a1a;
+  --text-color: #ffffff;
+  --border-color: #404040;
+  --form-background: #2d2d2d;
+}
+
+/* Style cho nút chuyển đổi Dark mode */
+.theme-switch {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: var(--primary-color);
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.theme-switch:hover {
+  opacity: 0.9;
+}
+
+/* Style cho preview ảnh */
+.image-preview-container {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.image-preview {
+  max-width: 200px;
+  max-height: 200px;
+  border: 2px dashed var(--border-color);
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Cập nhật các màu sắc cho các phần tử khác */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+form {
+  background-color: var(--form-background);
+}
+
+input[type="text"], 
+input[type="number"], 
+select {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.modal-content {
+  background-color: var(--form-background);
+  color: var(--text-color);
+}
