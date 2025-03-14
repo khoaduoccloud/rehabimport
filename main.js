@@ -2,7 +2,7 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyUVoC88ChWJYsJTlzgHCYcFyd9SDqbp6mJy3Iyr53CtGl5Dkh74YPcdaV1aj6LbvzO0w/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzATnctvfQfIG2FtpxiDAAwSFXcwSUXwkhTLbZuqx7IT-cA2F2vbsNoZt0HzdMZiKjIEg/exec';
 
 // Thêm Dark Mode Toggle
 function addDarkModeToggle() {
@@ -37,10 +37,47 @@ function hideLoader() {
   document.getElementById("loader").style.display = "none";
 }
 
+// Thêm hàm format tiền tệ
+function formatCurrency(number) {
+  if (!number) return '';
+  return new Intl.NumberFormat('vi-VN', {
+    style: 'decimal',
+    maximumFractionDigits: 0
+  }).format(number) + ' đ';
+}
+
+// Hàm chuyển đổi từ định dạng tiền tệ về số
+function parseCurrency(string) {
+  if (!string) return 0;
+  return parseInt(string.replace(/[^\d]/g, ''));
+}
+
+// Khởi tạo các event listeners khi trang được tải
+document.addEventListener('DOMContentLoaded', function() {
+  // Thêm event listener cho input nguyên giá
+  const originalPriceInput = document.getElementById('originalPrice');
+  
+  originalPriceInput.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/[^\d]/g, '');
+    if (value) {
+      e.target.value = formatCurrency(value);
+    }
+  });
+
+  // Format giá trị ban đầu nếu có
+  if (originalPriceInput.value) {
+    originalPriceInput.value = formatCurrency(parseCurrency(originalPriceInput.value));
+  }
+
+  // Thêm Dark Mode Toggle
+  addDarkModeToggle();
+});
+
 // Form validation
 function validateForm() {
   const deviceID = document.getElementById('deviceID').value.trim();
   const deviceName = document.getElementById('deviceName').value.trim();
+  const originalPrice = document.getElementById('originalPrice').value.trim();
   const errors = [];
 
   if (!deviceID) {
@@ -56,6 +93,10 @@ function validateForm() {
     errors.push('Vui lòng nhập Tên thiết bị');
   }
 
+  if (!originalPrice) {
+    errors.push('Vui lòng nhập Nguyên giá');
+  }
+
   if (errors.length > 0) {
     alert(errors.join('\n'));
     return false;
@@ -63,39 +104,20 @@ function validateForm() {
   return true;
 }
 
-// Thêm hàm format tiền tệ
-function formatCurrency(number) {
-  return new Intl.NumberFormat('vi-VN', {
-    style: 'decimal',
-    maximumFractionDigits: 0
-  }).format(number) + ' đ';
-}
-
-// Hàm chuyển đổi từ định dạng tiền tệ về số
-function parseCurrency(string) {
-  return parseInt(string.replace(/[^\d]/g, ''));
-}
-
-// Thêm event listener cho input nguyên giá
-document.getElementById('originalPrice').addEventListener('input', function(e) {
-  let value = e.target.value.replace(/[^\d]/g, '');
-  if (value) {
-    e.target.value = formatCurrency(value);
-  }
-});
-
 // Form submission
 document.getElementById("deviceForm").addEventListener("submit", function(e) {
   e.preventDefault();
   if (!validateForm()) return;
 
   showLoader();
+  const originalPriceValue = parseCurrency(document.getElementById('originalPrice').value);
+  
   const data = {
     deviceID: document.getElementById('deviceID').value.trim(),
     deviceName: document.getElementById('deviceName').value.trim(),
     deviceType: document.getElementById('deviceType').value,
     modelSerial: document.getElementById('modelSerial').value.trim(),
-    originalPrice: parseCurrency(document.getElementById('originalPrice').value),
+    originalPrice: originalPriceValue,
     manufactureYear: document.getElementById('manufactureYear').value,
     usageYear: document.getElementById('usageYear').value,
     manufacturer: document.getElementById('manufacturer').value.trim(),
@@ -106,7 +128,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     imageURL: document.getElementById('imageURL').value.trim()
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbyUVoC88ChWJYsJTlzgHCYcFyd9SDqbp6mJy3Iyr53CtGl5Dkh74YPcdaV1aj6LbvzO0w/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbzATnctvfQfIG2FtpxiDAAwSFXcwSUXwkhTLbZuqx7IT-cA2F2vbsNoZt0HzdMZiKjIEg/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -145,7 +167,7 @@ document.getElementById("searchBtn").addEventListener("click", function() {
   }
 
   const params = new URLSearchParams(data).toString();
-  fetch(`${'https://script.google.com/macros/s/AKfycbyUVoC88ChWJYsJTlzgHCYcFyd9SDqbp6mJy3Iyr53CtGl5Dkh74YPcdaV1aj6LbvzO0w/exec'}?${params}`)
+  fetch(`${'https://script.google.com/macros/s/AKfycbzATnctvfQfIG2FtpxiDAAwSFXcwSUXwkhTLbZuqx7IT-cA2F2vbsNoZt0HzdMZiKjIEg/exec'}?${params}`)
     .then(response => response.json())
     .then(result => {
       hideLoader();
@@ -309,7 +331,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
     showLoader();
-    fetch('https://script.google.com/macros/s/AKfycbyUVoC88ChWJYsJTlzgHCYcFyd9SDqbp6mJy3Iyr53CtGl5Dkh74YPcdaV1aj6LbvzO0w/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbzATnctvfQfIG2FtpxiDAAwSFXcwSUXwkhTLbZuqx7IT-cA2F2vbsNoZt0HzdMZiKjIEg/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams({
@@ -342,9 +364,4 @@ document.getElementById("refreshBtn").addEventListener("click", function() {
 // Info button handler
 document.getElementById("infoBtn").addEventListener("click", function() {
   window.open('cv.html', '_blank');
-});
-
-// Initialize when document is ready
-document.addEventListener('DOMContentLoaded', function() {
-  addDarkModeToggle();
 });
