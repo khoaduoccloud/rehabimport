@@ -1,13 +1,56 @@
+// Thêm nút chuyển đổi Dark mode vào HTML
+const themeButton = document.createElement('button');
+themeButton.className = 'theme-switch';
+themeButton.innerHTML = '<i class="fas fa-moon"></i> Chế độ tối';
+document.body.appendChild(themeButton);
+
+// Xử lý chuyển đổi theme
+themeButton.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  
+  // Đổi icon
+  themeButton.innerHTML = newTheme === 'dark' 
+    ? '<i class="fas fa-sun"></i> Chế độ sáng'
+    : '<i class="fas fa-moon"></i> Chế độ tối';
+});
+
 function showLoader() {
 	document.getElementById("loader").style.display = "block";
 }
 function hideLoader() {
 	document.getElementById("loader").style.display = "none";
 }
+// thêm tính năng validation
+// Thêm vào main.js
+function validateForm() {
+  const deviceID = document.getElementById('deviceID').value.trim();
+  const deviceName = document.getElementById('deviceName').value.trim();
+  
+  if (!deviceID) {
+    alert('Vui lòng nhập Mã thiết bị');
+    return false;
+  }
 
+  if (!deviceName) {
+    alert('Vui lòng nhập Tên thiết bị');
+    return false;
+  }
+
+  // Validate định dạng mã thiết bị
+  const deviceIDPattern = /^[A-Za-z]+\.[0-9]+$/;
+  if (!deviceIDPattern.test(deviceID)) {
+    alert('Mã thiết bị không đúng định dạng (VD: PHCNNL.01)');
+    return false;
+  }
+
+  return true;
+}
 document.getElementById("deviceForm").addEventListener("submit", function(e) {
   e.preventDefault();
-
+if (!validateForm()) return;
 	//Hiển thị loader
 	showLoader();
   // Lấy dữ liệu từ form
@@ -30,7 +73,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
   // Chuyển object thành form-encoded string (key=value&key=value...)
   const formData = new URLSearchParams(data).toString();
 
-  fetch('https://script.google.com/macros/s/AKfycbwMFt-Rjf3w_Rxt67CnhXX05pbf2BCHshCYHXhg_pmkuD8YH8bLgTR9Kfn4ov39pf4FZQ/exec', { 
+  fetch('https://script.google.com/macros/s/AKfycbzLwPv73CTRv5CvGp4RycQsWnZDLd8x2G7_fOsVZPiFygR8Pm5UTB08TSLtPU75B-8wdQ/exec', { 
     method: 'POST',
     headers: { 
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -66,7 +109,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
       // Tạo query string từ các trường
       const params = new URLSearchParams(data).toString();
       // Gửi GET request lên doGet (Google Apps Script)
-      fetch('https://script.google.com/macros/s/AKfycbwMFt-Rjf3w_Rxt67CnhXX05pbf2BCHshCYHXhg_pmkuD8YH8bLgTR9Kfn4ov39pf4FZQ/exec' + '?' + params)
+      fetch('https://script.google.com/macros/s/AKfycbzLwPv73CTRv5CvGp4RycQsWnZDLd8x2G7_fOsVZPiFygR8Pm5UTB08TSLtPU75B-8wdQ/exec' + '?' + params)
         .then(r => r.json())
         .then(json => {
 		hideLoader();
@@ -194,7 +237,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
       action: "delete",
       deviceID: deviceID
     };
-    fetch('https://script.google.com/macros/s/AKfycbwMFt-Rjf3w_Rxt67CnhXX05pbf2BCHshCYHXhg_pmkuD8YH8bLgTR9Kfn4ov39pf4FZQ/exec', {
+    fetch('https://script.google.com/macros/s/AKfycbzLwPv73CTRv5CvGp4RycQsWnZDLd8x2G7_fOsVZPiFygR8Pm5UTB08TSLtPU75B-8wdQ/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams(data).toString()
@@ -211,3 +254,63 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
     });
   }
 });
+// thêm tính năng phân trang, loading, cache
+let searchCache = {};
+let currentPage = 1;
+const ITEMS_PER_PAGE = 10;
+
+function displaySearchResults(data) {
+  const modal = document.getElementById("searchModal");
+  const modalResults = document.getElementById("modalResults");
+  modalResults.innerHTML = "";
+
+  if (!data || !data.results || data.results.length === 0) {
+    modalResults.innerHTML = "<p>Không tìm thấy kết quả nào.</p>";
+    modal.style.display = "block";
+    return;
+  }
+
+  // Tính toán phân trang
+  const totalPages = Math.ceil(data.results.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const currentPageData = data.results.slice(startIndex, endIndex);
+
+  // Tạo bảng kết quả
+  const table = createResultTable(data.headers, currentPageData);
+  
+  // Tạo điều khiển phân trang
+  const pagination = createPagination(totalPages);
+
+  modalResults.appendChild(table);
+  modalResults.appendChild(pagination);
+  modal.style.display = "block";
+}
+
+function createPagination(totalPages) {
+  const div = document.createElement("div");
+  div.className = "pagination";
+  
+  // Nút Previous
+  if (currentPage > 1) {
+    const prev = document.createElement("button");
+    prev.textContent = "Trang trước";
+    prev.onclick = () => changePage(currentPage - 1);
+    div.appendChild(prev);
+  }
+
+  // Số trang
+  const pageInfo = document.createElement("span");
+  pageInfo.textContent = `Trang ${currentPage}/${totalPages}`;
+  div.appendChild(pageInfo);
+
+  // Nút Next
+  if (currentPage < totalPages) {
+    const next = document.createElement("button");
+    next.textContent = "Trang sau";
+    next.onclick = () => changePage(currentPage + 1);
+    div.appendChild(next);
+  }
+
+  return div;
+}
