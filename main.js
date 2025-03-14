@@ -211,20 +211,41 @@ function displaySearchResults(data) {
     const tr = document.createElement("tr");
     row.forEach((cell, index) => {
       const td = document.createElement("td");
-      if (index === 11 && cell) { // nếu cột ảnh có giá trị
-      const img = document.createElement("img");
-      img.src = cell;
-      img.style.width = "80px";
-      img.style.height = "auto";
-      td.appendChild(img);
-    } else {
-      td.textContent = cell;
-    }
-    td.style.border = "1px solid #ccc";
-    td.style.padding = "8px";
-    tr.appendChild(td);
-  });
-  tbody.appendChild(tr);
+      
+      // Xử lý đặc biệt cho cột hình ảnh
+      if (index === 13 && cell) { // Giả sử cột 13 là cột hình ảnh
+        const img = document.createElement("img");
+        img.src = cell;
+        img.alt = "Hình ảnh thiết bị";
+        img.onerror = function() {
+          this.src = 'placeholder.png'; // Ảnh mặc định khi không tải được
+          this.alt = 'Không có hình ảnh';
+        };
+        
+        // Thêm chức năng xem ảnh full size
+        img.onclick = function() {
+          const fullImg = window.open(cell, '_blank');
+          if (!fullImg) {
+            alert('Vui lòng cho phép popup để xem ảnh full size');
+          }
+        };
+        
+        td.appendChild(img);
+      } else {
+        // Định dạng số cho cột nguyên giá
+        if (index === 5) { // Giả sử cột 5 là nguyên giá
+          td.textContent = new Intl.NumberFormat('vi-VN', {
+            style: 'currency',
+            currency: 'VND'
+          }).format(cell);
+        } else {
+          td.textContent = cell;
+        }
+      }
+      
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
   });
 
   // Đưa bảng vào modal
