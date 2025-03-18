@@ -213,7 +213,7 @@ body {
         label {
             font-weight: bold;
             text-transform: uppercase; /* In hoa các nhãn */
-            font-size: 15px;
+            font-size: 19px;
             line-height: 1.2;
             white-space: nowrap;
         }
@@ -251,7 +251,7 @@ body {
   width: 120px;
   height: 22px;
   border-radius: 40px;
-  color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(199,97,43,1) 35%, rgba(0,212,255,1) 100%);
+  color: #b55724;
   border: 2px solid;
   position: fixed;             /* Sửa từ relative -> fixed */
   top: 50%;                   /* Đặt ở giữa theo chiều dọc */
