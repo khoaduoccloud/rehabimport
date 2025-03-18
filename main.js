@@ -371,3 +371,52 @@ document.getElementById("refreshBtn").addEventListener("click", function() {
 document.getElementById("infoBtn").addEventListener("click", function() {
   window.open('cv.html', '_blank');
 });
+function showValidationMessage(input, message, isError = true) {
+  const existingMessage = input.parentElement.querySelector('.validation-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+
+  const messageElement = document.createElement('div');
+  messageElement.className = `validation-message ${isError ? 'error' : 'success'}`;
+  messageElement.textContent = message;
+  input.parentElement.appendChild(messageElement);
+
+  if (!isError) {
+    setTimeout(() => messageElement.remove(), 2000);
+  }
+}
+
+// Thêm CSS cho validation messages
+const style = document.createElement('style');
+style.textContent = `
+  .validation-message {
+    font-size: 12px;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 3px;
+    animation: slideIn 0.3s ease;
+  }
+
+  .validation-message.error {
+    color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+
+  .validation-message.success {
+    color: #388e3c;
+    background-color: rgba(56, 142, 60, 0.1);
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+document.head.appendChild(style);
