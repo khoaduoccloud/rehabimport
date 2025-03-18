@@ -2,7 +2,7 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec';
 
 // Thêm Dark Mode Toggle
 function addDarkModeToggle() {
@@ -30,11 +30,37 @@ function addDarkModeToggle() {
 
 // Loader functions
 function showLoader() {
-  document.getElementById("loader").style.display = "block";
+  const loader = document.getElementById("loader");
+  const overlay = document.getElementById("loader-overlay");
+  loader.style.display = "block";
+  overlay.style.display = "block";
+  loader.querySelector("::after").style.animation = "progress 1s linear forwards";
 }
 
 function hideLoader() {
-  document.getElementById("loader").style.display = "none";
+  const loader = document.getElementById("loader");
+  const overlay = document.getElementById("loader-overlay");
+  
+  // Đảm bảo progress bar đạt 100% trước khi ẩn
+  const loaderBar = loader.querySelector("::after");
+  loaderBar.style.width = "100%";
+  
+  setTimeout(() => {
+    loader.style.display = "none";
+    overlay.style.display = "none";
+    loaderBar.style.width = "0";
+    loaderBar.style.animation = "none";
+  }, 500); // Đợi 0.5s sau khi hoàn thành
+}
+
+// Thêm Promise để xử lý các function bất đồng bộ
+async function handleAsyncFunction(asyncFn) {
+  showLoader();
+  try {
+    await asyncFn();
+  } finally {
+    hideLoader();
+  }
 }
 
 // Thêm hàm format tiền tệ
@@ -61,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let value = e.target.value.trim().toUpperCase();
     // Nếu chỉ nhập mã khoa (không có số), gửi request để lấy số tiếp theo
     if (value && !value.includes('.')) {
-      fetch(`${SCRIPT_URL}?action=getNextID&department=${value}`)
+      fetch(`${'https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec'}?action=getNextID&department=${value}`)
         .then(response => response.json())
         .then(result => {
           if (result.success) {
@@ -111,82 +137,68 @@ function validateForm() {
 }
 
 // Form submission
-document.getElementById("deviceForm").addEventListener("submit", function(e) {
+document.getElementById("deviceForm").addEventListener("submit", async function(e) {
   e.preventDefault();
   if (!validateForm()) return;
 
-  showLoader();
-  const originalPriceValue = parseCurrency(document.getElementById('originalPrice').value);
-  
-  const data = {
-    deviceID: document.getElementById('deviceID').value.trim(),
-    deviceName: document.getElementById('deviceName').value.trim(),
-    deviceType: document.getElementById('deviceType').value,
-    modelSerial: document.getElementById('modelSerial').value.trim(),
-    originalPrice: originalPriceValue,
-    manufactureYear: document.getElementById('manufactureYear').value,
-    usageYear: document.getElementById('usageYear').value,
-    manufacturer: document.getElementById('manufacturer').value.trim(),
-    country: document.getElementById('country').value.trim(),
-    department: document.getElementById('department').value,
-    user: document.getElementById('user').value,
-    source: document.getElementById('source').value,
-    imageURL: document.getElementById('imageURL').value.trim()
-  };
+  await handleAsyncFunction(async () => {
+    const originalPriceValue = parseCurrency(document.getElementById('originalPrice').value);
+    
+    const data = {
+      deviceID: document.getElementById('deviceID').value.trim(),
+      deviceName: document.getElementById('deviceName').value.trim(),
+      deviceType: document.getElementById('deviceType').value,
+      modelSerial: document.getElementById('modelSerial').value.trim(),
+      originalPrice: originalPriceValue,
+      manufactureYear: document.getElementById('manufactureYear').value,
+      usageYear: document.getElementById('usageYear').value,
+      manufacturer: document.getElementById('manufacturer').value.trim(),
+      country: document.getElementById('country').value.trim(),
+      department: document.getElementById('department').value,
+      user: document.getElementById('user').value,
+      source: document.getElementById('source').value,
+      imageURL: document.getElementById('imageURL').value.trim()
+    };
 
-  fetch('https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: new URLSearchParams(data).toString()
-  })
-  .then(response => response.json())
-  .then(result => {
-    hideLoader();
+    const response = await fetch('https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+      },
+      body: new URLSearchParams(data).toString()
+    });
+
+    const result = await response.json();
     if (!result.success) {
       throw new Error(result.error || 'Lỗi không xác định');
     }
     alert(result.message);
-    document.getElementById("deviceForm").reset();
-  })
-  .catch(error => {
-    hideLoader();
-    alert('Lỗi: ' + error.message);
-    console.error('Error:', error);
+    this.reset();
   });
 });
 
 // Search functionality
-document.getElementById("searchBtn").addEventListener("click", function() {
-  showLoader();
-  const data = getFormData();
-  
-  // Validate department
-  const deptInput = data.department.trim().toLowerCase();
-  const allowedDepartments = ["phcnnl", "phcn nhi", "nth", "cc", "yhct", "kd tbyt", "cdha tdcn xn"];
-  
-  if (deptInput && !allowedDepartments.includes(deptInput)) {
-    hideLoader();
-    alert("Không đúng cú pháp cho KHOA PHÒNG SỬ DỤNG. Hãy thử nhập: PHCNNL, PHCN Nhi, NTH, CC, YHCT, KD-TBYT, CĐHA-TDCN-XN.");
-    return;
-  }
+document.getElementById("searchBtn").addEventListener("click", async function() {
+  await handleAsyncFunction(async () => {
+    const data = getFormData();
+    
+    // Validate department
+    const deptInput = data.department.trim().toLowerCase();
+    const allowedDepartments = ["phcnnl", "phcn nhi", "nth", "cc", "yhct", "kd tbyt", "cdha tdcn xn"];
+    
+    if (deptInput && !allowedDepartments.includes(deptInput)) {
+      alert("Không đúng cú pháp cho KHOA PHÒNG SỬ DỤNG. Hãy thử nhập: PHCNNL, PHCN Nhi, NTH, CC, YHCT, KD-TBYT, CĐHA-TDCN-XN.");
+      return;
+    }
 
-  const params = new URLSearchParams(data).toString();
-  fetch(`${'https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec'}?${params}`)
-    .then(response => response.json())
-    .then(result => {
-      hideLoader();
-      if (!result.success) {
-        throw new Error(result.error || 'Lỗi tìm kiếm');
-      }
-      displaySearchResults(result);
-    })
-    .catch(error => {
-      hideLoader();
-      console.error("Lỗi tìm kiếm:", error);
-      alert("Lỗi tìm kiếm: " + error.message);
-    });
+    const params = new URLSearchParams(data).toString();
+    const response = await fetch(`${'https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec'}?${params}`);
+    const result = await response.json();
+    if (!result.success) {
+      throw new Error(result.error || 'Lỗi tìm kiếm');
+    }
+    displaySearchResults(result);
+  });
 });
 
 // Get form data
@@ -328,7 +340,7 @@ window.addEventListener("click", function(e) {
 });
 
 // Delete functionality
-document.getElementById("deleteBtn").addEventListener("click", function() {
+document.getElementById("deleteBtn").addEventListener("click", async function() {
   const deviceID = document.getElementById('deviceID').value.trim();
   if (!deviceID) {
     alert("Vui lòng nhập MÃ THIẾT BỊ của bản ghi cần xóa.");
@@ -336,28 +348,22 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
   }
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
-    showLoader();
-    fetch('https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-      body: new URLSearchParams({
-        action: "delete",
-        deviceID: deviceID
-      }).toString()
-    })
-    .then(response => response.json())
-    .then(result => {
-      hideLoader();
+    await handleAsyncFunction(async () => {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: new URLSearchParams({
+          action: "delete",
+          deviceID: deviceID
+        }).toString()
+      });
+
+      const result = await response.json();
       if (!result.success) {
         throw new Error(result.error || 'Lỗi khi xóa dữ liệu');
       }
       alert(result.message);
       document.getElementById("deviceForm").reset();
-    })
-    .catch(error => {
-      hideLoader();
-      console.error("Lỗi xóa dữ liệu:", error);
-      alert("Lỗi: " + error.message);
     });
   }
 });
