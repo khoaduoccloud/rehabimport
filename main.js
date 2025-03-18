@@ -2,7 +2,7 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw66ska6hRmdYjOdXdARZHdbnd5JDJofUTAtStvBPX2RfROm-VSVvi0IvUR8uvYYvw9KA/exec';
 
 // Thêm Dark Mode Toggle
 function addDarkModeToggle() {
@@ -30,31 +30,11 @@ function addDarkModeToggle() {
 
 // Loader functions
 function showLoader() {
-  const loader = document.getElementById("loader");
-  loader.style.display = "block";
-  loader.querySelector("::after").style.animation = "progress 1s linear forwards";
+  document.getElementById("loader").style.display = "block";
 }
 
 function hideLoader() {
-  const loader = document.getElementById("loader");
-  const loaderBar = loader.querySelector("::after");
-  loaderBar.style.width = "100%";
-  
-  setTimeout(() => {
-    loader.style.display = "none";
-    loaderBar.style.width = "0";
-    loaderBar.style.animation = "none";
-  }, 500);
-}
-
-// Thêm Promise để xử lý các function bất đồng bộ
-async function handleAsyncFunction(asyncFn) {
-  showLoader();
-  try {
-    await asyncFn();
-  } finally {
-    hideLoader();
-  }
+  document.getElementById("loader").style.display = "none";
 }
 
 // Thêm hàm format tiền tệ
@@ -131,68 +111,82 @@ function validateForm() {
 }
 
 // Form submission
-document.getElementById("deviceForm").addEventListener("submit", async function(e) {
+document.getElementById("deviceForm").addEventListener("submit", function(e) {
   e.preventDefault();
   if (!validateForm()) return;
 
-  await handleAsyncFunction(async () => {
-    const originalPriceValue = parseCurrency(document.getElementById('originalPrice').value);
-    
-    const data = {
-      deviceID: document.getElementById('deviceID').value.trim(),
-      deviceName: document.getElementById('deviceName').value.trim(),
-      deviceType: document.getElementById('deviceType').value,
-      modelSerial: document.getElementById('modelSerial').value.trim(),
-      originalPrice: originalPriceValue,
-      manufactureYear: document.getElementById('manufactureYear').value,
-      usageYear: document.getElementById('usageYear').value,
-      manufacturer: document.getElementById('manufacturer').value.trim(),
-      country: document.getElementById('country').value.trim(),
-      department: document.getElementById('department').value,
-      user: document.getElementById('user').value,
-      source: document.getElementById('source').value,
-      imageURL: document.getElementById('imageURL').value.trim()
-    };
+  showLoader();
+  const originalPriceValue = parseCurrency(document.getElementById('originalPrice').value);
+  
+  const data = {
+    deviceID: document.getElementById('deviceID').value.trim(),
+    deviceName: document.getElementById('deviceName').value.trim(),
+    deviceType: document.getElementById('deviceType').value,
+    modelSerial: document.getElementById('modelSerial').value.trim(),
+    originalPrice: originalPriceValue,
+    manufactureYear: document.getElementById('manufactureYear').value,
+    usageYear: document.getElementById('usageYear').value,
+    manufacturer: document.getElementById('manufacturer').value.trim(),
+    country: document.getElementById('country').value.trim(),
+    department: document.getElementById('department').value,
+    user: document.getElementById('user').value,
+    source: document.getElementById('source').value,
+    imageURL: document.getElementById('imageURL').value.trim()
+  };
 
-    const response = await fetch(SCRIPT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: new URLSearchParams(data).toString()
-    });
-
-    const result = await response.json();
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body: new URLSearchParams(data).toString()
+  })
+  .then(response => response.json())
+  .then(result => {
+    hideLoader();
     if (!result.success) {
       throw new Error(result.error || 'Lỗi không xác định');
     }
     alert(result.message);
-    this.reset();
+    document.getElementById("deviceForm").reset();
+  })
+  .catch(error => {
+    hideLoader();
+    alert('Lỗi: ' + error.message);
+    console.error('Error:', error);
   });
 });
 
 // Search functionality
-document.getElementById("searchBtn").addEventListener("click", async function() {
-  await handleAsyncFunction(async () => {
-    const data = getFormData();
-    
-    // Validate department
-    const deptInput = data.department.trim().toLowerCase();
-    const allowedDepartments = ["phcnnl", "phcn nhi", "nth", "cc", "yhct", "kd tbyt", "cdha tdcn xn"];
-    
-    if (deptInput && !allowedDepartments.includes(deptInput)) {
-      alert("Không đúng cú pháp cho KHOA PHÒNG SỬ DỤNG. Hãy thử nhập: PHCNNL, PHCN Nhi, NTH, CC, YHCT, KD-TBYT, CĐHA-TDCN-XN.");
-      return;
-    }
+document.getElementById("searchBtn").addEventListener("click", function() {
+  showLoader();
+  const data = getFormData();
+  
+  // Validate department
+  const deptInput = data.department.trim().toLowerCase();
+  const allowedDepartments = ["phcnnl", "phcn nhi", "nth", "cc", "yhct", "kd tbyt", "cdha tdcn xn"];
+  
+  if (deptInput && !allowedDepartments.includes(deptInput)) {
+    hideLoader();
+    alert("Không đúng cú pháp cho KHOA PHÒNG SỬ DỤNG. Hãy thử nhập: PHCNNL, PHCN Nhi, NTH, CC, YHCT, KD-TBYT, CĐHA-TDCN-XN.");
+    return;
+  }
 
-    const params = new URLSearchParams(data).toString();
-    const response = await fetch(`${SCRIPT_URL}?${params}`);
-    const result = await response.json();
-    if (!result.success) {
-      throw new Error(result.error || 'Lỗi tìm kiếm');
-    }
-    displaySearchResults(result);
-  });
+  const params = new URLSearchParams(data).toString();
+  fetch(`${SCRIPT_URL}?${params}`)
+    .then(response => response.json())
+    .then(result => {
+      hideLoader();
+      if (!result.success) {
+        throw new Error(result.error || 'Lỗi tìm kiếm');
+      }
+      displaySearchResults(result);
+    })
+    .catch(error => {
+      hideLoader();
+      console.error("Lỗi tìm kiếm:", error);
+      alert("Lỗi tìm kiếm: " + error.message);
+    });
 });
 
 // Get form data
@@ -334,7 +328,7 @@ window.addEventListener("click", function(e) {
 });
 
 // Delete functionality
-document.getElementById("deleteBtn").addEventListener("click", async function() {
+document.getElementById("deleteBtn").addEventListener("click", function() {
   const deviceID = document.getElementById('deviceID').value.trim();
   if (!deviceID) {
     alert("Vui lòng nhập MÃ THIẾT BỊ của bản ghi cần xóa.");
@@ -342,22 +336,28 @@ document.getElementById("deleteBtn").addEventListener("click", async function() 
   }
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
-    await handleAsyncFunction(async () => {
-      const response = await fetch(SCRIPT_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-        body: new URLSearchParams({
-          action: "delete",
-          deviceID: deviceID
-        }).toString()
-      });
-
-      const result = await response.json();
+    showLoader();
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+      body: new URLSearchParams({
+        action: "delete",
+        deviceID: deviceID
+      }).toString()
+    })
+    .then(response => response.json())
+    .then(result => {
+      hideLoader();
       if (!result.success) {
         throw new Error(result.error || 'Lỗi khi xóa dữ liệu');
       }
       alert(result.message);
       document.getElementById("deviceForm").reset();
+    })
+    .catch(error => {
+      hideLoader();
+      console.error("Lỗi xóa dữ liệu:", error);
+      alert("Lỗi: " + error.message);
     });
   }
 });
