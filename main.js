@@ -76,67 +76,38 @@ document.addEventListener('DOMContentLoaded', function() {
   addDarkModeToggle();
 });
 
-// Thêm hàm hiển thị thông báo validation
-function showValidationMessage(input, message, isError = true) {
-  const messageElement = input.parentElement.querySelector('.validation-message');
-  messageElement.textContent = message;
-  messageElement.className = `validation-message ${isError ? 'error' : 'success'}`;
-  
-  if (!isError) {
-    setTimeout(() => {
-      messageElement.textContent = '';
-      messageElement.className = 'validation-message';
-    }, 2000);
-  }
-}
-
-// Cập nhật hàm validateForm
+// Form validation
 function validateForm() {
-  const deviceID = document.getElementById('deviceID');
-  const deviceName = document.getElementById('deviceName');
-  const originalPrice = document.getElementById('originalPrice');
-  let isValid = true;
+  const deviceID = document.getElementById('deviceID').value.trim().toUpperCase();
+  const deviceName = document.getElementById('deviceName').value.trim();
+  const originalPrice = document.getElementById('originalPrice').value.trim();
+  const errors = [];
 
-  // Reset tất cả thông báo validation
-  document.querySelectorAll('.validation-message').forEach(el => {
-    el.textContent = '';
-    el.className = 'validation-message';
-  });
-
-  // Validate Mã thiết bị
-  if (!deviceID.value.trim()) {
-    showValidationMessage(deviceID, 'Vui lòng nhập Mã thiết bị');
-    isValid = false;
+  if (!deviceID) {
+    errors.push('Vui lòng nhập Mã thiết bị');
   } else {
+    // Kiểm tra định dạng: PHCNNL.01, PHCNNHI.01, YHCT.01, v.v.
     const deviceIDPattern = /^(PHCNNL|PHCNNHI|YHCT|NTH|CC|XN)\.\d{2}$/;
-    if (!deviceIDPattern.test(deviceID.value.trim().toUpperCase())) {
-      showValidationMessage(deviceID, 'Mã thiết bị không đúng định dạng (VD: PHCNNL.01, PHCNNHI.01, YHCT.01)');
-      isValid = false;
-    } else {
-      showValidationMessage(deviceID, 'Mã thiết bị hợp lệ', false);
+    if (!deviceIDPattern.test(deviceID)) {
+      errors.push('Mã thiết bị không đúng định dạng (VD: PHCNNL.01, PHCNNHI.01, YHCT.01)');
     }
   }
 
-  // Validate Tên thiết bị
-  if (!deviceName.value.trim()) {
-    showValidationMessage(deviceName, 'Vui lòng nhập Tên thiết bị');
-    isValid = false;
-  } else {
-    showValidationMessage(deviceName, 'Tên thiết bị hợp lệ', false);
+  if (!deviceName) {
+    errors.push('Vui lòng nhập Tên thiết bị');
   }
 
-  // Validate Nguyên giá
-  if (!originalPrice.value.trim()) {
-    showValidationMessage(originalPrice, 'Vui lòng nhập Nguyên giá');
-    isValid = false;
-  } else if (!/^\d+$/.test(originalPrice.value)) {
-    showValidationMessage(originalPrice, 'Nguyên giá chỉ được phép nhập số');
-    isValid = false;
-  } else {
-    showValidationMessage(originalPrice, 'Nguyên giá hợp lệ', false);
+  if (!originalPrice) {
+    errors.push('Vui lòng nhập Nguyên giá');
+  } else if (!/^\d+$/.test(originalPrice)) {
+    errors.push('Nguyên giá chỉ được phép nhập số.');
   }
 
-  return isValid;
+  if (errors.length > 0) {
+    alert(errors.join('\n'));
+    return false;
+  }
+  return true;
 }
 
 // Form submission
