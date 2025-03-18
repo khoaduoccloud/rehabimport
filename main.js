@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let value = e.target.value.trim().toUpperCase();
     // Nếu chỉ nhập mã khoa (không có số), gửi request để lấy số tiếp theo
     if (value && !value.includes('.')) {
-      fetch(`${'https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec'}?action=getNextID&department=${value}`)
+      fetch(`${SCRIPT_URL}?action=getNextID&department=${value}`)
         .then(response => response.json())
         .then(result => {
           if (result.success) {
@@ -154,7 +154,7 @@ document.getElementById("deviceForm").addEventListener("submit", async function(
       imageURL: document.getElementById('imageURL').value.trim()
     };
 
-    const response = await fetch('https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec', {
+    const response = await fetch(SCRIPT_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -186,7 +186,7 @@ document.getElementById("searchBtn").addEventListener("click", async function() 
     }
 
     const params = new URLSearchParams(data).toString();
-    const response = await fetch(`${'https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec'}?${params}`);
+    const response = await fetch(`${SCRIPT_URL}?${params}`);
     const result = await response.json();
     if (!result.success) {
       throw new Error(result.error || 'Lỗi tìm kiếm');
@@ -343,7 +343,7 @@ document.getElementById("deleteBtn").addEventListener("click", async function() 
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
     await handleAsyncFunction(async () => {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec', {
+      const response = await fetch(SCRIPT_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body: new URLSearchParams({
