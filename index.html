@@ -4,129 +4,136 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nhập Thông Tin Thiết Bị</title>
-    <link rel="icon" type="image/svg" sizes="512x512" href="icon500.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+	<link rel="icon" type="image/svg" sizes="512x512" href="icon500.svg">
+	 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
-    <div id="loader" class="loader"></div>
-    
-    <header class="header">
-        <img src="icon500.svg" alt="Logo" class="logo">
-        <h1>Nhập Thông Tin Thiết Bị</h1>
-    </header>
-
+	<div id="loader" class="loader" style="display:none;"></div>
+	<div class=wave-bg></div>
+	<header class="header">
+  <img src="icon500.svg" alt="Logo" class="logo">
+  <h1>Form Nhập Thông Tin Thiết Bị</h1>
+	</header>
     <form id="deviceForm">
-        <div class="form-group">
-            <label for="deviceID">MÃ THIẾT BỊ</label>
-            <input type="text" id="deviceID" name="deviceID" placeholder="Ví dụ: PHCNNL.01">
-        </div>
-        <div class="form-group">
-            <label for="deviceName">TÊN THIẾT BỊ</label>
-            <input type="text" id="deviceName" name="deviceName" placeholder="Ví dụ: Máy điện xung 2 kênh">
-        </div>
-        <div class="form-group">
-            <label for="deviceType">LOẠI THIẾT BỊ</label>
-            <select id="deviceType" name="deviceType">
-                <option value="">--Chọn loại--</option>
-                <option value="Điện xung">Điện xung</option>
-                <option value="Châm cứu">Châm cứu</option>
-                <option value="X-quang">X-quang</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="modelSerial">MODEL/SERIAL</label>
-            <input type="text" id="modelSerial" name="modelSerial" placeholder="Ví dụ: ...">
-        </div>
-        <div class="form-group">
-            <label for="originalPrice">NGUYÊN GIÁ</label>
-            <input type="number" id="originalPrice" name="originalPrice" placeholder="Ví dụ: 1500000">
-        </div>
-        <div class="form-group">
-            <label for="manufactureYear">NĂM SẢN XUẤT</label>
-            <input type="number" id="manufactureYear" name="manufactureYear" placeholder="Ví dụ: 2025">
-        </div>
-        <div class="form-group">
-            <label for="usageYear">NĂM SỬ DỤNG</label>
-            <input type="number" id="usageYear" name="usageYear" placeholder="Ví dụ: ...">
-        </div>
-        <div class="form-group">
-            <label for="manufacturer">HÃNG SẢN XUẤT</label>
-            <input type="text" id="manufacturer" name="manufacturer" placeholder="Ví dụ: ...">
-        </div>
-        <div class="form-group">
-            <label for="country">NƯỚC SẢN XUẤT</label>
-            <input type="text" id="country" name="country" placeholder="Ví dụ: ...">
-        </div>
-        <div class="form-group">
-            <label for="department">KHOA PHÒNG SỬ DỤNG</label>
-            <select id="department" name="department">
-                <option value="">--Chọn Khoa/Phòng sử dụng--</option>
-                <option value="PHCNNL">PHCN Người Lớn</option>
-                <option value="PHCN Nhi">PHCN Nhi</option>
-                <option value="NTH">Nội Tổng Hợp</option>
-                <option value="CC">Cấp Cứu</option>
-                <option value="XN">CĐHA-TDCN-XN</option>
-                <option value="YHCT">Y Học Cổ Truyền</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="user">NGƯỜI SỬ DỤNG</label>
-            <select id="user" name="user">
-                <option value="">--Chọn người sử dụng máy--</option>
-                <option value="Nguyễn Huệ Phương">Nguyễn Huệ Phương</option>
-                <option value="Lê Ánh Li Na">Lê Ánh Li Na</option>
-                <option value="Phan Thị Hoàng Viễn">Phan Thị Hoàng Viễn</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="source">NGUỒN NHẬP VÀO</label>
-            <select id="source" name="source">
-                <option value="">--Chọn nguồn--</option>
-                <option value="Nguồn ngân sách">Nguồn ngân sách</option>
-                <option value="Nguồn tài trợ">Nguồn tài trợ</option>
-                <option value="Chương trình">Chương trình</option>
-            </select>
-        </div>
-        <div class="form-group full-width">
-            <label for="imageURL">HÌNH ẢNH (URL)</label>
-            <input type="text" id="imageURL" name="imageURL" placeholder="Ví dụ: https://example.com/your-image.jpg">
-        </div>
-        <input type="submit" value="LƯU DỮ LIỆU" class="full-width">
-    </form>
-
-    <div class="right-buttons">
-        <button id="searchBtn">
-            <i class="fa fa-search"></i>
-            Tìm kiếm
-        </button>
-        <button id="deleteBtn">
-            <i class="fa fa-trash"></i>
-            Xóa dữ liệu
-        </button>
-        <button id="infoBtn">
-            <i class="fa fa-info-circle"></i>
-            Thông tin
-        </button>
-        <button id="refreshBtn">
-            <i class="fa fa-sync"></i>
-            Làm mới
-        </button>
+    <div class="form-group">
+      <label for="deviceID">MÃ THIẾT BỊ:</label>
+      <input type="text" id="deviceID" name="deviceID" placeholder="Ví dụ: PHCNNL.01">
     </div>
-
-    <div id="searchModal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal" class="closeBtn">&times;</span>
-            <h2>Kết Quả Tìm Kiếm</h2>
-            <div id="modalResults"></div>
-        </div>
+    <div class="form-group">
+      <label for="deviceName">TÊN THIẾT BỊ:</label>
+      <input type="text" id="deviceName" name="deviceName" placeholder="Ví dụ: Máy điện xung 2 kênh">
     </div>
+    <div class="form-group">
+      <label for="deviceType">LOẠI THIẾT BỊ:</label>
+      <select id="deviceType" name="deviceType">
+    <option value="">--Chọn loại--</option>
+    <option value="Điện xung">Điện xung</option>
+    <option value="Châm cứu">Châm cứu</option>
+    <option value="X-quang">X-quang</option>
+    <!-- ... thêm các loại khác nếu cần ... -->
+  </select>
+    </div>
+    <div class="form-group">
+      <label for="modelSerial">MODEL/SERIAL:</label>
+      <input type="text" id="modelSerial" name="modelSerial" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="originalPrice">NGUYÊN GIÁ:</label>
+      <input type="number" id="originalPrice" name="originalPrice" placeholder="Ví dụ: 1500000">
+    </div>
+    <div class="form-group">
+      <label for="manufactureYear">NĂM SẢN XUẤT:</label>
+      <input type="number" id="manufactureYear" name="manufactureYear" placeholder="Ví dụ: 2025">
+    </div>
+    <div class="form-group">
+      <label for="usageYear">NĂM SỬ DỤNG:</label>
+      <input type="number" id="usageYear" name="usageYear" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="manufacturer">HÃNG SẢN XUẤT:</label>
+      <input type="text" id="manufacturer" name="manufacturer" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="country">NƯỚC SẢN XUẤT:</label>
+      <input type="text" id="country" name="country" placeholder="Ví dụ: ...">
+    </div>
+    <div class="form-group">
+      <label for="department">KHOA PHÒNG SỬ DỤNG:</label>
+      <select id="department" name="department">
+    <option value="">--Chọn Khoa/Phòng sử dụng--</option>
+    <option value="PHCNNL">PHCN Người Lớn</option>
+    <option value="PHCN Nhi">PHCN Nhi</option>
+    <option value="NTH">Nội Tổng Hợp</option>
+    <option value="CC">Cấp Cứu</option>
+	<option value="XN">CĐHA-TDCN-XN</option>
+	<option value="YHCT">Y Học Cổ Truyền</option>
+    <!-- ... thêm các khoa khác nếu cần ... -->
+  </select>
+    </div>
+    <div class="form-group">
+      <label for="user">NGƯỜI SỬ DỤNG:</label>
+      <select id="user" name="user">
+    <option value="">--Chọn người sử dụng máy--</option>
+    <option value="Nguyễn Huệ Phương">Nguyễn Huệ Phương</option>
+    <option value="Lê Ánh Li Na">Lê Ánh Li Na</option>
+    <option value="Phan Thị Hoàng Viễn">Phan Thị Hoàng Viễn</option>
+    <!-- ... thêm các tên khác nếu cần ... -->
+  </select>
+    </div>
+	<div class="form-group">
+  <label for="source">NGUỒN NHẬP VÀO:</label>
+  <select id="source" name="source">
+    <option value="">--Chọn nguồn--</option>
+    <option value="Nguồn ngân sách">Nguồn ngân sách</option>
+    <option value="Nguồn tài trợ">Nguồn tài trợ</option>
+    <option value="Chương trình">Chương trình</option>
+    <!-- Bạn có thể thêm các giá trị khác nếu cần -->
+  </select>
+	</div>
+<div class="form-group full-width">
+  <label for="imageURL">HÌNH ẢNH (URL):</label>
+  <input type="text" id="imageURL" name="imageURL" placeholder="Ví dụ: https://example.com/your-image.jpg">
+</div>
+    <input type="submit" value="Lưu dữ liệu">
+  </form>
+	<footer class="footer">
+  <p>© 2025 Official Import Form. All Rights Reserved | Design by <span class="highlight">ThangBui</span></p>
+</footer>
+<!-- CỘT BÊN PHẢI CHỨA 3 NÚT -->
+  <div class="right-buttons">
+    <!-- Nút 1: Tìm kiếm -->
+    <button id="searchBtn">
+      <i class="fa fa-search"></i>
+      Tìm kiếm
+    </button>
+    <!-- Nút 2: Xóa dữ liệu -->
+    <button id="deleteBtn">
+      <i class="fa fa-trash"></i>
+      Xóa dữ liệu
+    </button>
+    <!-- Nút 3: Thông tin (Information) -->
+    <button id="infoBtn">
+      <i class="fa fa-info-circle"></i>
+      Thông tin
+    </button>
+ 	<!-- Nút 4: Refresh trang -->
+  <button id="refreshBtn">
+    <i class="fa fa-sync"></i>
+    Làm mới
+  </button>
+  </div>
+	<div id="searchResults"></div>
+	<!-- Modal ẩn, hiển thị khi tìm kiếm xong -->
+<div id="searchModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="closeBtn">&times;</span>
+    <h2>Kết Quả Tìm Kiếm</h2>
+    <div id="modalResults"></div>
+  </div>
+</div>
 
-    <footer class="footer">
-        <p>© 2025 Official Import Form. All Rights Reserved | Design by <span class="highlight">ThangBui</span></p>
-    </footer>
-
-    <script src="main.js"></script>
+   <script src="main.js"></script>
 </body>
 </html>
