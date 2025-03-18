@@ -2,7 +2,7 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec';
 
 // Thêm Dark Mode Toggle
 function addDarkModeToggle() {
@@ -31,26 +31,20 @@ function addDarkModeToggle() {
 // Loader functions
 function showLoader() {
   const loader = document.getElementById("loader");
-  const overlay = document.getElementById("loader-overlay");
   loader.style.display = "block";
-  overlay.style.display = "block";
   loader.querySelector("::after").style.animation = "progress 1s linear forwards";
 }
 
 function hideLoader() {
   const loader = document.getElementById("loader");
-  const overlay = document.getElementById("loader-overlay");
-  
-  // Đảm bảo progress bar đạt 100% trước khi ẩn
   const loaderBar = loader.querySelector("::after");
   loaderBar.style.width = "100%";
   
   setTimeout(() => {
     loader.style.display = "none";
-    overlay.style.display = "none";
     loaderBar.style.width = "0";
     loaderBar.style.animation = "none";
-  }, 500); // Đợi 0.5s sau khi hoàn thành
+  }, 500);
 }
 
 // Thêm Promise để xử lý các function bất đồng bộ
@@ -87,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let value = e.target.value.trim().toUpperCase();
     // Nếu chỉ nhập mã khoa (không có số), gửi request để lấy số tiếp theo
     if (value && !value.includes('.')) {
-      fetch(`${'https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec'}?action=getNextID&department=${value}`)
+      fetch(`${'https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec'}?action=getNextID&department=${value}`)
         .then(response => response.json())
         .then(result => {
           if (result.success) {
@@ -160,7 +154,7 @@ document.getElementById("deviceForm").addEventListener("submit", async function(
       imageURL: document.getElementById('imageURL').value.trim()
     };
 
-    const response = await fetch('https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -192,7 +186,7 @@ document.getElementById("searchBtn").addEventListener("click", async function() 
     }
 
     const params = new URLSearchParams(data).toString();
-    const response = await fetch(`${'https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec'}?${params}`);
+    const response = await fetch(`${'https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec'}?${params}`);
     const result = await response.json();
     if (!result.success) {
       throw new Error(result.error || 'Lỗi tìm kiếm');
@@ -349,7 +343,7 @@ document.getElementById("deleteBtn").addEventListener("click", async function() 
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
     await handleAsyncFunction(async () => {
-      const response = await fetch('https://script.google.com/macros/s/AKfycbwYB5gfzDRKtts0gCBwZac0rLP-MxpjjPvJMNcqBj6lO4IISWjAV5chzsR1XtKroys5/exec', {
+      const response = await fetch('https://script.google.com/macros/s/AKfycbz3mdBkGnOtISMJgWJ5GEt5G2OL7aOhh13pZDmSUutaPHFf-GutJ3Opq62p95k7-oA0hg/exec', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
         body: new URLSearchParams({
