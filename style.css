@@ -577,4 +577,106 @@ select option {
     background-color: var(--input-background);
     color: var(--text-color);
 }
+/* Animation cho header khi load trang */
+.header {
+  animation: slideDown 0.8s ease-out;
+}
 
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hiệu ứng hover cho logo */
+.logo {
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: rotate(360deg) scale(1.1);
+}
+
+/* Animation cho các form-group */
+.form-group {
+  animation: fadeIn 0.5s ease-out;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Thêm delay cho từng form-group */
+.form-group:nth-child(2n) {
+  animation-delay: 0.1s;
+}
+
+.form-group:nth-child(2n+1) {
+  animation-delay: 0.2s;
+}
+
+/* Hiệu ứng ripple cho buttons */
+.right-buttons button {
+  position: relative;
+  overflow: hidden;
+}
+
+.right-buttons button::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(rgba(255,255,255,0.2), transparent);
+  transform: translateY(-100%);
+  transition: transform 0.3s ease;
+}
+
+.right-buttons button:hover::after {
+  transform: translateY(0);
+}
+
+/* Hiệu ứng cho dark mode switch */
+.theme-switch {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-switch:hover {
+  transform: rotate(180deg) scale(1.1);
+  box-shadow: 0 0 15px rgba(92, 107, 192, 0.6);
+}
+
+/* Wave background animation */
+.wave-bg {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(45deg, rgba(76, 175, 80, 0.1) 0%, rgba(92, 107, 192, 0.1) 100%);
+  z-index: -1;
+  animation: waveMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes waveMove {
+  from {
+    background-position: 0% 0%;
+  }
+  to {
+    background-position: 100% 100%;
+  }
+}
