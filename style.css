@@ -12,15 +12,10 @@
       gap: 10px;
       margin-top: 20px;
       margin-bottom: 20px;
-      animation: slideDown 0.8s ease-out;
     }
     .logo {
       width: 50px;
       height: auto;
-      transition: transform 0.3s ease;
-    }
-    .logo:hover {
-      transform: rotate(360deg) scale(1.1);
     }
 .footer {
   position: fixed;       /* Cố định footer */
@@ -50,7 +45,6 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      width: 150px; /* Cố định chiều rộng */
     }
     .right-buttons button {
       display: flex;
@@ -63,11 +57,6 @@
       color: white;
       cursor: pointer;
       font-size: 14px;
-      width: 100%;
-      height: 40px;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
     }
     .right-buttons button:hover {
       background-color: #45a049;
@@ -91,7 +80,6 @@
   height: 100%;
   overflow: auto; /* Cho phép scroll nếu nội dung dài */
   background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
-  transition: opacity 0.3s ease;
 }
 
 /* Khung nội dung của modal */
@@ -103,18 +91,6 @@
   border-radius: 10px; /* Bo góc */
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   position: relative;
-  animation: modalSlideIn 0.5s ease-out;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Nút đóng (X) */
@@ -133,55 +109,15 @@
 }
 
 /* Bảng trong modal có thể tùy chỉnh thêm */
-/* Style cho bảng kết quả tìm kiếm */
 #modalResults table {
-  width: 100%;
   border-collapse: collapse;
-  margin-top: 15px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%;
 }
 
-#modalResults th {
-  background: linear-gradient(45deg, var(--primary-color), #45a049);
-  padding: 15px;
-  font-size: 14px;
-}
-
-#modalResults td {
-  padding: 10px;
-  border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.3s ease;
-}
-
-/* Style cho ảnh trong kết quả tìm kiếm */
-#modalResults td img {
-  max-width: 150px;
-  max-height: 150px;
-  object-fit: contain;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: transform 0.3s ease;
-}
-
-#modalResults td img:hover {
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
-/* Thêm hover effect cho hàng trong bảng */
-#modalResults tr:hover td {
-  background-color: rgba(76, 175, 80, 0.1);
-}
-
-/* Style cho modal trong dark mode */
-[data-theme="dark"] #modalResults th {
-  background-color: #2c5530;
-}
-
-[data-theme="dark"] #modalResults tr:hover {
-  background-color: #444444;
+#modalResults th, #modalResults td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
 }
 body {
   background: url('email-pattern.png') center/cover no-repeat;
@@ -198,46 +134,18 @@ body {
             grid-template-columns: 1fr 1fr;
             gap: 20px;
             max-width: 800px;
-            width: 100%;
-            margin: 20px auto 60px;
-            padding: 30px;
+            margin: 0 auto;
+            background-color: ;
+            padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
         }
 	/* STYLING CHO FORM */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  animation: fadeIn 0.5s ease-out;
-  animation-fill-mode: both;
+  
 }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Thêm delay cho từng form-group */
-.form-group:nth-child(2n) {
-  animation-delay: 0.1s;
-}
-
-.form-group:nth-child(2n+1) {
-  animation-delay: 0.2s;
-}
-
 /* style cho hình ảnh URL */
 .form-group.full-width {
   grid-column: span 2; /* Chiếm 2 cột trong lưới */
@@ -258,32 +166,27 @@ body {
         label {
             font-weight: bold;
             text-transform: uppercase; /* In hoa các nhãn */
-            font-size: 14px;
-            line-height: 1.2;
-            white-space: nowrap;
+            color: #333;
+            margin-bottom: 5px;
         }
 
         input[type="text"], input[type="number"], select {
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 5px;
             width: 100%;
-            font-size: 14px;
-            line-height: 1.5;
-            min-height: 42px;
-            height: auto;
+            box-sizing: border-box;
         }
 
         input[type="submit"] {
             grid-column: span 2;
             padding: 12px;
-            background-color: var(--primary-color);
+            background-color: #4CAF50;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            height: 45px;
         }
 
         input[type="submit"]:hover {
@@ -322,43 +225,15 @@ body {
 /* Thêm nút chuyển đổi Dark mode */
 .theme-switch {
   position: fixed;
-  bottom: 50px;        /* Đẩy lên cao hơn, cách footer 80px */
+  top: 20px;
   right: 20px;
   z-index: 1000;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  background: var(--primary-color);
   border: none;
-  background-color: #5c6bc0;
   color: white;
+  padding: 10px;
+  border-radius: 5px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.theme-switch:hover {
-  transform: rotate(180deg) scale(1.1);
-  box-shadow: 0 0 15px rgba(92, 107, 192, 0.6);
-}
-
-/* Đảm bảo footer luôn hiển thị đúng */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px 0;
-  background-color: var(--background-color);
-  text-align: center;
-  z-index: 999;
-}
-
-/* Thêm margin-bottom cho form để không bị che bởi footer */
-form {
-  margin-bottom: 60px;  /* Tạo khoảng trống cho footer */
 }
 /* Cập nhật biến màu cho theme sáng */
 :root {
@@ -397,11 +272,7 @@ body[data-theme="dark"]::before {
 /* Cập nhật style cho form trong dark mode */
 [data-theme="dark"] form {
   background-color: var(--form-background);
-  border: 1px solid var(--border-color);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(10px);
-  width: 100%;
-  box-sizing: border-box;
 }
 
 /* Cập nhật style cho input và select trong dark mode */
@@ -469,9 +340,8 @@ body[data-theme="dark"]::before {
 
 /* Điều chỉnh màu cho option trong select dropdown */
 [data-theme="dark"] select option {
-  padding: 8px;
-  background-color: var(--input-background);
-  color: var(--text-color);
+  background-color: #333333;
+  color: #ffffff;
 }
 
 /* Điều chỉnh màu cho footer */
@@ -501,215 +371,5 @@ body[data-theme="dark"]::before {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-/* đoạn cải thiện UI */
-/* Animation cho form khi load trang */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-form {
-  animation: fadeInUp 0.8s ease-out;
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* Hiệu ứng hover cho input và select */
-input[type="text"], 
-input[type="number"], 
-select {
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-  background-color: #f8f9fa;
-}
-
-input[type="text"]:focus, 
-input[type="number"]:focus, 
-select:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
-  background-color: #fff;
-}
-
-/* Nút submit đẹp hơn */
-input[type="submit"] {
-  transition: all 0.3s ease;
-  background: linear-gradient(45deg, #4CAF50, #45a049);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  position: relative;
-  overflow: hidden;
-}
-
-input[type="submit"]:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
-}
-
-input[type="submit"]:active {
-  transform: translateY(0);
-}
-
-/* Animation cho loader */
-.loader {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-}
-
-@keyframes loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* Nút bên phải với hiệu ứng hover đẹp */
-.right-buttons button::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: linear-gradient(rgba(255,255,255,0.2), transparent);
-  transform: translateY(-100%);
-  transition: transform 0.3s ease;
-}
-
-.right-buttons button:hover::after {
-  transform: translateY(0);
-}
-
-/* Wave background animation */
-.wave-bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: linear-gradient(45deg, rgba(76, 175, 80, 0.1) 0%, rgba(92, 107, 192, 0.1) 100%);
-  z-index: -1;
-  animation: waveMove 10s ease-in-out infinite alternate;
-}
-
-@keyframes waveMove {
-  from {
-    background-position: 0% 0%;
-  }
-  to {
-    background-position: 100% 100%;
-  }
-}
-
-/* Điều chỉnh style cho option trong select */
-select option {
-    padding: 8px;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-/* Đảm bảo select trong dark mode cũng hiển thị đúng */
-[data-theme="dark"] select {
-    background-color: var(--input-background);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-[data-theme="dark"] select option {
-    padding: 8px;
-    background-color: var(--input-background);
-    color: var(--text-color);
-}
-
-/* Animation cho header khi load trang */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  form {
-    grid-template-columns: 1fr;
-    padding: 20px;
-    margin: 10px;
-  }
-
-  .right-buttons {
-    position: fixed;
-    bottom: 70px;
-    right: 10px;
-    top: auto;
-    flex-direction: row;
-    width: auto;
-    gap: 5px;
-  }
-
-  .right-buttons button {
-    padding: 8px;
-    font-size: 12px;
-  }
-
-  .theme-switch {
-    bottom: 20px;
-    right: 10px;
-  }
-
-  .modal-content {
-    width: 95%;
-    margin: 10px auto;
-    padding: 15px;
-  }
-
-  #modalResults {
-    overflow-x: auto;
-  }
-}
-
-/* Validation Messages */
-.validation-message {
-  font-size: 12px;
-  margin-top: 5px;
-  padding: 5px;
-  border-radius: 3px;
-  animation: slideIn 0.3s ease;
-}
-
-.validation-message.error {
-  color: #d32f2f;
-  background-color: rgba(211, 47, 47, 0.1);
-}
-
-.validation-message.success {
-  color: #388e3c;
-  background-color: rgba(56, 142, 60, 0.1);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
