@@ -4,39 +4,84 @@ let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw66ska6hRmdYjOdXdARZHdbnd5JDJofUTAtStvBPX2RfROm-VSVvi0IvUR8uvYYvw9KA/exec';
 
-// Custom Cursor
-const cursor = document.createElement('div');
-cursor.classList.add('custom-cursor');
-document.body.appendChild(cursor);
+// Bubbles Effect cho Cursor
+const bubblesContainer = document.createElement('div');
+bubblesContainer.classList.add('bubbles');
+document.body.appendChild(bubblesContainer);
 
+// Tạo hiệu ứng bubbles khi di chuyển chuột
 document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
+  createBubble(e.clientX, e.clientY);
 });
 
-document.addEventListener('mousedown', () => {
-  cursor.classList.add('active');
+// Tạo bubble mới
+function createBubble(x, y) {
+  // Giới hạn tốc độ tạo bubble để tránh quá nhiều hiệu ứng
+  if (Math.random() > 0.92) { // Chỉ tạo bubble ngẫu nhiên 8% thời gian di chuyển
+    const bubble = document.createElement('div');
+    bubble.classList.add('bubble');
+    
+    // Kích thước ngẫu nhiên từ 8px đến 12px
+    const size = Math.random() * 4 + 8; 
+    bubble.style.width = `${size}px`;
+    bubble.style.height = `${size}px`;
+    
+    // Vị trí gần vị trí con trỏ
+    bubble.style.left = `${x}px`;
+    bubble.style.top = `${y}px`;
+    
+    bubblesContainer.appendChild(bubble);
+    
+    // Xóa bubble sau khi animation kết thúc
+    setTimeout(() => {
+      bubble.remove();
+    }, 3000); // Thời gian animation float
+  }
+}
+
+// Theme Toggle
+document.addEventListener('DOMContentLoaded', function() {
+  // Tạo Theme Toggle
+  const themeToggle = document.createElement('div');
+  themeToggle.classList.add('theme-toggle');
+  themeToggle.innerHTML = `
+    <input type="checkbox" id="darkmode-toggle">
+    <label for="darkmode-toggle">
+      <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 A7 7 0 0 0 21 12.79z"></path>
+      </svg>
+    </label>
+  `;
+  document.body.appendChild(themeToggle);
+
+  // Xử lý toggle theme
+  const darkModeToggle = document.getElementById('darkmode-toggle');
+  
+  // Khởi tạo trạng thái toggle dựa trên theme đã lưu
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  document.body.setAttribute('data-theme', savedTheme);
+  
+  // Đồng bộ trạng thái toggle với theme
+  darkModeToggle.checked = (savedTheme === 'dark');
+  
+  // Xử lý sự kiện thay đổi theme
+  darkModeToggle.addEventListener('change', function() {
+    const newTheme = this.checked ? 'dark' : 'light';
+    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
 });
-
-document.addEventListener('mouseup', () => {
-  cursor.classList.remove('active');
-});
-
-// Theme Switch
-const themeSwitch = document.createElement('div');
-themeSwitch.classList.add('theme-switch');
-document.body.appendChild(themeSwitch);
-
-themeSwitch.addEventListener('click', () => {
-  const currentTheme = document.body.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.body.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-});
-
-// Check saved theme
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.body.setAttribute('data-theme', savedTheme);
 
 // Loader functions
 function showLoader() {
