@@ -3,72 +3,118 @@
       margin: 0; 
       padding: 0;
       box-sizing: border-box;
-      cursor: none; /* Ẩn cursor mặc định */
+      /* Khôi phục cursor mặc định */
+      cursor: auto; 
     }
 
-/* Custom Cursor */
-.custom-cursor {
-  width: 20px;
-  height: 20px;
-  background: rgba(76, 175, 80, 0.3);
-  border: 2px solid #4CAF50;
-  border-radius: 50%;
-  position: fixed;
+/* Bubbles Effect cho Cursor */
+.bubbles {
   pointer-events: none;
+  position: fixed;
+  display: block;
   z-index: 9999;
-  transition: transform 0.2s ease;
+  width: 100%;
+  height: 100%;
 }
 
-.custom-cursor.active {
-  transform: scale(1.5);
-  background: rgba(76, 175, 80, 0.5);
+.bubble {
+  position: absolute;
+  background-color: rgba(76, 175, 80, 0.3);
+  border: 2px solid #4CAF50;
+  border-radius: 50%;
+  animation: float 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0;
+  }
 }
 
 /* Gradient Background */
 body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   min-height: 100vh;
+  background-attachment: fixed;
   transition: background 0.3s ease;
 }
 
 [data-theme="dark"] body {
   background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+  background-attachment: fixed;
 }
 
-/* Theme Switch */
-.theme-switch {
+/* Theme Toggle - Style mới */
+.theme-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
+  z-index: 1000;
+}
+
+.theme-toggle input[type="checkbox"] {
+  display: none;
+}
+
+.theme-toggle label {
+  cursor: pointer;
+  position: relative;
+  display: block;
   width: 60px;
   height: 30px;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
+  background-color: #83d8ff;
+  border-radius: 30px;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s;
 }
 
-.theme-switch::before {
-  content: '';
+.theme-toggle input:checked + label {
+  background-color: #1f2020;
+}
+
+.theme-toggle label .sun,
+.theme-toggle label .moon {
   position: absolute;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  top: 2px;
-  left: 2px;
-  background: #4CAF50;
-  transition: all 0.3s ease;
+  width: 22px;
+  height: 22px;
+  top: 4px;
+  transition: all 0.5s;
+  fill: white;
 }
 
-[data-theme="dark"] .theme-switch::before {
-  transform: translateX(30px);
-  background: #2196F3;
+.theme-toggle label .sun {
+  left: 4px;
+  opacity: 1;
+  fill: #f39c12;
+}
+
+.theme-toggle label .moon {
+  right: 4px;
+  opacity: 0;
+  fill: #f1f1f1;
+}
+
+.theme-toggle input:checked + label .sun {
+  opacity: 0;
+}
+
+.theme-toggle input:checked + label .moon {
+  opacity: 1;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+  }
+  
   form {
     grid-template-columns: 1fr;
     padding: 20px;
@@ -93,11 +139,6 @@ body {
     width: auto;
     padding: 8px 15px;
   }
-
-  .theme-switch {
-    top: 10px;
-    right: 10px;
-  }
 }
 
 /* HEADER - LOGO + TIÊU ĐỀ */
@@ -115,16 +156,16 @@ body {
     }
 .footer {
   position: fixed;       /* Cố định footer */
-  bottom: 0cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
+  bottom: 0;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
   left: 0;
   width: 100%;
   text-align: center;
-
   padding: 10px 0;
   box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* Đổ bóng nhẹ */
   font-size: 0.9rem;
   color: #333;
   z-index: 999;          /* Để footer nổi trên các phần tử khác */
+  background-color: var(--background-color);
 }
 
 .footer .highlight {
@@ -278,6 +319,7 @@ h1 {
             background-color: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
+            animation: fadeInUp 0.8s ease-out;
         }
 	/* STYLING CHO FORM */
 .form-group {
@@ -320,6 +362,15 @@ h1 {
             line-height: 1.5;
             min-height: 42px;
             height: auto;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            background-color: #f8f9fa;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus, select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            background-color: #fff;
         }
 
         input[type="submit"] {
@@ -332,10 +383,22 @@ h1 {
             cursor: pointer;
             font-size: 16px;
             height: 45px;
+            transition: all 0.3s ease;
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
         }
 
         input[type="submit"]:hover {
             background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        input[type="submit"]:active {
+            transform: translateY(0);
         }
 
 
@@ -369,7 +432,7 @@ h1 {
       
 
 /* Thêm nút chuyển đổi Dark mode */
-.theme-switch {
+.theme-toggle {
   position: fixed;
   bottom: 50px;        /* Đẩy lên cao hơn, cách footer 80px */
   right: 20px;
@@ -434,7 +497,7 @@ body[data-theme="dark"]::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* Lớp mờ đen */
+  background: rgba(0, 0, 0, 0.3); /* Lớp mờ đen */
   z-index: -1;
 }
 
@@ -528,8 +591,6 @@ body[data-theme="dark"]::before {
 [data-theme="dark"] .footer .highlight {
   color: #ffa500; /* Màu cam cho tên designer */
 }
-
-
 
 /* Loading spinner cho preview */
 .preview-loading {
@@ -643,31 +704,31 @@ input[type="submit"]:active {
   height: 200px;
 }
 
-/* Dark mode switch animation */
-.theme-switch {
+/* Theme toggle animation */
+.theme-toggle {
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.theme-switch:hover {
-  transform: rotate(180deg);
+.theme-toggle:hover {
+  transform: translateY(-5px);
 }
 
 /* Điều chỉnh style cho option trong select */
 select option {
-    padding: 8px;
-    font-size: 14px;
-    line-height: 1.5;
+  padding: 8px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 /* Đảm bảo select trong dark mode cũng hiển thị đúng */
 [data-theme="dark"] select {
-    background-color: var(--input-background);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
+  background-color: var(--input-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
 }
 
 [data-theme="dark"] select option {
-    padding: 8px;
-    background-color: var(--input-background);
-    color: var(--text-color);
+  padding: 8px;
+  background-color: var(--input-background);
+  color: var(--text-color);
 }
