@@ -4,22 +4,60 @@
       padding: 0;
       box-sizing: border-box;
     }
+
+:root {
+  --primary-color: #673AB7;
+  --text-color: #333;
+  --bg-color: #f5f5f5;
+  --border-color: #e0e0e0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  position: relative;
+  background: url('https://images.unsplash.com/photo-1557683316-973673baf926') center/cover no-repeat fixed;
+}
+
+/* Overlay cho background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  z-index: -1;
+}
+
 /* HEADER - LOGO + TIÊU ĐỀ */
 .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    .logo {
-      width: 50px;
-      height: auto;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 15px 0;
+  background: rgba(255, 255, 255, 0.95);
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+}
+
+h1 {
+  font-size: 22px;
+  color: #333;
+  margin: 0;
+}
+
 .footer {
   position: fixed;       /* Cố định footer */
-  bottom: 0cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
+  bottom: 0;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
   left: 0;
   width: 100%;
   text-align: center;
@@ -38,70 +76,76 @@
 
 
 /* CỘT BÊN PHẢI CHỨA 3 NÚT */
-    .right-buttons {
-      position: fixed; /* Cố định ở bên phải màn hình */
-      top: 100px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .right-buttons button {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    .right-buttons button:hover {
-      background-color: #45a049;
-    }
+.right-buttons {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.right-buttons button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(76, 175, 80, 0.9);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 120px;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.right-buttons button:hover {
+  background: rgba(69, 160, 73, 0.95);
+  transform: translateX(-5px);
+}
+
 .right-buttons button#refreshBtn {
-  background-color: #2196F3; /* Màu xanh dương khác cho nút refresh */
+  background: rgba(33, 150, 243, 0.9);
 }
 
 .right-buttons button#refreshBtn:hover {
-  background-color: #1976D2;
+  background: rgba(25, 118, 210, 0.95);
 }
 
 /* Nền mờ che toàn màn hình khi modal bật */
 .modal {
-  display: none; /* Ẩn mặc định */
+  display: none;
   position: fixed;
-  z-index: 999; /* Đảm bảo nổi trên mọi thứ */
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  overflow: auto; /* Cho phép scroll nếu nội dung dài */
-  background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
 }
 
 /* Khung nội dung của modal */
 .modal-content {
-  background-color: #fff;
-  margin: 5% auto; /* Căn giữa theo chiều ngang */
+  background: white;
+  margin: 5% auto;
   padding: 20px;
-  width: 80%; /* Độ rộng hộp */
-  border-radius: 10px; /* Bo góc */
-  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  width: 80%;
+  max-width: 800px;
+  border-radius: 8px;
   position: relative;
 }
 
 /* Nút đóng (X) */
 .closeBtn {
   position: absolute;
+  right: 20px;
   top: 10px;
-  right: 15px;
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 24px;
   cursor: pointer;
-  color: #999;
+  color: #666;
 }
 
 .closeBtn:hover {
@@ -109,132 +153,144 @@
 }
 
 /* Bảng trong modal có thể tùy chỉnh thêm */
+/* Style cho bảng kết quả tìm kiếm */
+#modalResults {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
 #modalResults table {
+  width: 100%;
   border-collapse: collapse;
-  width: 100%;
+  margin-top: 15px;
+  min-width: 1200px; /* Đảm bảo bảng không bị vỡ */
 }
 
-#modalResults th, #modalResults td {
-  border: 1px solid #ccc;
-  padding: 8px;
+#modalResults th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
   text-align: left;
-}
-body {
-  background: url('email-pattern.png') center/cover no-repeat;
-  background-attachment: fixed; /* parallax effect */
-}
-        h1 {
-            text-align: center;
-            color: #333;
-		margin: 0;
-        }
-
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: ;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-	/* STYLING CHO FORM */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  
-}
-/* style cho hình ảnh URL */
-.form-group.full-width {
-  grid-column: span 2; /* Chiếm 2 cột trong lưới */
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
-/* Nếu bạn muốn label căn giữa, bạn có thể thêm */
-.form-group.full-width label {
-	grid-column: span 2;
-  text-align: center; /* Căn giữa text của label */
-  margin-bottom: 8px; /* Cho khoảng cách đẹp giữa label và input */
+#modalResults td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
 }
 
-/* Đảm bảo input giãn toàn bộ chiều ngang */
-.form-group.full-width input {
-  width: 100%;
-  box-sizing: border-box;
+/* Style cho ảnh trong kết quả tìm kiếm */
+#modalResults td img {
+  max-width: 150px;
+  max-height: 150px;
+  object-fit: contain;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
 }
-        label {
-            font-weight: bold;
-            text-transform: uppercase; /* In hoa các nhãn */
-            color: #333;
-            margin-bottom: 5px;
-        }
 
-        input[type="text"], input[type="number"], select {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+#modalResults td img:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
 
-        input[type="submit"] {
-            grid-column: span 2;
-            padding: 12px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
+/* Thêm hover effect cho hàng trong bảng */
+#modalResults tr:hover {
+  background-color: var(--border-color);
+}
 
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+/* Style cho modal trong dark mode */
+[data-theme="dark"] #modalResults th {
+  background-color: #2c5530;
+}
 
+[data-theme="dark"] #modalResults tr:hover {
+  background-color: #444444;
+}
 
-/* HTML: <div class="loader"></div> */
+/* Loader styles */
 .loader {
-  width: 120px;
-  height: 22px;
-  border-radius: 40px;
-  color: #514b82;
-  border: 2px solid;
-  position: fixed;             /* Sửa từ relative -> fixed */
-  top: 50%;                   /* Đặt ở giữa theo chiều dọc */
-  left: 50%;                  /* Đặt ở giữa theo chiều ngang */
-  transform: translate(-50%, -50%); /* Căn giữa hoàn toàn */
-  z-index: 1000;              /* Đảm bảo nằm trên cùng */
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid #4CAF50;
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 9999;
 }
 
-.loader::before {
-  content: "";
+.loader::after {
+  content: '';
   position: absolute;
-  margin: 2px;
-  inset: 0 100% 0 0;
-  border-radius: inherit;
-  background: currentColor;
-  animation: l6 2s infinite;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  animation: none;
+  transition: width 0.5s ease-in-out;
 }
 
-@keyframes l6 {
-    100% {inset:0}
+@keyframes progress {
+  0% { width: 0; }
+  100% { width: 100%; }
 }
 
 /* Thêm nút chuyển đổi Dark mode */
 .theme-switch {
   position: fixed;
-  top: 20px;
+  bottom: 50px;        /* Đẩy lên cao hơn, cách footer 80px */
   right: 20px;
   z-index: 1000;
-  background: var(--primary-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   border: none;
+  background-color: #5c6bc0;
   color: white;
-  padding: 10px;
-  border-radius: 5px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
 }
+
+/* Đảm bảo footer luôn hiển thị đúng */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  background-color: var(--background-color);
+  text-align: center;
+  z-index: 999;
+}
+
+/* Thêm margin-bottom cho form để không bị che bởi footer */
+form {
+  max-width: 1000px;
+  margin: 0 auto 60px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  backdrop-filter: blur(10px);
+}
+
 /* Cập nhật biến màu cho theme sáng */
 :root {
   --primary-color: #4CAF50;
@@ -272,7 +328,11 @@ body[data-theme="dark"]::before {
 /* Cập nhật style cho form trong dark mode */
 [data-theme="dark"] form {
   background-color: var(--form-background);
+  border: 1px solid var(--border-color);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Cập nhật style cho input và select trong dark mode */
@@ -340,8 +400,9 @@ body[data-theme="dark"]::before {
 
 /* Điều chỉnh màu cho option trong select dropdown */
 [data-theme="dark"] select option {
-  background-color: #333333;
-  color: #ffffff;
+  padding: 8px;
+  background-color: var(--input-background);
+  color: var(--text-color);
 }
 
 /* Điều chỉnh màu cho footer */
@@ -354,8 +415,6 @@ body[data-theme="dark"]::before {
 [data-theme="dark"] .footer .highlight {
   color: #ffa500; /* Màu cam cho tên designer */
 }
-
-
 
 /* Loading spinner cho preview */
 .preview-loading {
@@ -372,4 +431,348 @@ body[data-theme="dark"]::before {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+/* đoạn cải thiện UI */
+/* Animation cho form khi load trang */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+form {
+  animation: fadeInUp 0.8s ease-out;
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Hiệu ứng hover cho input và select */
+input[type="text"], 
+input[type="number"], 
+select {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background-color: #f8f9fa;
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus, 
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  background-color: #fff;
+}
+
+/* Nút submit đẹp hơn */
+input[type="submit"] {
+  transition: all 0.3s ease;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+}
+
+input[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* Animation cho loader */
+.loader {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Nút bên phải với hiệu ứng hover đẹp */
+.right-buttons button {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.right-buttons button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.right-buttons button:hover::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Dark mode switch animation */
+.theme-switch {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.theme-switch:hover {
+  transform: rotate(180deg);
+}
+
+/* Điều chỉnh style cho option trong select */
+select option {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Đảm bảo select trong dark mode cũng hiển thị đúng */
+[data-theme="dark"] select {
+    background-color: var(--input-background);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] select option {
+    padding: 8px;
+    background-color: var(--input-background);
+    color: var(--text-color);
+}
+
+/* Modern Form Styling */
+form {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 0;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+  outline: none;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+  color: #424242;
+  font-size: 13px;
+}
+
+input:focus + label,
+select:focus + label {
+  color: var(--primary-color);
+}
+
+/* Header Styling */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+/* Submit Button */
+input[type="submit"] {
+  background: linear-gradient(45deg, #9C27B0, #673AB7);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
+}
+
+input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(156, 39, 176, 0.3);
+}
+
+/* Loader Animation */
+.loader {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.loader::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #9C27B0;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --border-color: #333333;
+}
+
+[data-theme="dark"] form {
+  background: rgba(30, 30, 30, 0.95);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select {
+  background: rgba(45, 45, 45, 0.9);
+  border-color: #333333;
+  color: #ffffff;
+}
+
+[data-theme="dark"] label {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .header {
+  background: rgba(30, 30, 30, 0.95);
+}
+
+[data-theme="dark"] h1 {
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  form {
+    margin: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  form {
+    grid-template-columns: 1fr;
+  }
+  
+  .right-buttons {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}
+
+/* Style cho trường hình ảnh và nút submit */
+.full-width {
+  grid-column: 1 / -1;
+  margin-top: 5px;
+}
+
+input[type="submit"] {
+  grid-column: 1 / -1;
+  margin-top: 10px;
+  padding: 10px;
+  background: linear-gradient(45deg, #9C27B0, #673AB7);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+/* Style cho bảng kết quả tìm kiếm */
+#modalResults table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  overflow-x: auto;
+  display: block;
+}
+
+#modalResults th {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+#modalResults td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  white-space: nowrap;
+}
+
+#modalResults tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.modal-content {
+  width: 95%;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 20px;
+  margin: 20px auto;
+}
