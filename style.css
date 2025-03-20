@@ -4,24 +4,45 @@
       padding: 0;
       box-sizing: border-box;
     }
+
+:root {
+  --primary-color: #673AB7;
+  --text-color: #333;
+  --bg-color: #f5f5f5;
+  --border-color: #e0e0e0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 /* HEADER - LOGO + TIÊU ĐỀ */
 .header {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
-      animation: slideDown 0.8s ease-out;
-    }
-    .logo {
-      width: 50px;
-      height: auto;
-      transition: transform 0.3s ease;
-    }
-    .logo:hover {
-      transform: rotate(360deg) scale(1.1);
-    }
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
+h1 {
+  font-size: 1.5rem;
+  color: var(--text-color);
+  margin: 0;
+}
+
 .footer {
   position: fixed;       /* Cố định footer */
   bottom: 0cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
@@ -43,35 +64,36 @@
 
 
 /* CỘT BÊN PHẢI CHỨA 3 NÚT */
-    .right-buttons {
-      position: fixed; /* Cố định ở bên phải màn hình */
-      top: 100px;
-      right: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 150px; /* Cố định chiều rộng */
-    }
-    .right-buttons button {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px;
-      border: none;
-      border-radius: 5px;
-      background-color: #4CAF50;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-      width: 100%;
-      height: 40px;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .right-buttons button:hover {
-      background-color: #45a049;
-    }
+.right-buttons {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 10;
+}
+
+.right-buttons button {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background: white;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.2s;
+}
+
+.right-buttons button:hover {
+  transform: translateX(-5px);
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.15);
+}
+
 .right-buttons button#refreshBtn {
   background-color: #2196F3; /* Màu xanh dương khác cho nút refresh */
 }
@@ -91,7 +113,6 @@
   height: 100%;
   overflow: auto; /* Cho phép scroll nếu nội dung dài */
   background-color: rgba(0, 0, 0, 0.5); /* Nền mờ */
-  transition: opacity 0.3s ease;
 }
 
 /* Khung nội dung của modal */
@@ -103,18 +124,6 @@
   border-radius: 10px; /* Bo góc */
   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   position: relative;
-  animation: modalSlideIn 0.5s ease-out;
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* Nút đóng (X) */
@@ -138,21 +147,19 @@
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 #modalResults th {
-  background: linear-gradient(45deg, var(--primary-color), #45a049);
-  padding: 15px;
-  font-size: 14px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
 }
 
 #modalResults td {
   padding: 10px;
   border-bottom: 1px solid var(--border-color);
-  transition: background-color 0.3s ease;
 }
 
 /* Style cho ảnh trong kết quả tìm kiếm */
@@ -171,8 +178,8 @@
 }
 
 /* Thêm hover effect cho hàng trong bảng */
-#modalResults tr:hover td {
-  background-color: rgba(76, 175, 80, 0.1);
+#modalResults tr:hover {
+  background-color: var(--border-color);
 }
 
 /* Style cho modal trong dark mode */
@@ -183,140 +190,30 @@
 [data-theme="dark"] #modalResults tr:hover {
   background-color: #444444;
 }
-body {
-  background: url('email-pattern.png') center/cover no-repeat;
-  background-attachment: fixed; /* parallax effect */
-}
-        h1 {
-            text-align: center;
-            color: #333;
-		margin: 0;
-        }
-
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 800px;
-            width: 100%;
-            margin: 20px auto 60px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
-	/* STYLING CHO FORM */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  animation: fadeIn 0.5s ease-out;
-  animation-fill-mode: both;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-/* Thêm delay cho từng form-group */
-.form-group:nth-child(2n) {
-  animation-delay: 0.1s;
-}
-
-.form-group:nth-child(2n+1) {
-  animation-delay: 0.2s;
-}
-
-/* style cho hình ảnh URL */
-.form-group.full-width {
-  grid-column: span 2; /* Chiếm 2 cột trong lưới */
-}
-
-/* Nếu bạn muốn label căn giữa, bạn có thể thêm */
-.form-group.full-width label {
-	grid-column: span 2;
-  text-align: center; /* Căn giữa text của label */
-  margin-bottom: 8px; /* Cho khoảng cách đẹp giữa label và input */
-}
-
-/* Đảm bảo input giãn toàn bộ chiều ngang */
-.form-group.full-width input {
-  width: 100%;
-  box-sizing: border-box;
-}
-        label {
-            font-weight: bold;
-            text-transform: uppercase; /* In hoa các nhãn */
-            font-size: 14px;
-            line-height: 1.2;
-            white-space: nowrap;
-        }
-
-        input[type="text"], input[type="number"], select {
-            padding: 8px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 5px;
-            width: 100%;
-            font-size: 14px;
-            line-height: 1.5;
-            min-height: 42px;
-            height: auto;
-        }
-
-        input[type="submit"] {
-            grid-column: span 2;
-            padding: 12px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            height: 45px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
 
 /* HTML: <div class="loader"></div> */
 .loader {
-  width: 120px;
-  height: 22px;
-  border-radius: 40px;
-  color: #514b82;
-  border: 2px solid;
-  position: fixed;             /* Sửa từ relative -> fixed */
-  top: 50%;                   /* Đặt ở giữa theo chiều dọc */
-  left: 50%;                  /* Đặt ở giữa theo chiều ngang */
-  transform: translate(-50%, -50%); /* Căn giữa hoàn toàn */
-  z-index: 1000;              /* Đảm bảo nằm trên cùng */
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.loader::before {
-  content: "";
-  position: absolute;
-  margin: 2px;
-  inset: 0 100% 0 0;
-  border-radius: inherit;
-  background: currentColor;
-  animation: l6 2s infinite;
+.loader::after {
+  content: '';
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
-@keyframes l6 {
-    100% {inset:0}
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Thêm nút chuyển đổi Dark mode */
@@ -336,12 +233,7 @@ body {
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.theme-switch:hover {
-  transform: rotate(180deg) scale(1.1);
-  box-shadow: 0 0 15px rgba(92, 107, 192, 0.6);
+  transition: all 0.3s ease;
 }
 
 /* Đảm bảo footer luôn hiển thị đúng */
@@ -360,6 +252,7 @@ body {
 form {
   margin-bottom: 60px;  /* Tạo khoảng trống cho footer */
 }
+
 /* Cập nhật biến màu cho theme sáng */
 :root {
   --primary-color: #4CAF50;
@@ -485,8 +378,6 @@ body[data-theme="dark"]::before {
   color: #ffa500; /* Màu cam cho tên designer */
 }
 
-
-
 /* Loading spinner cho preview */
 .preview-loading {
   width: 30px;
@@ -575,41 +466,37 @@ input[type="submit"]:active {
 }
 
 /* Nút bên phải với hiệu ứng hover đẹp */
+.right-buttons button {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
 .right-buttons button::after {
   content: '';
   position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: linear-gradient(rgba(255,255,255,0.2), transparent);
-  transform: translateY(-100%);
-  transition: transform 0.3s ease;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
 }
 
 .right-buttons button:hover::after {
-  transform: translateY(0);
+  width: 200px;
+  height: 200px;
 }
 
-/* Wave background animation */
-.wave-bg {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: linear-gradient(45deg, rgba(76, 175, 80, 0.1) 0%, rgba(92, 107, 192, 0.1) 100%);
-  z-index: -1;
-  animation: waveMove 10s ease-in-out infinite alternate;
+/* Dark mode switch animation */
+.theme-switch {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-@keyframes waveMove {
-  from {
-    background-position: 0% 0%;
-  }
-  to {
-    background-position: 100% 100%;
-  }
+.theme-switch:hover {
+  transform: rotate(180deg);
 }
 
 /* Điều chỉnh style cho option trong select */
@@ -632,83 +519,171 @@ select option {
     color: var(--text-color);
 }
 
-/* Animation cho header khi load trang */
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Modern Form Styling */
+form {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+input:focus,
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.1);
+  outline: none;
+}
+
+label {
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: block;
+  color: #424242;
+  transition: color 0.3s ease;
+}
+
+input:focus + label,
+select:focus + label {
+  color: var(--primary-color);
+}
+
+/* Header Styling */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 15px;
+}
+
+/* Submit Button */
+input[type="submit"] {
+  background: linear-gradient(45deg, #9C27B0, #673AB7);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 20px;
+}
+
+input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(156, 39, 176, 0.3);
+}
+
+/* Loader Animation */
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.loader::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #9C27B0;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] {
+  --bg-color: #121212;
+  --text-color: #ffffff;
+  --border-color: #333333;
+}
+
+[data-theme="dark"] form {
+  background: rgba(30, 30, 30, 0.95);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select {
+  background: rgba(45, 45, 45, 0.9);
+  border-color: #333333;
+  color: #ffffff;
+}
+
+[data-theme="dark"] label {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .header {
+  background: rgba(30, 30, 30, 0.95);
+}
+
+[data-theme="dark"] h1 {
+  color: #ffffff;
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  form {
+    grid-template-columns: repeat(2, 1fr);
+    margin: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   form {
     grid-template-columns: 1fr;
-    padding: 20px;
-    margin: 10px;
   }
-
+  
   .right-buttons {
-    position: fixed;
-    bottom: 70px;
-    right: 10px;
-    top: auto;
+    position: static;
     flex-direction: row;
-    width: auto;
-    gap: 5px;
-  }
-
-  .right-buttons button {
-    padding: 8px;
-    font-size: 12px;
-  }
-
-  .theme-switch {
-    bottom: 20px;
-    right: 10px;
-  }
-
-  .modal-content {
-    width: 95%;
-    margin: 10px auto;
-    padding: 15px;
-  }
-
-  #modalResults {
-    overflow-x: auto;
-  }
-}
-
-/* Validation Messages */
-.validation-message {
-  font-size: 12px;
-  margin-top: 5px;
-  padding: 5px;
-  border-radius: 3px;
-  animation: slideIn 0.3s ease;
-}
-
-.validation-message.error {
-  color: #d32f2f;
-  background-color: rgba(211, 47, 47, 0.1);
-}
-
-.validation-message.success {
-  color: #388e3c;
-  background-color: rgba(56, 142, 60, 0.1);
-}
-
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    padding: 1rem;
+    transform: none;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 }
