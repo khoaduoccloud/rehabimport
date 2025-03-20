@@ -5,26 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nhập Thông Tin Thiết Bị</title>
 	<link rel="icon" type="image/svg" sizes="512x512" href="icon500.svg">
-	 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+	 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-<body class="wave-bg">
+<body>
 	<div id="loader" class="loader" style="display:none;"></div>
 	<header class="header">
   <img src="icon500.svg" alt="Logo" class="logo">
-  <h1>Form Nhập Thông Tin Thiết Bị</h1>
+  <h1>Nhập Thông Tin Thiết Bị</h1>
 	</header>
     <form id="deviceForm">
     <div class="form-group">
       <label for="deviceID">MÃ THIẾT BỊ:</label>
       <input type="text" id="deviceID" name="deviceID" placeholder="Ví dụ: PHCNNL.01">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="deviceName">TÊN THIẾT BỊ:</label>
       <input type="text" id="deviceName" name="deviceName" placeholder="Ví dụ: Máy điện xung 2 kênh">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="deviceType">LOẠI THIẾT BỊ:</label>
@@ -35,37 +33,30 @@
     <option value="X-quang">X-quang</option>
     <!-- ... thêm các loại khác nếu cần ... -->
   </select>
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="modelSerial">MODEL/SERIAL:</label>
       <input type="text" id="modelSerial" name="modelSerial" placeholder="Ví dụ: ...">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="originalPrice">NGUYÊN GIÁ:</label>
       <input type="number" id="originalPrice" name="originalPrice" placeholder="Ví dụ: 1500000">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="manufactureYear">NĂM SẢN XUẤT:</label>
       <input type="number" id="manufactureYear" name="manufactureYear" placeholder="Ví dụ: 2025">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="usageYear">NĂM SỬ DỤNG:</label>
       <input type="number" id="usageYear" name="usageYear" placeholder="Ví dụ: ...">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="manufacturer">HÃNG SẢN XUẤT:</label>
       <input type="text" id="manufacturer" name="manufacturer" placeholder="Ví dụ: ...">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="country">NƯỚC SẢN XUẤT:</label>
       <input type="text" id="country" name="country" placeholder="Ví dụ: ...">
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="department">KHOA PHÒNG SỬ DỤNG:</label>
@@ -79,7 +70,6 @@
 	<option value="YHCT">Y Học Cổ Truyền</option>
     <!-- ... thêm các khoa khác nếu cần ... -->
   </select>
-      <div class="validation-message"></div>
     </div>
     <div class="form-group">
       <label for="user">NGƯỜI SỬ DỤNG:</label>
@@ -90,7 +80,6 @@
     <option value="Phan Thị Hoàng Viễn">Phan Thị Hoàng Viễn</option>
     <!-- ... thêm các tên khác nếu cần ... -->
   </select>
-      <div class="validation-message"></div>
     </div>
 	<div class="form-group">
   <label for="source">NGUỒN NHẬP VÀO:</label>
@@ -101,12 +90,10 @@
     <option value="Chương trình">Chương trình</option>
     <!-- Bạn có thể thêm các giá trị khác nếu cần -->
   </select>
-      <div class="validation-message"></div>
 	</div>
 <div class="form-group full-width">
   <label for="imageURL">HÌNH ẢNH (URL):</label>
   <input type="text" id="imageURL" name="imageURL" placeholder="Ví dụ: https://example.com/your-image.jpg">
-  <div class="validation-message"></div>
 </div>
     <input type="submit" value="Lưu dữ liệu">
   </form>
