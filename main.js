@@ -2,86 +2,31 @@
 let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw66ska6hRmdYjOdXdARZHdbnd5JDJofUTAtStvBPX2RfROm-VSVvi0IvUR8uvYYvw9KA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec';
 
-// Bubbles Effect cho Cursor
-const bubblesContainer = document.createElement('div');
-bubblesContainer.classList.add('bubbles');
-document.body.appendChild(bubblesContainer);
+// Thêm Dark Mode Toggle
+function addDarkModeToggle() {
+  const themeButton = document.createElement('button');
+  themeButton.className = 'theme-switch';
+  themeButton.innerHTML = '<i class="fas fa-moon"></i>';
+  document.body.appendChild(themeButton);
 
-// Tạo hiệu ứng bubbles khi di chuyển chuột
-document.addEventListener('mousemove', (e) => {
-  createBubble(e.clientX, e.clientY);
-});
-
-// Tạo bubble mới
-function createBubble(x, y) {
-  // Giới hạn tốc độ tạo bubble để tránh quá nhiều hiệu ứng
-  if (Math.random() > 0.92) { // Chỉ tạo bubble ngẫu nhiên 8% thời gian di chuyển
-    const bubble = document.createElement('div');
-    bubble.classList.add('bubble');
-    
-    // Kích thước ngẫu nhiên từ 8px đến 12px
-    const size = Math.random() * 4 + 8; 
-    bubble.style.width = `${size}px`;
-    bubble.style.height = `${size}px`;
-    
-    // Vị trí gần vị trí con trỏ
-    bubble.style.left = `${x}px`;
-    bubble.style.top = `${y}px`;
-    
-    bubblesContainer.appendChild(bubble);
-    
-    // Xóa bubble sau khi animation kết thúc
-    setTimeout(() => {
-      bubble.remove();
-    }, 3000); // Thời gian animation float
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.body.setAttribute('data-theme', savedTheme);
+    themeButton.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
   }
-}
 
-// Theme Toggle
-document.addEventListener('DOMContentLoaded', function() {
-  // Tạo Theme Toggle
-  const themeToggle = document.createElement('div');
-  themeToggle.classList.add('theme-toggle');
-  themeToggle.innerHTML = `
-    <input type="checkbox" id="darkmode-toggle">
-    <label for="darkmode-toggle">
-      <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"></circle>
-        <line x1="12" y1="1" x2="12" y2="3"></line>
-        <line x1="12" y1="21" x2="12" y2="23"></line>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-        <line x1="1" y1="12" x2="3" y2="12"></line>
-        <line x1="21" y1="12" x2="23" y2="12"></line>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-      </svg>
-      <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 A7 7 0 0 0 21 12.79z"></path>
-      </svg>
-    </label>
-  `;
-  document.body.appendChild(themeToggle);
-
-  // Xử lý toggle theme
-  const darkModeToggle = document.getElementById('darkmode-toggle');
-  
-  // Khởi tạo trạng thái toggle dựa trên theme đã lưu
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  document.body.setAttribute('data-theme', savedTheme);
-  
-  // Đồng bộ trạng thái toggle với theme
-  darkModeToggle.checked = (savedTheme === 'dark');
-  
-  // Xử lý sự kiện thay đổi theme
-  darkModeToggle.addEventListener('change', function() {
-    const newTheme = this.checked ? 'dark' : 'light';
+  themeButton.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
     document.body.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
+    themeButton.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
   });
-});
+}
 
 // Loader functions
 function showLoader() {
@@ -189,7 +134,7 @@ document.getElementById("deviceForm").addEventListener("submit", function(e) {
     imageURL: document.getElementById('imageURL').value.trim()
   };
 
-  fetch(SCRIPT_URL, {
+  fetch('https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
@@ -228,7 +173,7 @@ document.getElementById("searchBtn").addEventListener("click", function() {
   }
 
   const params = new URLSearchParams(data).toString();
-  fetch(`${SCRIPT_URL}?${params}`)
+  fetch(`${'https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec'}?${params}`)
     .then(response => response.json())
     .then(result => {
       hideLoader();
@@ -392,7 +337,7 @@ document.getElementById("deleteBtn").addEventListener("click", function() {
 
   if (confirm(`Bạn có chắc muốn xóa bản ghi có MÃ THIẾT BỊ: ${deviceID}?`)) {
     showLoader();
-    fetch(SCRIPT_URL, {
+    fetch('https://script.google.com/macros/s/AKfycbx19SlSxj1Wij8ijYPLlOYE9wi72FA67BkMtyVV7Zj8Aqlz43656A5Q-7eCINunDx3RXw/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
       body: new URLSearchParams({
@@ -426,3 +371,52 @@ document.getElementById("refreshBtn").addEventListener("click", function() {
 document.getElementById("infoBtn").addEventListener("click", function() {
   window.open('cv.html', '_blank');
 });
+function showValidationMessage(input, message, isError = true) {
+  const existingMessage = input.parentElement.querySelector('.validation-message');
+  if (existingMessage) {
+    existingMessage.remove();
+  }
+
+  const messageElement = document.createElement('div');
+  messageElement.className = `validation-message ${isError ? 'error' : 'success'}`;
+  messageElement.textContent = message;
+  input.parentElement.appendChild(messageElement);
+
+  if (!isError) {
+    setTimeout(() => messageElement.remove(), 2000);
+  }
+}
+
+// Thêm CSS cho validation messages
+const style = document.createElement('style');
+style.textContent = `
+  .validation-message {
+    font-size: 12px;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 3px;
+    animation: slideIn 0.3s ease;
+  }
+
+  .validation-message.error {
+    color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.1);
+  }
+
+  .validation-message.success {
+    color: #388e3c;
+    background-color: rgba(56, 142, 60, 0.1);
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+`;
+document.head.appendChild(style);
