@@ -8,11 +8,6 @@
 
 
 
-.custom-cursor.active {
-  transform: scale(1.5);
-  background: rgba(76, 175, 80, 0.5);
-}
-
 /* Gradient Background */
 body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
