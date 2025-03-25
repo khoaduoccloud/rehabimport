@@ -67,36 +67,52 @@
         }
 
         .name {
-            color: white;
+            color: #eeeeee;
             font-size: 1.75em;
             margin-bottom: 10px;
         }
 
         .title {
-            color: rgba(255, 255, 255, 0.75);
+            color: #d7bde2;
             font-size: 1.6;
             text-align: center;
             margin-bottom: 25px;
         }
+        
+        .intro {
+            color: #f2f2f2;
+            font-size: 20px;
+            text-align: center;
+            margin: auto;
+            text-decoration: none;
+        }
 
         .content {
-            padding: 30px;
+            position: relative;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
         }
 
         .socials {
         display: flex;
-        gap: 15px;
-        margin-bottom: 30px;
+        gap: 20px;
+        font-size: 20px;
+        margin-bottom: 10px;
+        justify-content: center;
+        transform: translateY(-30px);
         }
 
         .socials a {
-        width: 40px;
-        height: 40px;
+        width: 60px;
+        height: 60px;
         border-radius: 50%;
         display: grid;
         place-items: center;
         background: var(--glass);
-        color: white;
+        color: #0e0e0e;
         text-decoration: none;
         transition: 0.3s;
         }
@@ -107,48 +123,73 @@
         }
 
         .contacts {
-            padding: 20px;
-            gap: 15px;
-            margin-bottom: 30px;
+            padding: 10px;
+            gap: 10px;
             display: flex;
-            align-items: column;
             flex-direction: column;
-            color: #666;
         }
 
         .contacts i {
-            width: 25px;
-            margin-right: 10px;
-            color: var(--primary-color);
+            width: 20px;
+            margin-left: -30px;
+            margin-right: 0;
+            color: #ffffff;
+            opacity: 0.5;
+            transition: opacity 0.3s ease-in-out
+        }
+
+        .contacts i:hover {
+            opacity: 1;
+        }
+
+        .contacts a {
+            color: #0e0e0e;
+            font-size: 16px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-weight: 200;
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
         }
 
         .skills {
             display: flex;
             gap: 10px;
+            justify-content: center;
             flex-wrap: wrap;
+            margin-top: 50px;
         }
 
         .skill-tag {
-            background-color: #f0f0f0;
+            background-color: #f2f2f2;
             padding: 5px 15px;
             border-radius: 15px;
-            font-size: 14px;
-            color: #666;
+            font-size: 15px;
+            color: #000000;
+            font-weight: 500;
         }
+
+        .skill-tag:hover {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+        }
+        
         button {
         padding: 12px 30px;
         border: none;
+        margin-top: 40px;
         background: linear-gradient(45deg, var(--primary), var(--secondary));
         color: white;
         font-weight: 600;
         border-radius: 25px;
         cursor: pointer;
         transition: 0.3s;
-        transform: translateX(70%) translateY(100%);
+        align-items: center;
+        justify-content: center;
         }
 
         button:hover {
-            letter-spacing: 2px;
+            letter-spacing: 0.5px;
             box-shadow: 0 5px 15px rgba(255, 70, 86, 0.4);
         }
 
@@ -171,6 +212,7 @@
             <img src="avatar.jpg" alt="Profile Picture" class="profile-img">
             <h1 class="name">Bùi Văn Hữu Thắng</h1>
             <p class="title">Web Developer | UX/UI | Pharmacist</p>
+            <h2 class="intro">Sản phẩm này không phải là thuốc. Chỉ có tác dụng thay thế tạm thời!</h2>
         </div>
         <div class="content">
             <div class="socials">
