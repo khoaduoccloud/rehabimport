@@ -5,6 +5,22 @@
       box-sizing: border-box;
       cursor: none; /* Ẩn cursor mặc định */
     }
+	/* Custom Cursor */
+.custom-cursor {
+  width: 20px;
+  height: 20px;
+  background: rgba(76, 175, 80, 0.3);
+  border: 2px solid #4CAF50;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.2s ease;
+}
+.custom-cursor.active {
+  transform: scale(1.5);
+  background: rgba(76, 175, 80, 0.5);
+}
 
 
 
