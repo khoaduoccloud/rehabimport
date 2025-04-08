@@ -3,6 +3,11 @@ let searchCache = {};
 let currentPage = 1;
 const ITEMS_PER_PAGE = 10;
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw66ska6hRmdYjOdXdARZHdbnd5JDJofUTAtStvBPX2RfROm-VSVvi0IvUR8uvYYvw9KA/exec';
+const darkmodeToggle = document.getElementById('darkmode-toggle');
+const cherryBlossoms = document.getElementById('cherry-blossoms');
+const perpetualHearts = document.getElementById('perpetual-hearts');
+const heartsContainer = document.getElementById('hearts-container');
+
 
 // Custom Cursor
 const cursor = document.createElement('div');
@@ -22,21 +27,190 @@ document.addEventListener('mouseup', () => {
   cursor.classList.remove('active');
 });
 
-// Theme Switch
-const themeSwitch = document.createElement('div');
-themeSwitch.classList.add('theme-switch');
-document.body.appendChild(themeSwitch);
+// Phan DarkMode
+// Enhanced dark mode functionality with system preference detection
+if (darkmodeToggle) {
+  // Check if user has a saved preference first
+  const savedDarkMode = localStorage.getItem('darkMode');
+  
+  // If no saved preference, check system preference
+  if (savedDarkMode === null) {
+      // Check if user prefers dark mode at system level
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      
+      // Apply system preference
+      if (prefersDarkMode) {
+          document.body.classList.add('dark-mode');
+          darkmodeToggle.checked = true;
+      }
+  } else if (savedDarkMode === 'enabled') {
+      // Apply saved user preference if it exists
+      document.body.classList.add('dark-mode');
+      darkmodeToggle.checked = true;
+  }
+  
+  // Listen for system preference changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      // Only apply system changes if user hasn't set a preference
+      if (localStorage.getItem('darkMode') === null) {
+          const systemPrefersDark = e.matches;
+          document.body.classList.toggle('dark-mode', systemPrefersDark);
+          darkmodeToggle.checked = systemPrefersDark;
+      }
+  });
+  
+  // Toggle handler remains for manual control
+  darkmodeToggle.addEventListener('change', function() {
+      document.body.classList.toggle('dark-mode', this.checked);
+      
+      // Store user preference
+      if (this.checked) {
+          localStorage.setItem('darkMode', 'enabled');
+      } else {
+          localStorage.setItem('darkMode', 'disabled');
+      }
+  });
+}
 
-themeSwitch.addEventListener('click', () => {
-  const currentTheme = document.body.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.body.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-});
 
-// Check saved theme
-const savedTheme = localStorage.getItem('theme') || 'light';
-document.body.setAttribute('data-theme', savedTheme);
+// Fix dark mode functionality - improved implementation
+if (darkmodeToggle) {
+  // Check if user has a saved preference first
+  const savedDarkMode = localStorage.getItem('darkMode');
+  
+  // Default to light mode if no preference is saved
+  if (savedDarkMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+      darkmodeToggle.checked = true;
+  } else {
+      document.body.classList.remove('dark-mode'); // Ensure light mode
+      darkmodeToggle.checked = false;
+  }
+  
+  // Apply saved preference or system preference if no saved preference
+  if (savedDarkMode === 'enabled') {
+      document.body.classList.add('dark-mode');
+      darkmodeToggle.checked = true;
+  } else if (savedDarkMode === null) {
+      // Check system preference only if user hasn't set a preference
+      const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDarkMode) {
+          document.body.classList.add('dark-mode');
+          darkmodeToggle.checked = true;
+      }
+  }
+  
+  // Event listener for toggle change with debugging
+  darkmodeToggle.addEventListener('change', function() {
+      console.log('Dark mode toggle changed. Checked:', this.checked);
+      if (this.checked) {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('darkMode', 'enabled');
+          console.log('Dark mode enabled and saved to localStorage');
+      } else {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('darkMode', 'disabled');
+          console.log('Dark mode disabled and saved to localStorage');
+      }
+  });
+  
+  // Listen for system preference changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      // Only apply system changes if user hasn't set a preference
+      if (localStorage.getItem('darkMode') === null) {
+          const systemPrefersDark = e.matches;
+          document.body.classList.toggle('dark-mode', systemPrefersDark);
+          darkmodeToggle.checked = systemPrefersDark;
+          console.log('System preference changed, dark mode:', systemPrefersDark);
+      }
+  });
+
+  // Enhanced dark mode toggle logic
+  darkmodeToggle.addEventListener('change', function () {
+    const isDarkMode = this.checked;
+    document.body.classList.toggle('dark-mode', isDarkMode);
+
+    // Reset dynamically applied styles
+    if (!isDarkMode) {
+        // Reset placeholder and input styles
+        document.querySelectorAll('input, select').forEach(el => {
+            el.style.color = ''; // Reset text color
+            el.style.backgroundColor = ''; // Reset background color
+        });
+
+        // Reset footer styles
+        const footer = document.querySelector('.footer');
+        if (footer) {
+            footer.style.backgroundColor = ''; // Reset background color
+            footer.style.color = ''; // Reset text color
+        }
+    }
+
+    // Store user preference
+    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+  });
+
+} else {
+  console.warn('Dark mode toggle element not found');
+}
+//KET THUC DARKMODE
+
+// Improved scrollbar decoration function that works on all pages
+function createScrollbarDecoration() {
+  const scrollDecoration = document.createElement('div');
+  scrollDecoration.className = 'scrollbar-decoration';
+  
+  // Add floating hearts
+  for (let i = 1; i <= 3; i++) {
+      const heart = document.createElement('div');
+      heart.className = `scrollbar-heart scroll-h${i}`;
+      scrollDecoration.appendChild(heart);
+  }
+  
+  document.body.appendChild(scrollDecoration);
+  
+  // Show scrollbar decoration when scrolling is possible
+  function checkScrollable() {
+      const isBodyScrollable = document.body.scrollHeight > window.innerHeight;
+      const scrollableContainers = Array.from(document.querySelectorAll('.container')).filter(
+          el => el.scrollHeight > el.clientHeight
+      );
+      
+      if (isBodyScrollable || scrollableContainers.length > 0) {
+          scrollDecoration.style.opacity = '0.7';
+      } else {
+          scrollDecoration.style.opacity = '0.4';
+      }
+  }
+  
+  // Check on load and resize
+  checkScrollable();
+  window.addEventListener('resize', checkScrollable);
+  
+  // Enhance visibility during scrolling
+  document.addEventListener('scroll', function() {
+      scrollDecoration.style.opacity = '1';
+      
+      // Return to normal opacity after a delay
+      clearTimeout(scrollDecoration.timeoutId);
+      scrollDecoration.timeoutId = setTimeout(() => {
+          checkScrollable();
+      }, 800);
+  }, true);
+  
+  // Monitor DOM changes that might affect scrollability
+  const observer = new MutationObserver(checkScrollable);
+  observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['style', 'class']
+  });
+}
+
+// Call function to create scrollbar decoration
+createScrollbarDecoration();
+
 
 // Loader functions
 function showLoader() {
@@ -81,9 +255,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error:', error));
     }
   });
-
-  // Thêm Dark Mode Toggle
-  addDarkModeToggle();
 });
 
 // Form validation
