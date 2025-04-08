@@ -8,8 +8,51 @@
 	 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Initialize dark mode based on saved preference
+        (function () {
+            const savedDarkMode = localStorage.getItem('darkMode');
+            const isDarkMode = savedDarkMode === 'enabled';
+            document.documentElement.classList.toggle('dark-mode', isDarkMode);
+
+            // Reset dynamically applied styles on load
+            if (!isDarkMode) {
+                document.querySelectorAll('input, select').forEach(el => {
+                    el.style.color = ''; // Reset text color
+                    el.style.backgroundColor = ''; // Reset background color
+                });
+
+                // Reset footer styles
+                const footer = document.querySelector('.footer');
+                if (footer) {
+                    footer.style.backgroundColor = ''; // Reset background color
+                    footer.style.color = ''; // Reset text color
+                }
+            }
+        })();
+    </script>
 </head>
 <body>
+  <div class="theme-toggle">
+    <input type="checkbox" id="darkmode-toggle">
+    <label for="darkmode-toggle">
+      <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </svg>
+      <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 A7 7 0 0 0 21 12.79z"></path>
+    </svg>
+    </label>
+  </div>
 	<div id="loader" class="loader" style="display:none;"></div>
 	<header class="header">
   <img src="icon500.svg" alt="Logo" class="logo">
@@ -132,13 +175,6 @@
     <div id="modalResults"></div>
   </div>
 </div>
-<!--Theme-toggle---->
-	<div class="theme-toggle">
-		<input type="checkbox" id="theme-switch">
-		<label for="theme-switch" class="toggle-label">
-			<div class="toggle-circle"></div>
-		</label>
-	</div>
    <script src="main.js"></script>
 </body>
 </html>
