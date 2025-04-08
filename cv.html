@@ -81,7 +81,7 @@
         }
         
         .intro {
-            color: #f2f2f2;
+            color: #ffffff; /* Tăng độ tương phản */
             font-size: 20px;
             text-align: center;
             margin: auto;
@@ -134,7 +134,7 @@
             width: 20px;
             margin-left: -30px;
             margin-right: 0;
-            color: #ffffff;
+            color: #cccccc; /* Tăng độ tương phản nhẹ */
             opacity: 0.5;
             transition: opacity 0.3s ease-in-out
         }
@@ -144,7 +144,7 @@
         }
 
         .contacts a {
-            color: #0e0e0e;
+            color: #ffffff; /* Tăng độ tương phản */
             font-size: 16px;
             font-family: Georgia, 'Times New Roman', Times, serif;
             font-weight: 200;
@@ -168,11 +168,31 @@
             font-size: 15px;
             color: #000000;
             font-weight: 500;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+            transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .skill-tag::after {
+            content: attr(data-progress) '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
         }
 
         .skill-tag:hover {
             background: linear-gradient(45deg, var(--primary), var(--secondary));
-            color: white;
+            color: transparent; /* Che đi tên kỹ năng */
+        }
+
+        .skill-tag:hover::after {
+            opacity: 1; /* Hiển thị phần trăm kỹ năng */
         }
         
         button {
@@ -205,6 +225,92 @@
                 transform: translateY(-20px) rotateX(-5deg) rotateY(-5deg);
             }
         }
+
+        @media (max-width: 768px) {
+            .profile-card {
+                width: 90%;
+                height: auto;
+                padding: 20px;
+            }
+
+            .profile-img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .name {
+                font-size: 1.5em;
+            }
+
+            .title {
+                font-size: 1.2em;
+            }
+
+            .skills {
+                margin-top: 20px;
+                gap: 5px;
+            }
+
+            button {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .socials {
+                gap: 10px;
+            }
+
+            .socials a {
+                width: 50px;
+                height: 50px;
+                font-size: 16px;
+            }
+
+            .contacts a {
+                font-size: 14px;
+            }
+        }
+        .scroll-gif {
+    position: absolute; /* Đặt vị trí tương đối với profile-card */
+    bottom: 50px; /* Đặt ảnh GIF ngay dưới profile-card */
+    left: 50%;
+    transform: translateX(-50%); /* Canh giữa theo chiều ngang */
+    width: 50px;
+    height: 50px;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 1; /* Đảm bảo ảnh GIF nằm dưới các thành phần khác nếu cần */
+    animation: fadeIn 2s ease-in-out; /* Hiệu ứng fade-in */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.scroll-text {
+    position: absolute;
+    bottom: 25px; /* Đặt ngay dưới .scroll-gif */
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.7); /* Màu trắng nhạt */
+    font-size: 14px;
+    text-align: center;
+    animation: fadeInOut 3s infinite; /* Hiệu ứng fade in/out liên tục */
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+}
     </style>
 </head>
 <body>
@@ -228,14 +334,18 @@
                 <a style="text-decoration: none;" href="" target="_blank"><i class="fas fa-map-marker-alt"></i>Đà Nẵng, Việt Nam</a>
             </div>
             <div class="skills">
-                <span class="skill-tag">HTML</span>
-                <span class="skill-tag">CSS</span>
-                <span class="skill-tag">JavaScript</span>
-                <span class="skill-tag">Google Apps Script</span>
-                <span class="skill-tag">UX/UI Design</span>
+                <span class="skill-tag" data-progress="90%">HTML</span>
+                <span class="skill-tag" data-progress="80%">CSS</span>
+                <span class="skill-tag" data-progress="75%">JavaScript</span>
+                <span class="skill-tag" data-progress="70%">Google Apps Script</span>
+                <span class="skill-tag" data-progress="85%">UX/UI Design</span>
             </div>
             <button>Contact Me</button>
         </div>
-    </div>
+        </div>
+    <div class="scroll-down">
+        <img class="scroll-gif" src="https://uploads-ssl.webflow.com/5cff83ac2044e22cb8cf2f11/5d00043816a6c695bcf1581a_scroll.gif" alt="Scroll Down">
+        <p class="scroll-text">scroll down for more</p>
+        </div>
 </body>
 </html>
