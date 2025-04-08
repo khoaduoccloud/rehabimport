@@ -3,116 +3,272 @@
       margin: 0; 
       padding: 0;
       box-sizing: border-box;
-      cursor: none; /* Ẩn cursor mặc định */
+      cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="44" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="1.25" stroke-linejoin="round" d="M18 14.88 8.16 3.15c-.26-.31-.76-.12-.76.28v15.31c0 .36.42.56.7.33l3.1-2.6 1.55 4.25c.08.22.33.34.55.26l1.61-.59a.43.43 0 0 0 .26-.55l-1.55-4.25h4.05c.36 0 .56-.42.33-.7Z"></path></svg>'), auto;
     }
-	/* Custom Cursor */
-.custom-cursor {
-  width: 20px;
-  height: 20px;
-  background: rgba(76, 175, 80, 0.3);
-  border: 2px solid #4CAF50;
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.2s ease;
-}
-.custom-cursor.active {
-  transform: scale(1.5);
-  background: rgba(76, 175, 80, 0.5);
-}
 
-
-
-/* Gradient Background */
 body {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: 100vh;
-  transition: background 0.3s ease;
+    background-image: linear-gradient(rgba(0, 45, 247, 0.5), rgba(36, 192, 184, 0.5)), url(email-pattern.png);/* Less bright gradient */
+    display: block;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-x: hidden; /* Allow vertical scrolling but prevent horizontal */
+    overflow-y: auto;
 }
 
-[data-theme="dark"] body {
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+/* Dark mode styles - updated colors */
+body.dark-mode {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgb(40, 12, 58)), url(email-pattern.png);/* Less bright gradient */
 }
 
-/* Theme Switch */
-.theme-switch {
+
+/* Theme toggle styling - updated to be cuter */
+.theme-toggle {
   position: fixed;
   top: 20px;
   right: 20px;
-  width: 60px;
-  height: 30px;
-  background: #fff;
-  border-radius: 15px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  z-index: 2000; /* Ensure it's above all other elements */
   cursor: pointer;
-  z-index: 1000;
-  transition: all 0.3s ease;
 }
 
-.theme-switch::before {
-  content: '';
-  position: absolute;
+.theme-toggle label {
+  width: 65px;
+  height: 32px;
+  position: relative;
+  display: block;
+  background: linear-gradient(45deg, #ffecf0, #fff5f8);
+  border-radius: 30px;
+  box-shadow: inset 0px 3px 8px rgba(255, 107, 149, 0.2), 0 3px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: 0.3s;
+  border: 2px solid rgba(255, 182, 193, 0.5);
+  box-sizing: border-box; /* Ensure padding and border are included in width/height */
+}
+
+.theme-toggle label:after {
+  content: "";
   width: 26px;
   height: 26px;
-  border-radius: 50%;
-  top: 2px;
+  position: absolute;
+  top: 1px;
   left: 2px;
-  background: #4CAF50;
-  transition: all 0.3s ease;
+  background: linear-gradient(45deg, #ffeb7b, #ec92ae);
+  border-radius: 50%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
 }
 
-[data-theme="dark"] .theme-switch::before {
-  transform: translateX(30px);
-  background: #2196F3;
+.theme-toggle input {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  position: absolute; /* Ensure it doesn't interfere with layout */
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  form {
-    grid-template-columns: 1fr;
-    padding: 20px;
-    margin: 10px;
-  }
+.theme-toggle input:checked + label {
+  background: linear-gradient(45deg, #282839, #262338);
+  border-color: rgba(123, 104, 238, 0.4);
+}
 
-  .form-group.full-width {
-    grid-column: span 1;
-  }
+/* Fix the toggle circle going outside the container */
+.theme-toggle input:checked + label:after {
+  left: calc(100% - 28px); /* 100% minus circle width (26px) minus right offset (2px) */
+  transform: translateX(0); /* Remove translateX(-100%) to fix positioning */
+  background: linear-gradient(45deg, #7986cb, #5c6bc0);
+}
 
-  .right-buttons {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    top: auto;
-    flex-direction: row;
-    width: auto;
-    gap: 10px;
-  }
+.theme-toggle label svg {
+  position: absolute;
+  width: 14px;
+  top: 7px;
+  z-index: 100;
+  transition: 0.3s;
+}
 
-  .right-buttons button {
-    width: auto;
-    padding: 8px 15px;
-  }
+.theme-toggle label svg.sun {
+  left: 7px;
+  fill: none;
+  stroke: #db2100;
+  stroke-width: 2;
+}
 
-  .theme-switch {
-    top: 10px;
-    right: 10px;
+.theme-toggle label svg.moon {
+  right: 7px;
+  fill: #5c6bc0;
+  transform: scale(0.85);
+}
+
+.theme-toggle input:checked + label svg.sun {
+  stroke: #ffb6c1;
+  opacity: 0.6;
+}
+
+.theme-toggle input:checked + label svg.moon {
+  fill: #e0e0ff;
+}
+
+
+/* Scrollbar decoration - floating hearts */
+.scrollbar-decoration {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 36px;
+  height: 36px;
+  z-index: 1000;
+  opacity: 0.9; /* Make it more visible by default */
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+body:hover .scrollbar-decoration {
+  opacity: 1;
+}
+
+.scrollbar-heart {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b95"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat;
+  background-size: contain;
+  animation: floatScrollbarHeart 3s ease-in-out infinite;
+}
+
+.dark-mode .scrollbar-heart {
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff8bb3"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') no-repeat;
+}
+
+.scroll-h1 {
+  top: -30px;
+  right: 5px;
+  animation-delay: 0s;
+}
+
+.scroll-h2 {
+  top: -20px;
+  right: 0px;
+  transform: scale(0.7);
+  animation-delay: 1s;
+}
+
+.scroll-h3 {
+  top: -13px;
+  right: 8px;
+  transform: scale(0.8);
+  animation-delay: 1.5s;
+}
+
+@keyframes floatScrollbarHeart {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-8px);
   }
 }
+::-webkit-scrollbar {
+  width: 8px; /* Smaller scrollbar for mobile */
+}
+
+::-webkit-scrollbar-thumb {
+  border-width: 2px;
+}
+
+.scrollbar-decoration {
+  right: 5px;
+  bottom: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.scrollbar-heart {
+  width: 10px;
+  height: 10px;
+}
+
+/* Ensure inner elements with scrollbars get the same styling */
+* ::-webkit-scrollbar {
+  width: 10px; /* Slightly smaller for inner elements */
+  display: block; /* Always show scrollbars */
+}
+
+* ::-webkit-scrollbar-track {
+  background: transparent;
+  margin: 4px 0;
+}
+
+* ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ffb6c1, #ff8bb3);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 0 5px rgba(255, 107, 149, 0.15);
+}
+
+* ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ff6b95, #ffb6c1);
+  box-shadow: 0 0 8px rgba(255, 107, 149, 0.3);
+}
+
+.dark-mode * ::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff8bb3, #ff6b95);
+}
+
+.dark-mode * ::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ff6b95, #ff8bb3);
+  box-shadow: 0 0 12px rgba(255, 139, 179, 0.5);
+}
+
+@media (max-width: 500px) {
+  /* ...existing mobile styles... */
+
+  /* Maintain consistent scrollbar styling for mobile */
+  ::-webkit-scrollbar,
+  * ::-webkit-scrollbar {
+      width: 8px;
+  }
+  
+  ::-webkit-scrollbar-thumb,
+  * ::-webkit-scrollbar-thumb {
+      border-width: 2px;
+  }
+  
+  /* ...existing code... */
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+
+@keyframes svgWiggle {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+} /*KET THUC SCROLLBAR ICON */
+
+
+
+
 
 /* HEADER - LOGO + TIÊU ĐỀ */
 .header {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      gap: 5px;
+      margin-bottom: 2px;
+      color: #2c3e50; /* Màu xanh đậm chuyên nghiệp */
     }
-    .logo {
-      width: 50px;
+body.dark-mode .header {
+  color: #ecf0f1; /* Màu sáng hơn trong dark mode */
+}
+.logo {
+      width: 80px;
       height: auto;
     }
+
 .footer {
   position: fixed;       /* Cố định footer */
   bottom: 0cm;           /* Cách đáy 2cm (có thể đổi thành 40px hoặc 2rem) */
@@ -132,6 +288,29 @@ body {
   font-weight: bold;
 }
 
+/* Đảm bảo footer luôn hiển thị đúng */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  background-color: #f0f0f0;
+  text-align: center;
+  z-index: 999;
+}
+
+/* Light mode footer styles */
+body:not(.dark-mode) .footer {
+  background-color: #f0f0f0; /* Light background */
+  color: #333333; /* Dark text */
+}
+
+/* Dark mode footer styles */
+body.dark-mode .footer {
+  background-color: #030303; /* Dark background */
+  color: #f0f0f0; /* Light text */
+}
 
 /* CỘT BÊN PHẢI CHỨA 3 NÚT */
     .right-buttons {
@@ -249,36 +428,90 @@ body {
   background-color: var(--border-color);
 }
 
-/* Style cho modal trong dark mode */
-[data-theme="dark"] #modalResults th {
-  background-color: #2c5530;
+/* Thêm margin-bottom cho form để không bị che bởi footer */
+form {
+  margin-bottom: 60px;  /* Tạo khoảng trống cho footer */
 }
 
-[data-theme="dark"] #modalResults tr:hover {
-  background-color: #444444;
+form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 800px;
+  width: 100%;
+  margin: 20px auto 60px;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
 }
 
-h1 {
-            text-align: center;
-            color: #333;
-		margin: 0;
-        }
+body.dark-mode form {
+  background-color: rgba(50, 50, 70, 0.95); /* Màu nền tối nhẹ nhàng hơn */
+  border: 1px solid rgba(100, 100, 150, 0.5); /* Màu viền phù hợp hơn */
+  color: #e0e0e0; /* Màu chữ chính trong form */
+}
 
-        form {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 800px;
-            width: 100%;
-            margin: 20px auto 60px;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
-            background-color: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-        }
+body.dark-mode form label {
+  color: #ffcc80; /* Màu vàng nhạt cho tiêu đề */
+}
+
+body.dark-mode form input[type="text"], 
+body.dark-mode form input[type="number"], 
+body.dark-mode form select {
+  background-color: rgba(70, 70, 90, 0.95); /* Màu nền input */
+  color: #ffffff; /* Màu chữ trong input */
+  border: 1px solid rgba(120, 120, 160, 0.5); /* Màu viền input */
+}
+
+body.dark-mode form input[type="text"]:focus, 
+body.dark-mode form input[type="number"]:focus, 
+body.dark-mode form select:focus {
+  border-color: #ffcc80; /* Màu viền khi focus */
+  box-shadow: 0 0 0 3px rgba(255, 204, 128, 0.3); /* Hiệu ứng focus */
+}
+
+/* Placeholder color in dark mode */
+.dark-mode input::placeholder,
+.dark-mode select::placeholder {
+  color: #ffffff; /* White color for contrast */
+}
+
+/* Optional: Adjust input text color in dark mode */
+.dark-mode input,
+.dark-mode select {
+  color: #ffffff; /* White text for inputs */
+  background-color: #333333; /* Dark background for inputs */
+}
+
+/* Reset placeholder and input styles for light mode */
+body:not(.dark-mode) input::placeholder,
+body:not(.dark-mode) select::placeholder {
+  color: #000000; /* Black for light mode */
+}
+
+body:not(.dark-mode) input,
+body:not(.dark-mode) select {
+  color: #000000; /* Black text for inputs */
+  background-color: #ffffff; /* White background for inputs */
+}
+
+/* Ensure dark mode styles are only applied in dark mode */
+body.dark-mode input,
+body.dark-mode select {
+  color: #ffffff;
+  background-color: #333333;
+}
+
+/* Ensure placeholder styles are scoped to dark mode */
+body.dark-mode input::placeholder,
+body.dark-mode select::placeholder {
+  color: #ffffff;
+}
+
 	/* STYLING CHO FORM */
 .form-group {
   display: flex;
@@ -313,7 +546,7 @@ h1 {
 
         input[type="text"], input[type="number"], select {
             padding: 8px 12px;
-            border: 1px solid var(--border-color);
+            border: 1px solid #000;
             border-radius: 5px;
             width: 100%;
             font-size: 14px;
@@ -325,7 +558,7 @@ h1 {
         input[type="submit"] {
             grid-column: span 2;
             padding: 12px;
-            background-color: var(--primary-color);
+            background-color: #ffffff;
             color: white;
             border: none;
             border-radius: 5px;
@@ -366,171 +599,51 @@ h1 {
 @keyframes l6 {
     100% {inset:0}
 }
-      
 
-/* Thêm nút chuyển đổi Dark mode */
-.theme-switch {
-  position: fixed;
-  bottom: 50px;        /* Đẩy lên cao hơn, cách footer 80px */
-  right: 20px;
-  z-index: 1000;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: none;
-  background-color: #5c6bc0;
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
-}
-
-/* Đảm bảo footer luôn hiển thị đúng */
-.footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 10px 0;
-  background-color: var(--background-color);
-  text-align: center;
-  z-index: 999;
-}
-
-/* Thêm margin-bottom cho form để không bị che bởi footer */
 form {
-  margin-bottom: 60px;  /* Tạo khoảng trống cho footer */
-}
-/* Cập nhật biến màu cho theme sáng */
-:root {
-  --primary-color: #4CAF50;
-  --background-color: #ffffff;
-  --text-color: #333333;
-  --border-color: #cccccc;
-  --form-background: #ffffff;
-  --input-background: #ffffff;
-  --placeholder-color: #666666;
-}
-
-/* Cập nhật màu cho Dark mode với độ tương phản cao hơn */
-[data-theme="dark"] {
-  --primary-color: #4eda54;  /* Màu xanh sáng hơn */
-  --background-color: #121212; /* Nền tối hơn */
-  --text-color: #ffffff;      /* Chữ trắng */
-  --border-color: #666666;    /* Viền rõ hơn */
-  --form-background: rgba(45, 45, 45, 0.95); /* Form tối với độ trong suốt */
-  --input-background: #333333; /* Nền input tối */
-  --placeholder-color: #aaaaaa; /* Màu placeholder sáng hơn */
-}
-
-/* Thêm lớp overlay cho dark mode */
-body[data-theme="dark"]::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7); /* Lớp mờ đen */
-  z-index: -1;
-}
-
-/* Cập nhật style cho form trong dark mode */
-[data-theme="dark"] form {
-  background-color: var(--form-background);
-  border: 1px solid var(--border-color);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  animation: fadeInUp 0.8s ease-out;
   backdrop-filter: blur(10px);
-  width: 100%;
-  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Cập nhật style cho input và select trong dark mode */
-[data-theme="dark"] input[type="text"],
-[data-theme="dark"] input[type="number"],
-[data-theme="dark"] select {
-  background-color: var(--input-background);
-  color: var(--text-color);
-  border: 1px solid var(--border-color);
+/* Hiệu ứng hover cho input và select */
+input[type="text"], 
+input[type="number"], 
+select {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  background-color: #f8f9fa;
 }
 
-/* Cập nhật style cho placeholder trong dark mode */
-[data-theme="dark"] input::placeholder,
-[data-theme="dark"] select::placeholder {
-  color: var(--placeholder-color);
+input[type="text"]:focus, 
+input[type="number"]:focus, 
+select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  background-color: #fff;
 }
 
-/* Tăng độ tương phản cho nút trong dark mode */
-[data-theme="dark"] .right-buttons button {
-  background-color: #4eda54;
-  color: #000000;
-  font-weight: bold;
+/* Nút submit đẹp hơn */
+input[type="submit"] {
+  transition: all 0.3s ease;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
 }
 
-[data-theme="dark"] .right-buttons button:hover {
-  background-color: #3cb371;
+input[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
 }
 
-/* Cập nhật style cho modal trong dark mode */
-[data-theme="dark"] .modal-content {
-  background-color: var(--form-background);
-  border: 1px solid var(--border-color);
+input[type="submit"]:active {
+  transform: translateY(0);
 }
 
-[data-theme="dark"] .modal-content table {
-  border-color: var(--border-color);
-}
-
-[data-theme="dark"] .modal-content th,
-[data-theme="dark"] .modal-content td {
-  border-color: var(--border-color);
-  color: var(--text-color);
-}
-/* Điều chỉnh màu cho tiêu đề chính và các label trong dark mode */
-[data-theme="dark"] h1,
-[data-theme="dark"] label,
-[data-theme="dark"] .header {
-  color: #ffffff !important; /* Màu trắng cho text */
-}
-
-/* Điều chỉnh màu cho placeholder trong input khi ở dark mode */
-[data-theme="dark"] input::placeholder,
-[data-theme="dark"] select {
-  color: #aaaaaa; /* Màu xám nhạt cho placeholder */
-}
-
-/* Điều chỉnh màu chữ trong input khi người dùng nhập liệu */
-[data-theme="dark"] input[type="text"],
-[data-theme="dark"] input[type="number"],
-[data-theme="dark"] select,
-[data-theme="dark"] option {
-  color: #ffffff; /* Màu trắng cho text khi nhập */
-  background-color: #333333; /* Nền tối cho input */
-}
-
-/* Điều chỉnh màu cho option trong select dropdown */
-[data-theme="dark"] select option {
-  padding: 8px;
-  background-color: var(--input-background);
-  color: var(--text-color);
-}
-
-/* Điều chỉnh màu cho footer */
-[data-theme="dark"] .footer {
-  color: #ffffff;
-  background-color: rgba(45, 45, 45, 0.95);
-}
-
-/* Giữ nguyên màu highlight trong footer */
-[data-theme="dark"] .footer .highlight {
-  color: #ffa500; /* Màu cam cho tên designer */
-}
-
-
-
+      
 /* Loading spinner cho preview */
 .preview-loading {
   width: 30px;
@@ -643,31 +756,10 @@ input[type="submit"]:active {
   height: 200px;
 }
 
-/* Dark mode switch animation */
-.theme-switch {
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.theme-switch:hover {
-  transform: rotate(180deg);
-}
 
 /* Điều chỉnh style cho option trong select */
 select option {
     padding: 8px;
     font-size: 14px;
     line-height: 1.5;
-}
-
-/* Đảm bảo select trong dark mode cũng hiển thị đúng */
-[data-theme="dark"] select {
-    background-color: var(--input-background);
-    color: var(--text-color);
-    border: 1px solid var(--border-color);
-}
-
-[data-theme="dark"] select option {
-    padding: 8px;
-    background-color: var(--input-background);
-    color: var(--text-color);
 }
