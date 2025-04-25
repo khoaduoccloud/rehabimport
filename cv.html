@@ -10,6 +10,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         :root {
+    /* Thêm các biến mới */
+    --card-max-width: 400px;
+    --card-max-height: 800px;
+    --card-padding: 40px;
+    --card-border-radius: 20px;
+    
+    /* Các biến màu sắc hiện có */
     --primary: rgba(255, 70, 86, 0.9);
     --secondary: rgba(89, 205, 255, 0.9);
     --glass: rgba(255, 255, 255, 0.05);
@@ -21,7 +28,7 @@
         box-sizing: border-box;
     }
 
-        body {
+    body {
             min-height: 100vh;
             display: grid;
             place-items: center;
@@ -29,24 +36,103 @@
             background-position: center;
             background-size: cover;
             font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
         }
+
+        /* Loading Screen */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loading-fill {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background-color: rgba(128, 128, 128, 0.2);
+            transition: height 0.1s linear;
+        }
+        .loading-percentage {
+            font-size: 6rem;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            margin-bottom: 1rem;
+            color: #fff;
+            z-index: 1;
+        }
+        .loading p {
+            color: #fff;
+            font-size: 1rem;
+            letter-spacing: 0.5rem;
+            text-transform: uppercase;
+            z-index: 1;
+        }
+
+        .loading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to top,
+                rgba(255, 255, 255, 0.15),
+                rgba(255, 255, 255, 0.05)
+            );
+            transition: height 0.3s ease-out;
+            z-index: -1;
+            backdrop-filter: blur(5px);
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                visibility: visible;
+            }
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+        
 
         .profile-card {
             position: relative;
-            width: 400px;
-            height: 800px;
+            width: min(85vw, 380px); /* Giảm kích thước tổng thể */
+            height: min(85vh, 700px); /* Giảm chiều cao */
             background: var(--glass);
-            border-radius: 20px;
+            border-radius: var(--card-border-radius);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             transform-style: preserve-3d;
             animation: float 6s ease-in-out infinite;
+            overflow: hidden; /* Thêm overflow để kiểm soát nội dung */
+            display: flex;
+            flex-direction: column;
         }
 
         .header {
-            position: relative;
-            padding: 40px;
+            padding: 20px; /* Giảm padding */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -89,17 +175,16 @@
         }
 
         .content {
-            position: relative;
-            padding: 20px;
+            flex: 1;
+            padding: 20px; /* Giảm padding */
             display: flex;
             flex-direction: column;
-            align-items: center;
-            z-index: 1;
+            gap: 15px; /* Thêm khoảng cách giữa các phần tử */
         }
 
         .socials {
         display: flex;
-        gap: 20px;
+        gap: 15px; /* Giảm gap */
         font-size: 20px;
         margin-bottom: 10px;
         justify-content: center;
@@ -107,8 +192,8 @@
         }
 
         .socials a {
-        width: 60px;
-        height: 60px;
+        width: 45px; /* Giảm kích thước */
+        height: 45px;
         border-radius: 50%;
         display: grid;
         place-items: center;
@@ -128,6 +213,13 @@
             gap: 10px;
             display: flex;
             flex-direction: column;
+            /* Thêm margin-left để dịch sang phải */
+            margin-left: 30px; /* Bạn có thể điều chỉnh giá trị này */
+            /* Hoặc sử dụng transform */
+            transform: translateX(30px); /* Cách khác để dịch sang phải */
+            /* Hoặc sử dụng position relative và left */
+            position: relative;
+            left: 30px;
         }
 
         .contacts i {
@@ -155,17 +247,17 @@
 
         .skills {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 50px;
+            margin-top: 20px; /* Giảm margin */
         }
 
         .skill-tag {
             background-color: #f2f2f2;
-            padding: 5px 15px;
+            padding: 4px 12px; /* Giảm padding */
             border-radius: 15px;
-            font-size: 15px;
+            font-size: 14px; /* Giảm font size */
             color: #000000;
             font-weight: 500;
             position: relative;
@@ -196,9 +288,9 @@
         }
         
         button {
-        padding: 12px 30px;
+        padding: 10px 25px;
         border: none;
-        margin-top: 40px;
+        margin-top: 20px; /* Giảm margin */
         background: linear-gradient(45deg, var(--primary), var(--secondary));
         color: white;
         font-weight: 600;
@@ -228,9 +320,8 @@
 
         @media (max-width: 768px) {
             .profile-card {
-                width: 90%;
-                height: auto;
-                padding: 20px;
+                width: min(90vw, 320px);
+                height: min(80vh, 600px);
             }
 
             .profile-img {
@@ -311,9 +402,71 @@
         opacity: 1;
     }
 }
+
+@media screen and (max-width: 1440px) {
+    .profile-card {
+        width: min(85vw, 380px);
+        height: min(85vh, 750px);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .profile-card {
+        width: min(80vw, 350px);
+        height: min(80vh, 700px);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .profile-card {
+        width: min(90vw, 320px);
+        height: min(80vh, 600px);
+    }
+    
+    .header {
+        padding: 15px;
+    }
+    
+    .content {
+        padding: 15px;
+        gap: 10px;
+    }
+    
+    .profile-img {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .name {
+        font-size: 1.3em;
+    }
+    
+    .title {
+        font-size: 1.1em;
+    }
+    
+    .intro {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .profile-card {
+        width: 95vw;
+        height: auto;
+        min-height: 550px;
+        padding: 15px;
+    }
+}
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="loading-fill" id="loading-fill"></div>
+        <div class="loading-percentage" id="loading-percentage">0%</div>
+        <p>Loading</p>
+    </div>
     <div class="profile-card">
         <div class="header">
             <img src="avatar.jpg" alt="Profile Picture" class="profile-img">
@@ -347,5 +500,32 @@
         <img class="scroll-gif" src="https://uploads-ssl.webflow.com/5cff83ac2044e22cb8cf2f11/5d00043816a6c695bcf1581a_scroll.gif" alt="Scroll Down">
         <p class="scroll-text">scroll down for more</p>
         </div>
+    <script>
+    // Loading Screen
+    window.addEventListener('load', function() {
+        const loading = document.getElementById('loading');
+        const loadingFill = document.getElementById('loading-fill');
+        const loadingPercentage = document.getElementById('loading-percentage');
+        let progress = 0;
+    
+    const loadingInterval = setInterval(function() {
+        if (progress >= 100) {
+            clearInterval(loadingInterval);
+            setTimeout(function() {
+                loading.style.opacity = '0';
+                loading.style.visibility = 'hidden';
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                }, 500);
+            }, 200);
+            return;
+        }
+
+        progress += 1;
+        loadingPercentage.textContent = progress + '%';
+        loadingFill.style.height = progress + '%';
+    }, 30);
+});
+</script>
 </body>
 </html>
