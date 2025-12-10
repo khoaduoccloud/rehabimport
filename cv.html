@@ -527,5 +527,248 @@
     }, 30);
 });
 </script>
+    <section id="projects">
+        <div class="text-center space-y-4">
+            <h2 class="text-4xl md:text-5xl font-bold font-display text-gradient">Featured Projects</h2>
+            <p class="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+                Here are some of the projects I'm proud to have worked on.
+            </p>
+        </div>
+        <div class="filter-chips" id="filterChips"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12" id="projectsGrid"></div>
+        
+        <!-- Modal -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal-content" id="modalContent">
+                <!-- Content populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Project type as comment for reference
+        // type Project = {
+        //   id: number;
+        //   title: string;
+        //   description: string;
+        //   longDescription: string;
+        //   imageUrl: string;
+        //   tags: string[];
+        //   liveUrl?: string;
+        //   githubUrl?: string;
+        // };
+
+        const mockProjects = [
+            {
+                id: 1,
+                title: 'E-commerce Platform',
+                description: 'A full-featured online store with a modern UI.',
+                longDescription: 'Developed a comprehensive e-commerce platform using React and Node.js, featuring product catalogs, a shopping cart, secure checkout with Stripe, and a user authentication system. The frontend is built for optimal user experience and responsiveness.\n\nThe architecture is designed to be scalable, handling thousands of products and concurrent users. State management is handled with Zustand for a lightweight and fast experience.',
+                imageUrl: 'https://images.unsplash.com/photo-1522199755839-a2bacb67c546?q=80&w=2072&auto=format&fit=crop',
+                tags: ['React', 'Node.js', 'Web Dev', 'Stripe'],
+                liveUrl: '#',
+                githubUrl: '#',
+            },
+            {
+                id: 2,
+                title: 'Project Management Tool',
+                description: 'A collaborative tool to manage tasks and projects.',
+                longDescription: 'A Kanban-style project management application that allows teams to organize tasks, track progress, and collaborate in real-time. Features include drag-and-drop boards, task assignments, and deadline tracking. Built with TypeScript and Firebase.\n\nReal-time data synchronization is achieved using Firebase Firestore, ensuring all team members have the most up-to-date view of the project status.',
+                imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop',
+                tags: ['TypeScript', 'React', 'Firebase', 'Web Dev'],
+                githubUrl: '#',
+            },
+            {
+                id: 3,
+                title: 'Personal Blog',
+                description: 'A sleek, fast, and SEO-friendly personal blog.',
+                longDescription: 'Designed and developed a personal blog with a focus on performance and readability. It uses a static site generator for speed and is integrated with a headless CMS for easy content management. Features include dark mode, search functionality, and RSS feeds.\n\nThe design is minimalist and content-focused, providing a pleasant reading experience across all devices.',
+                imageUrl: 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=2070&auto=format&fit=crop',
+                tags: ['Next.js', 'MDX', 'Design', 'Vercel'],
+                liveUrl: '#',
+            },
+            {
+                id: 4,
+                title: 'Data Visualization Dashboard',
+                description: 'An interactive dashboard for visualizing complex data.',
+                longDescription: 'Created a dynamic data visualization dashboard using D3.js and React. It allows users to explore large datasets through interactive charts and graphs, with features like filtering, sorting, and data exporting. The dashboard is designed to be both powerful and intuitive.\n\nIt connects to a REST API to fetch data and presents it in a highly interactive and visually appealing manner, helping users to derive insights quickly.',
+                imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop',
+                tags: ['React', 'D3.js', 'Data Viz', 'API'],
+                githubUrl: '#',
+            },
+            {
+                id: 5,
+                title: 'Mobile Fitness App UI',
+                description: 'A concept UI for a modern fitness tracking app.',
+                longDescription: 'Designed a clean and motivating user interface for a mobile fitness application. The design focuses on clarity, ease of use, and providing users with at-a-glance progress tracking. Prototyped using Figma and built with React Native.\n\nThe UI kit includes components for workout tracking, progress charts, social sharing, and personalized coaching, all designed with a consistent and modern aesthetic.',
+                imageUrl: 'https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?q=80&w=2071&auto=format&fit=crop',
+                tags: ['UI/UX', 'Figma', 'Design', 'React Native'],
+                liveUrl: '#',
+            },
+            {
+                id: 6,
+                title: 'Cloud Storage Service',
+                description: 'A secure and scalable cloud storage solution.',
+                longDescription: 'Developed a cloud storage service with a focus on security and performance. Users can upload, download, and share files through a simple web interface. The backend is built on a microservices architecture and deployed on Cloudflare Workers for global low-latency access.\n\nEnd-to-end encryption is implemented to ensure user data privacy and security.',
+                imageUrl: 'https://images.unsplash.com/photo-1585399001829-d7350d59622d?q=80&w=1974&auto=format&fit=crop',
+                tags: ['Cloudflare', 'TypeScript', 'Web Dev', 'Security'],
+                githubUrl: '#',
+            },
+        ];
+
+        // State
+        let selectedProject = null;
+        let selectedTag = null;
+        const loading = false; // Hardcoded as false for standalone; can be toggled if needed
+
+        // Compute tags
+        const tags = ['All', ...Array.from(new Set(mockProjects.flatMap(p => p.tags)))];
+
+        // DOM elements
+        const filterChipsContainer = document.getElementById('filterChips');
+        const projectsGrid = document.getElementById('projectsGrid');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalContent = document.getElementById('modalContent');
+
+        // Render filter chips
+        function renderFilterChips() {
+            filterChipsContainer.innerHTML = tags.map(tag => `
+                <span class="badge ${selectedTag === tag ? 'default' : 'secondary'}" data-tag="${tag}">${tag}</span>
+            `).join('');
+            
+            // Add event listeners
+            filterChipsContainer.querySelectorAll('.badge').forEach(badge => {
+                badge.addEventListener('click', (e) => {
+                    const tag = e.currentTarget.dataset.tag;
+                    setSelectedTag(tag);
+                    renderProjects();
+                });
+            });
+        }
+
+        // Set selected tag
+        function setSelectedTag(tag) {
+            selectedTag = tag;
+            // Update UI
+            document.querySelectorAll('.badge').forEach(b => {
+                b.classList.toggle('default', b.dataset.tag === tag);
+                b.classList.toggle('secondary', b.dataset.tag !== tag);
+            });
+        }
+
+        // Render projects or skeletons
+        function renderProjects() {
+            const filteredProjects = !selectedTag || selectedTag === 'All' 
+                ? mockProjects 
+                : mockProjects.filter(p => p.tags.includes(selectedTag));
+
+            if (loading) {
+                projectsGrid.innerHTML = Array.from({ length: 6 }).map((_, index) => `
+                    <div class="skeleton-card">
+                        <div class="skeleton skeleton-image"></div>
+                        <div class="flex-grow p-6">
+                            <div class="skeleton skeleton-text w-3/4 mb-2"></div>
+                            <div class="skeleton skeleton-text w-full"></div>
+                            <div class="skeleton skeleton-text w-2/3 mt-1"></div>
+                        </div>
+                        <div class="flex flex-wrap gap-2 p-6 pt-0">
+                            <div class="skeleton h-6 w-16 rounded-full"></div>
+                            <div class="skeleton h-6 w-20 rounded-full"></div>
+                        </div>
+                    </div>
+                `).join('');
+                return;
+            }
+
+            projectsGrid.innerHTML = filteredProjects.map(project => `
+                <div class="project-card" data-id="${project.id}">
+                    <img src="${project.imageUrl}" alt="${project.title}" />
+                    <div class="content">
+                        <h3>${project.title}</h3>
+                        <p>${project.description}</p>
+                    </div>
+                    <div class="tags flex flex-wrap gap-2 p-6 pt-0">
+                        ${project.tags.map(tag => `<span class="badge secondary">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            // Add event listeners to cards
+            projectsGrid.querySelectorAll('.project-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    const id = parseInt(e.currentTarget.dataset.id);
+                    const project = mockProjects.find(p => p.id === id);
+                    openProject(project);
+                });
+            });
+        }
+
+        // Open project modal
+        function openProject(project) {
+            selectedProject = project;
+            modalContent.innerHTML = `
+                <div>
+                    <div class="aspect-video modal-image">
+                        <img src="${project.imageUrl}" alt="${project.title}" />
+                    </div>
+                    <h1 class="modal-title">${project.title}</h1>
+                    <div class="modal-tags">
+                        ${project.tags.map(tag => `<span class="badge secondary">${tag}</span>`).join('')}
+                    </div>
+                    <div class="mt-6 text-base text-foreground/80 space-y-4 modal-description">
+                        ${project.longDescription.split('\n').filter(p => p.trim()).map(paragraph => `
+                            <p class="modal-paragraph">${paragraph}</p>
+                        `).join('')}
+                    </div>
+                    <div class="mt-8 flex gap-4">
+                        ${project.liveUrl ? `
+                            <a href="${project.liveUrl}" target="_blank" rel="noopener noreferrer" class="button btn-gradient">
+                                View Live 
+                                <svg class="icon ml-2" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M19 9l-7 7-7-7"/>
+                                    <path d="M14 14l3.5-3.5M10 10L6.5 6.5"/>
+                                </svg>
+                            </a>
+                        ` : ''}
+                        ${project.githubUrl ? `
+                            <a href="${project.githubUrl}" target="_blank" rel="noopener noreferrer" class="button button-outline">
+                                <svg class="icon mr-2" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M9 19c-5 1.5-.8-2-7-2-5.5 0-10 6-10 6v-4c0-2.2.8-4 4-4 2.2 0 3 1.8 3 4 0 .2-.1 2.2-.3 2.3 1.2 0 2.6-1.2 2.7-2.9 0-.5-.1-1-.3-1.3-.9-.5-2.3-.5-3.5-.6-.1-.1-.5-.5-.9-1-.2-.1-.2-2 0-2 .3 0 1 .1 1.4 2 1.3 5 2.6 6.5 6.1 6.1 2 0 3.5-1.6 3.5-3.3 0-1.9-1.4-3.2-3.6-3.5 1.1-.2 2.1-.7 3-.1.9.6 1.6 1.6 1.9 2.3 2.5-2.6 6.3-2.6 6.3-5.5 0-1.4-.8-2.4-1.8-3.2z"/>
+                                </svg>
+                                View Code
+                            </a>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            modalOverlay.classList.add('open');
+            document.body.style.overflow = 'hidden'; // Prevent scroll
+        }
+
+        // Close modal
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+            selectedProject = null;
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) {
+                closeModal();
+            }
+        });
+
+        // Initial render
+        renderFilterChips();
+        renderProjects();
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('open')) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
 </html>
